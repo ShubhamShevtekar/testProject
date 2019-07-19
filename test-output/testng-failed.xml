@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
+  <test thread-count="5" name="Default test(failed)">
+    <classes>
+      <class name="scenarios.GEO.LanguagePost">
+        <methods>
+          <include name="getToken"/>
+          <include name="startRepo"/>
+          <include name="startReport"/>
+          <include name="before"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="TC_01"/>
+        </methods>
+      </class> <!-- scenarios.GEO.LanguagePost -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

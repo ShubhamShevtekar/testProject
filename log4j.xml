@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- # Set the maximum file size before rollover
+log4j.appender.FILE.MaxFileSize=100KB
+
+# Set the the backup index
+log4j.appender.FILE.MaxBackupIndex=2 -->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- For Printing message with date , time & class name also <param name="ConversionPattern" 
+				value="%d{dd MMM yyyy HH:mm:ss} %5p %c{1} - %m%n"/> -->
+			<!-- For printing message only -->
+			<param name="ConversionPattern" value="%-5p[%c{1}]: %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="info-log" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="Resources/Application.log" />
+		<param name="MaxFileSize" value="50MB" />
+       <param name="MaxBackupIndex" value="10"/>
+     	<param name="append" value="true" />		
+		<param name="level" value="INFO"/>
+		<layout class="org.apache.log4j.PatternLayout">		
+			<param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss}%x %-5p[%c{1}]: %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			   <param name="LevelMin" value="debug" />
+            <param name="LevelMax" value="info" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+      
+		</appender>
+	<appender name="error-log" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="Resources/Error.log" />
+		<param name="MaxFileSize" value="20MB" />
+       	<param name="MaxBackupIndex" value="10"/>
+        <param name="append" value="true" />
+		<param name="level" value="ERROR"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss}%x %-5p[%c{1}]: %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="warn" />
+            <param name="LevelMax" value="error" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+</appender>
+	
+		<logger name="com.jcg.log4j.example">
+        <appender-ref ref="info-log" />
+        <appender-ref ref="error-log" />
+    </logger>
+	<root>
+	<level value="INFO" />
+			<appender-ref ref="consoleAppender" />
+			 <appender-ref ref="info-log" />
+				<appender-ref ref="error-log" /> 
+	</root>
+	
+	
+	
+		
+</log4j:configuration>
