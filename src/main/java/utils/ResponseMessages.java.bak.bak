@@ -1,0 +1,77 @@
+package utils;
+
+public class ResponseMessages {
+	
+	//***success messages
+	public String geoTypePostSuccessMsg = "Geopolitical Type Details successfully saved with GeopoliticalTypeId :";
+	public String geoTypePutSuccessMsg = "Geopolitical Type Details successfully updated with GeopoliticalTypeId :";
+	public String geoRsTypePostSuccessMsg = "GeopoliticalRelationshipType Details successfully saved with GeopoliticalRelationshipTypeCd :";
+	public String geoRsTypePutSuccessMsg = "GeopoliticalRelationshipType Details successfully updated with GeopoliticalRelationshipTypeCd :";
+	public String geoOrgStdPostSuccessMsg = "GEOPLORGSTD Details successfully saved with OrgStdCd :";
+	public String geoOrgStdPutSuccessMsg = "GEOPLORGSTD Details successfully updated with OrgStdCd :";
+	public String depnCntryRltspPostSuccessMsg = "Dependent Country Relationship Details successfully saved with DependentRelationshipId :";
+	public String depnCntryRltspPutSuccessMsg = "Dependent Country Relationship Details successfully updated with DependentRelationshipId :";
+	public String holidayPostSuccessMsg = "Holiday Details successfully saved with HolidayId :";
+	public String holidayPutSuccessMsg = "Holiday Details successfully updated with HolidayId :";
+	public String uomTypePostSuccessMsg = "REFUOMTYPE Details successfully saved with uomTypeCd :";
+	public String uomTypePutSuccessMsg = "REFUOMTYPE Details successfully updated with uomTypeCd :";
+	public String scriptPostSuccessMsg = "REFSCRIPT Details successfully saved with scrptCd :";
+	public String scriptPutSuccessMsg = "REFSCRIPT Details successfully updated with scrptCd :";
+	public String dayOfWeekPostSuccessMsg = "Day Of Week Details successfully saved with DayOfWeekNumber :";
+	public String dayOfWeekPutSuccessMsg = "Day of week Details successfully updated with DayOfWeekNumber :";
+	public String monthOfYearPostSuccessMsg = "Month of Year Details successfully saved with MonthOfYearNumber :";
+	public String monthOfYearPutSuccessMsg = "Month of Year Details successfully updated with MonthOfYearNumber :";
+	
+	//***error messages
+	public String invalidUrlMsg = "Not Found";
+	public String metaBlankMsg = "Meta cannot be a null field!, ";	
+	public String userNullMsg = "Username cannot be blank!, ";
+	public String recordExistsMsg = "Record already exists.";
+	public String invalidPutRequestMsg = "Request method 'PUT' not supported";
+	public String exceedLimitMsg = "Not correct format for Id!";
+	
+	
+	///geoType
+	public String geoTypeNameBlankMsg = "GeopoliticalTypeName cannot be blank!, ";		
+	public String geoTypeGeopoliticalTypeNameLimitMsg = "GeopoliticalTypeName cannot be greater than 50 characters!, ";
+	public String geoTypeUserNameLimitMsg = "";
+	
+	//geoRsType
+	public String geoRsTypeCodeBlankMsg = "GeopoliticalRelationshipTypeCd cannot be blank!, ";
+	public String geoRsTypeExistingValue = "Record already exists.";
+	public String geoRsTypeMetaNull = "Meta cannot be a null field!, ";
+	public String geoRsTypeNullUser = "Username cannot be blank!, ";
+	public String geoRsTypegeoRelTypeCdLengthMsg = "GeopoliticalRelationshipTypeCd cannot be greater than 20 characters!, ";
+	public String geoRsTypegeopoRelTypeDescMsg = "AreaRelationshipTypeDescription cannot be greater than 100 characters!, ";
+	public String geoRsTypeUserLenghtMsg = "";
+	
+	//***geoOrgStd
+	public String geoOrgStdCodeBlankMsg = "Organization Standard Code cannot be a null or blank field!, ";
+	public String geoOrgStdCodeNotInJson = "Organization Standard Code cannot be a null or blank field!, Organization Standard Code cannot be a null or blank field!, ";
+	public String geoOrgStdCodeLengthMsg = "Organization Standard Code cannot be greater than 10 characters!, ";
+	public String geoorgStdNmLengthMsg = "Organization Standard Name cannot be greater than 65 characters!, ";
+	public String geoOrgStdCodeExistingValue = "Record already exists.";
+	public String geoOrgStdUserLenghtMsg = "";
+	
+	//depnCntryRltsp
+	public String depnCntryRltspDescBlankMsg = "DependentRelationshipDescription cannot be blank!, ";
+	public String depnCntryRltspDescLimitMsg = "DependentRelationshipDescription cannot be greater than 65 characters!, ";
+	public String depnCntryRltspUserNameLimitMsg = "";
+	
+	
+	//holiday
+	public String holidayNameBlankMsg = "Holiday Name cannot be blank!, ";
+	public String holidayNameLimitMsg = "HolidayName cannot be greater than 65 characters, ";
+	public String holidayDateParamTextLimitMsg = "Holiday date param text cannot be greater than 400 characters, "; 
+	public String holidayUserNameLimitMsg = "";
+	public String uomTypeCodeBlankMsg = "UOM Code cannot be a null field!, ";
+	public String dayOfWeekNbrBlankMsg = "DOW Number cannot be a null field!, ";
+	public String monthOfYearNbmrBlankMsg = "MOY Number cannot be a null field!, ";
+	
+	//**Script
+	public String scriptCodeBlankMsg = "sciptCd cannot be a null field!, ";
+	public String scriptNameBlankMsg = "Script Name cannot be a blank or null field!, ";
+	public String scriptMetaBlankMsg = "Meta cannot be a null field!, ";
+	public String scriptWithoutScriptCodeAtribute = "sciptCd cannot be a null field!, sciptCd cannot be a null field!, ";
+	
+}
