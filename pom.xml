@@ -3,41 +3,29 @@
   <groupId>com.PLGEFS</groupId>
   <artifactId>geopolitical-func-test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <properties>
-		<!-- all subprojects/modules should have this property defined: it points 
-			to the root folder of the project -->
-		<project.root>${basedir}</project.root>
-		<jdk.level>1.8</jdk.level>
-	</properties>
-
+  <packaging>jar</packaging>
+  <url>http://maven.apache.org</url>
+ 
 <repositories>
 	<repository>
 		<id>devframework-public-repo</id>
 		<name>DevFramework Public Repo</name>
-		<url>
-http://nexus.test.cloud.fedex.com:8081/nexus/content/groups/public
-</url>
+		<url>http://nexus.test.cloud.fedex.com:8081/nexus/content/groups/public</url>
 	</repository>
 	<repository>
 		<id>devframework-3rdparty-repo</id>
 		<name>DevFramework Public Repo</name>
-		<url>
-http://nexus.test.cloud.fedex.com:8081/nexus/content/repositories/thirdparty
-</url>
+		<url>http://nexus.test.cloud.fedex.com:8081/nexus/content/repositories/thirdparty</url>
 	</repository>
 	<repository>
 		<id>devframework-public-repo2</id>
 		<name>DevFramework Public Repo2</name>
-		<url>
-https://nexus.prod.cloud.fedex.com:8443/nexus/content/groups/public
-</url>
+		<url>https://nexus.prod.cloud.fedex.com:8443/nexus/content/groups/public</url>
 	</repository>
 	<repository>
 		<id>devframework-public-repo3</id>
 		<name>DevFramework Public Repo3</name>
-		<url>
-https://nexus.prod.cloud.fedex.com:8443/nexus/content/repositories/thirdparty
-</url>
+		<url>https://nexus.prod.cloud.fedex.com:8443/nexus/content/repositories/thirdparty</url>
 	</repository>
 </repositories>
 	<pluginRepositories>
@@ -51,7 +39,12 @@ https://nexus.prod.cloud.fedex.com:8443/nexus/content/repositories/thirdparty
 			<snapshots />
 		</pluginRepository>
 	</pluginRepositories>
-
+	 <properties>
+			<!-- all subprojects/modules should have this property defined: it points 
+				to the root folder of the project -->
+			<project.root>${basedir}</project.root>
+			<jdk.level>1.8</jdk.level>
+	 </properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
