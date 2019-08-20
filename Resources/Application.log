@@ -30339,3 +30339,51 @@ DB_GeopoliticalType_Name: Test_1
 20-08-2019 09:48:56 INFO [UomTypeGet]: Total number of records matching between DB & Response: 0
 20-08-2019 09:48:56 INFO [UomTypeGet]: Each record validation starts
 20-08-2019 09:48:56 INFO [UomTypeGet]: ------------------------------------------------------------------
+20-08-2019 11:02:21 INFO [UomTypeGet]: Executing Test Case: TC_01
+20-08-2019 11:02:22 INFO [UomTypeGet]: URI passed: http://geopolitical-efs-gateway-rel.app.wtcdev2.paas.fedex.com/geopolitical-efs-query/uomTypes/
+20-08-2019 11:02:28 INFO [UomTypeGet]: Response status validation passed: 200
+20-08-2019 11:02:30 INFO [UomTypeGet]: Total number of records matching between DB & Response: 10
+20-08-2019 11:02:31 INFO [UomTypeGet]: Each record validation starts
+20-08-2019 11:02:32 INFO [UomTypeGet]: ------------------------------------------------------------------
+20-08-2019 11:02:33 INFO [UomTypeGet]: Executing Test Case: TC_02
+20-08-2019 11:02:33 INFO [UomTypeGet]: URI passed: http://geopolitical-efs-gateway-rel.app.wtcdev2.paas.fedex.com/geopolitical-efs-query/uomTypes/testAAA
+20-08-2019 11:02:34 INFO [UomTypeGet]: Response status validation passed: 200
+20-08-2019 11:02:34 INFO [UomTypeGet]: Total number of records matching between DB & Response: 0
+20-08-2019 11:02:34 INFO [UomTypeGet]: Each record validation starts
+20-08-2019 11:02:34 INFO [UomTypeGet]: ------------------------------------------------------------------
+20-08-2019 11:02:35 INFO [UomTypeGet]: Executing Test Case: TC_03
+20-08-2019 11:02:35 INFO [UomTypeGet]: URI passed: http://geopolitical-efs-gateway-rel.app.wtcdev2.paas.fedex.com/geopolitical-efs-query/uomTypes/Testdata10123
+20-08-2019 11:02:35 INFO [UomTypeGet]: As expected total number of records available in response: 0
+20-08-2019 11:02:35 INFO [UomTypeGet]: Response status code 200 validation passed: 200
+20-08-2019 11:02:35 INFO [UomTypeGet]: Expected error message is getting received in response when passing the invalid uomTypeCd in URI
+20-08-2019 11:02:35 INFO [UomTypeGet]: Execution is completed for Passed Test Case No. TC_03
+20-08-2019 11:02:35 INFO [UomTypeGet]: ------------------------------------------------------------------
+20-08-2019 11:02:36 INFO [UomTypeGet]: Executing Test Case: TC_04
+20-08-2019 11:02:36 INFO [UomTypeGet]: URI passed: http://geopolitical-efs-gateway-rel.app.wtcdev2.paas.fedex.com/geopolitical-efs-query/uomType
+20-08-2019 11:02:37 INFO [UomTypeGet]: Response status code 404 validation passed: 404
+20-08-2019 11:02:37 INFO [UomTypeGet]: Expected error message is getting received in response when passing the invalid URI
+20-08-2019 11:02:37 INFO [UomTypeGet]: Execution is completed for Passed Test Case No. TC_04
+20-08-2019 11:02:37 INFO [UomTypeGet]: ------------------------------------------------------------------
+20-08-2019 11:02:37 INFO [UomTypeGet]: Executing Test Case: TC_05
+20-08-2019 11:02:37 INFO [UomTypeGet]: URI passed: http://geopolitical-efs-gateway-rel.app.wtcdev2.paas.fedex.com/geopolitical-efs-query/uomTypes/@@@@@
+20-08-2019 11:02:37 INFO [UomTypeGet]: Response Received: 
+{
+	"meta":
+	{
+		"version":"1.0.0",
+		"message":
+		{
+			"data":null,
+			"internalMessage":"There are no records for the specified criteria",
+			"status":"Success"
+		}
+	},
+	"data":
+	[
+		
+	]
+}
+20-08-2019 11:02:38 INFO [UomTypeGet]: Response status validation passed: 200
+20-08-2019 11:02:38 INFO [UomTypeGet]: Total number of records matching between DB & Response: 0
+20-08-2019 11:02:38 INFO [UomTypeGet]: Each record validation starts
+20-08-2019 11:02:38 INFO [UomTypeGet]: ------------------------------------------------------------------
