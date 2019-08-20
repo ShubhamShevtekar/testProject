@@ -1,0 +1,3 @@
+scenarios.GEO.GeoPost
+scenarios.GEO.GeoPut
+scenarios.GEO.GeoGet
