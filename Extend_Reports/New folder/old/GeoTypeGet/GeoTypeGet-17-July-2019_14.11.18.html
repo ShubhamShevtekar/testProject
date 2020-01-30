@@ -1,0 +1,1947 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8' /> 
+	<meta name='description' content='' />
+	<meta name='robots' content='noodp, noydir' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+	<meta id="timeStampFormat" name="timeStampFormat" content='MMM d, yyyy hh:mm:ss a'/>
+	
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css' />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<link href='https://cdn.rawgit.com/extent-framework/extent-github-cdn/b65cd69/v3html/css/extent.css' type='text/css' rel='stylesheet' />
+	
+	<title>GeoTypeGet</title>
+
+	<style type='text/css'>
+		/* json-tree */
+		.jstBracket,.jstComma,.jstValue{white-space:pre-wrap}.jstValue{font-size:10px;font-weight:400;font-family:"Lucida Console",Monaco,monospace}.jstProperty{color:#666;word-wrap:break-word}.jstBool{color:#2525CC}.jstNum{color:#D036D0}.jstNull{color:gray}.jstStr{color:#2DB669}.jstFold:after{content:' -';cursor:pointer}.jstExpand{white-space:normal}.jstExpand:after{content:' +';cursor:pointer}.jstFolded{white-space:normal!important}.jstHiddenBlock{display:none}
+	</style>
+	
+	<script type="text/javascript">
+		/*! json-tree - v0.2.2 - 2017-09-25, MIT LICENSE */
+		var JSONTree=function(){var n={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"},t=0,r=0;this.create=function(n,t){return r+=1,N(u(n,0,!1),{class:"jstValue"})};var e=function(t){return t.replace(/[&<>'"]/g,function(t){return n[t]})},s=function(){return r+"_"+t++},u=function(n,t,r){if(null===n)return f(r?t:0);switch(typeof n){case"boolean":return l(n,r?t:0);case"number":return i(n,r?t:0);case"string":return o(n,r?t:0);default:return n instanceof Array?a(n,t,r):c(n,t,r)}},c=function(n,t,r){var e=s(),u=Object.keys(n).map(function(r){return j(r,n[r],t+1,!0)}).join(m()),c=[g("{",r?t:0,e),N(u,{id:e}),p("}",t)].join("\n");return N(c,{})},a=function(n,t,r){var e=s(),c=n.map(function(n){return u(n,t+1,!0)}).join(m());return[g("[",r?t:0,e),N(c,{id:e}),p("]",t)].join("\n")},o=function(n,t){var r=e(JSON.stringify(n));return N(v(r,t),{class:"jstStr"})},i=function(n,t){return N(v(n,t),{class:"jstNum"})},l=function(n,t){return N(v(n,t),{class:"jstBool"})},f=function(n){return N(v("null",n),{class:"jstNull"})},j=function(n,t,r){var s=v(e(JSON.stringify(n))+": ",r),c=N(u(t,r,!1),{});return N(s+c,{class:"jstProperty"})},m=function(){return N(",\n",{class:"jstComma"})},N=function(n,t){return d("span",t,n)},d=function(n,t,r){return"<"+n+Object.keys(t).map(function(n){return" "+n+'="'+t[n]+'"'}).join("")+">"+r+"</"+n+">"},g=function(n,t,r){return N(v(n,t),{class:"jstBracket"})+N("",{class:"jstFold",onclick:"JSONTree.toggle('"+r+"')"})};this.toggle=function(n){var t=document.getElementById(n),r=t.parentNode,e=t.previousElementSibling;""===t.className?(t.className="jstHiddenBlock",r.className="jstFolded",e.className="jstExpand"):(t.className="",r.className="",e.className="jstFold")};var p=function(n,t){return N(v(n,t),{})},v=function(n,t){return Array(2*t+1).join(" ")+n};return this}();
+	</script>
+</head>
+	<body class='extent standard default hide-overflow '>
+		<div id='theme-selector' alt='Click to toggle theme. To enable by default, use theme configuration.' title='Click to toggle theme. To enable by default, use theme configuration.'>
+			<span><i class='material-icons'>desktop_windows</i></span>
+		</div>
+<nav>
+	<div class="nav-wrapper">
+		<a href="#!" class="brand-logo black"><img src="https://cdn.rawgit.com/extent-framework/extent-github-cdn/d74480e/commons/img/logo.png"></a>
+		<!-- slideout menu -->
+		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
+			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
+						<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></a></li>
+		</ul>
+		<!-- report name -->
+		<span class='report-name'>Report</span>
+		<!-- report headline -->
+		<span class='report-headline'></span>
+		<!-- nav-right -->
+		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
+			<a href='#!'>
+			<span class='label blue darken-3 suite-start-time'>Jul 17, 2019 02:11:18 PM</span>
+			</a>
+		</ul>
+	</div>
+</nav>		<!-- container -->
+		<div class='container'>
+<div id='test-view' class='view'>
+	<section id='controls'>
+		<div class='controls grey lighten-4'>
+			<!-- test toggle -->
+			<div class='chip transparent'>
+				<a class='dropdown-button tests-toggle' data-activates='tests-toggle' data-constrainwidth='true' data-beloworigin='true' data-hover='true' href='#'>
+				<i class='material-icons'>warning</i> Status
+				</a>
+				<ul id='tests-toggle' class='dropdown-content'>
+										<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+					<li status='fail'><a href='#!'>Fail <i class='material-icons red-text'>cancel</i></a></li>
+					<li class='divider'></li>
+					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
+				</ul>
+			</div>
+			<!-- test toggle -->
+			<!-- category toggle -->
+			<!-- category toggle -->
+			<!-- clear filters -->
+			<div class='chip transparent hide'>
+				<a class='' id='clear-filters' alt='Clear Filters' title='Clear Filters'>
+				<i class='material-icons'>close</i> Clear
+				</a>
+			</div>
+			<!-- clear filters -->
+			<!-- enable dashboard -->
+			<div id='toggle-test-view-charts' class='chip transparent'>
+				<a class='pink-text' id='enable-dashboard' alt='Enable Dashboard' title='Enable Dashboard'>
+				<i class='material-icons'>track_changes</i> Dashboard
+				</a>
+			</div>
+			<!-- enable dashboard -->
+			<!-- search -->
+			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
+				<a href="#" class='search-div'>
+				<i class='material-icons'>search</i> Search
+				</a>
+				<div class='input-field left hide'>
+					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+				</div>
+			</div>
+			<!-- search -->
+		</div>
+	</section>
+<div id='test-view-charts' class='subview-full'>
+    <div id='charts-row' class='row nm-v nm-h'>
+        <div class='col s12 m12 l12 np-h'>
+            <div class='card-panel nm-v'>
+                <div class='left panel-name'>Tests</div>
+                <div class='chart-box' style="max-height:94px;">
+                    <canvas id='parent-analysis' width='90' height='70'></canvas>
+                </div>
+                <div class='block text-small'>
+                    <span class='tooltipped' data-position='top' data-tooltip='50%'><span class='strong'>1</span> test(s) passed</span>
+                </div>
+                <div class='block text-small'>
+                    <span class='strong tooltipped' data-position='top' data-tooltip='50%'>1</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="timeline-chart" class="row nm-v nm-h">
+        <div class="col s12 m12 l12 np-h">
+            <div class="card-panel">
+                <div class='left panel-name'>Timeline (seconds)</div>
+                <div class="chart-box" style="width:98%;max-height:145px;">
+                    <canvas id="timeline" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>	<div class='subview-left left'>
+		<div class='view-summary'>
+			<ul id='test-collection' class='test-collection'>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='1'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_01</span>
+						<span class='test-time'>Jul 17, 2019 02:11:20 PM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jul 17, 2019 02:11:20 PM</span>
+	<span class='label end-time'>Jul 17, 2019 02:11:38 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 18s+202ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:21 PM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Geopolitical Type service is successfully retrieving all Geopolitical types when no parameter is passed in URI</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:26 PM</td>
+				<td class='step-details'>
+						Response status validation passed: 202
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:28 PM</td>
+				<td class='step-details'>
+						DB connection success
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:28 PM</td>
+				<td class='step-details'>
+						Total number of records matching between DB & Response: 97
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:30 PM</td>
+				<td class='step-details'>
+						Each record validation starts
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:30 PM</td>
+				<td class='step-details'>
+						Record 1 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:30 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4666943322802842126<br /><br />DB_GeopoliticalType_ID: 4666943322802842126<br /><br />Response_GeopoliticalType_NameTestDemo1<br /><br />DB_GeopoliticalType_Name: TestDemo1<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:30 PM</td>
+				<td class='step-details'>
+						Record 2 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:30 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 1809514995558517034<br /><br />DB_GeopoliticalType_ID: 1809514995558517034<br /><br />Response_GeopoliticalType_NameTestfac123<br /><br />DB_GeopoliticalType_Name: Testfac123<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:30 PM</td>
+				<td class='step-details'>
+						Record 3 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:30 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5626623543340673760<br /><br />DB_GeopoliticalType_ID: 5626623543340673760<br /><br />Response_GeopoliticalType_NameTestfac1234<br /><br />DB_GeopoliticalType_Name: Testfac1234<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:30 PM</td>
+				<td class='step-details'>
+						Record 4 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:30 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5677767721321847836<br /><br />DB_GeopoliticalType_ID: 5677767721321847836<br /><br />Response_GeopoliticalType_NameTestfac12345<br /><br />DB_GeopoliticalType_Name: Testfac12345<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 5 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6805912010065330418<br /><br />DB_GeopoliticalType_ID: 6805912010065330418<br /><br />Response_GeopoliticalType_NameTestfac123456<br /><br />DB_GeopoliticalType_Name: Testfac123456<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 6 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5105081218671993131<br /><br />DB_GeopoliticalType_ID: 5105081218671993131<br /><br />Response_GeopoliticalType_NameTestfac1123456<br /><br />DB_GeopoliticalType_Name: Testfac1123456<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 7 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5862467593942741373<br /><br />DB_GeopoliticalType_ID: 5862467593942741373<br /><br />Response_GeopoliticalType_NameTestfac12123456<br /><br />DB_GeopoliticalType_Name: Testfac12123456<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 8 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 771145157236934460<br /><br />DB_GeopoliticalType_ID: 771145157236934460<br /><br />Response_GeopoliticalType_NameTestfac123123456<br /><br />DB_GeopoliticalType_Name: Testfac123123456<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 9 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8042590600075494255<br /><br />DB_GeopoliticalType_ID: 8042590600075494255<br /><br />Response_GeopoliticalType_NameTestfac1234123456<br /><br />DB_GeopoliticalType_Name: Testfac1234123456<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 10 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3148863876884147820<br /><br />DB_GeopoliticalType_ID: 3148863876884147820<br /><br />Response_GeopoliticalType_NameTestfac12345123456<br /><br />DB_GeopoliticalType_Name: Testfac12345123456<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 11 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8584690250994551477<br /><br />DB_GeopoliticalType_ID: 8584690250994551477<br /><br />Response_GeopoliticalType_Name123<br /><br />DB_GeopoliticalType_Name: 123<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 12 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 1996071595947135882<br /><br />DB_GeopoliticalType_ID: 1996071595947135882<br /><br />Response_GeopoliticalType_NametestDemo1234<br /><br />DB_GeopoliticalType_Name: testDemo1234<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 13 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2259648977354520461<br /><br />DB_GeopoliticalType_ID: 2259648977354520461<br /><br />Response_GeopoliticalType_NametestDemo12345<br /><br />DB_GeopoliticalType_Name: testDemo12345<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Record 14 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:31 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6690374758673250404<br /><br />DB_GeopoliticalType_ID: 6690374758673250404<br /><br />Response_GeopoliticalType_NametestDemo123456<br /><br />DB_GeopoliticalType_Name: testDemo123456<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Record 15 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5497749361029808200<br /><br />DB_GeopoliticalType_ID: 5497749361029808200<br /><br />Response_GeopoliticalType_NametestDemo1234567<br /><br />DB_GeopoliticalType_Name: testDemo1234567<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Record 16 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 7138746106923440977<br /><br />DB_GeopoliticalType_ID: 7138746106923440977<br /><br />Response_GeopoliticalType_NameCntry<br /><br />DB_GeopoliticalType_Name: Cntry<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Record 17 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5000413048282192071<br /><br />DB_GeopoliticalType_ID: 5000413048282192071<br /><br />Response_GeopoliticalType_Name~!@#$%%^^&*()_+<br /><br />DB_GeopoliticalType_Name: ~!@#$%%^^&*()_+<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Record 18 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 1566237385679684303<br /><br />DB_GeopoliticalType_ID: 1566237385679684303<br /><br />Response_GeopoliticalType_NameState_22<br /><br />DB_GeopoliticalType_Name: State_22<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Record 19 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 7533726485663673222<br /><br />DB_GeopoliticalType_ID: 7533726485663673222<br /><br />Response_GeopoliticalType_NameState_55<br /><br />DB_GeopoliticalType_Name: State_55<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Record 20 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8767435217274765857<br /><br />DB_GeopoliticalType_ID: 8767435217274765857<br /><br />Response_GeopoliticalType_NameState_23<br /><br />DB_GeopoliticalType_Name: State_23<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Record 21 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4752868281223122229<br /><br />DB_GeopoliticalType_ID: 4752868281223122229<br /><br />Response_GeopoliticalType_NameState_24<br /><br />DB_GeopoliticalType_Name: State_24<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Record 22 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3778639521099818348<br /><br />DB_GeopoliticalType_ID: 3778639521099818348<br /><br />Response_GeopoliticalType_Namenull<br /><br />DB_GeopoliticalType_Name: null<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Record 23 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:32 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 7085509041212086147<br /><br />DB_GeopoliticalType_ID: 7085509041212086147<br /><br />Response_GeopoliticalType_NametestDemo156797<br /><br />DB_GeopoliticalType_Name: testDemo156797<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 24 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5293161206884766191<br /><br />DB_GeopoliticalType_ID: 5293161206884766191<br /><br />Response_GeopoliticalType_NametestDemo1567974<br /><br />DB_GeopoliticalType_Name: testDemo1567974<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 25 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 1481028335113252022<br /><br />DB_GeopoliticalType_ID: 1481028335113252022<br /><br />Response_GeopoliticalType_NametestDemo15679747<br /><br />DB_GeopoliticalType_Name: testDemo15679747<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 26 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 9020550388075925992<br /><br />DB_GeopoliticalType_ID: 9020550388075925992<br /><br />Response_GeopoliticalType_NameWWW<br /><br />DB_GeopoliticalType_Name: WWW<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 27 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4384020772476775804<br /><br />DB_GeopoliticalType_ID: 4384020772476775804<br /><br />Response_GeopoliticalType_Nameassaas<br /><br />DB_GeopoliticalType_Name: assaas<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 28 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 1004178993697399935<br /><br />DB_GeopoliticalType_ID: 1004178993697399935<br /><br />Response_GeopoliticalType_NameProvince112<br /><br />DB_GeopoliticalType_Name: Province112<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 29 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6651507555915652951<br /><br />DB_GeopoliticalType_ID: 6651507555915652951<br /><br />Response_GeopoliticalType_Name@#$%^&*()!~<br /><br />DB_GeopoliticalType_Name: @#$%^&*()!~<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 30 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2041228465843992979<br /><br />DB_GeopoliticalType_ID: 2041228465843992979<br /><br />Response_GeopoliticalType_Name@#$%^&*()!~_+<>?:|<br /><br />DB_GeopoliticalType_Name: @#$%^&*()!~_+<>?:|<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 31 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6407318481719147565<br /><br />DB_GeopoliticalType_ID: 6407318481719147565<br /><br />Response_GeopoliticalType_Name@#$%^&*()!~_+<>?:|{}<br /><br />DB_GeopoliticalType_Name: @#$%^&*()!~_+<>?:|{}<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 32 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2309193814132873585<br /><br />DB_GeopoliticalType_ID: 2309193814132873585<br /><br />Response_GeopoliticalType_NameProvince124<br /><br />DB_GeopoliticalType_Name: Province124<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 33 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8951854531084536680<br /><br />DB_GeopoliticalType_ID: 8951854531084536680<br /><br />Response_GeopoliticalType_NameState_1<br /><br />DB_GeopoliticalType_Name: State_1<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Record 34 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:33 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6041580999245490754<br /><br />DB_GeopoliticalType_ID: 6041580999245490754<br /><br />Response_GeopoliticalType_NametestDemo156797471<br /><br />DB_GeopoliticalType_Name: testDemo156797471<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 35 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6757057028367238589<br /><br />DB_GeopoliticalType_ID: 6757057028367238589<br /><br />Response_GeopoliticalType_NametestDemo101<br /><br />DB_GeopoliticalType_Name: testDemo101<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 36 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 121537443590293727<br /><br />DB_GeopoliticalType_ID: 121537443590293727<br /><br />Response_GeopoliticalType_NameCountry_test116<br /><br />DB_GeopoliticalType_Name: Country_test116<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 37 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6358680709181532525<br /><br />DB_GeopoliticalType_ID: 6358680709181532525<br /><br />Response_GeopoliticalType_NameCountry_test<br /><br />DB_GeopoliticalType_Name: Country_test<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 38 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 7081094004798107168<br /><br />DB_GeopoliticalType_ID: 7081094004798107168<br /><br />Response_GeopoliticalType_NameCountry_44<br /><br />DB_GeopoliticalType_Name: Country_44<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 39 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 9111626374372724557<br /><br />DB_GeopoliticalType_ID: 9111626374372724557<br /><br />Response_GeopoliticalType_NameTest_23<br /><br />DB_GeopoliticalType_Name: Test_23<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 40 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8015944039675775760<br /><br />DB_GeopoliticalType_ID: 8015944039675775760<br /><br />Response_GeopoliticalType_NameZip<br /><br />DB_GeopoliticalType_Name: Zip<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 41 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4786574017350876018<br /><br />DB_GeopoliticalType_ID: 4786574017350876018<br /><br />Response_GeopoliticalType_Namezip<br /><br />DB_GeopoliticalType_Name: zip<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 42 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 1782530494356124840<br /><br />DB_GeopoliticalType_ID: 1782530494356124840<br /><br />Response_GeopoliticalType_NameCountry_test117<br /><br />DB_GeopoliticalType_Name: Country_test117<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 43 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3864672120141213644<br /><br />DB_GeopoliticalType_ID: 3864672120141213644<br /><br />Response_GeopoliticalType_NameTEST_2601<br /><br />DB_GeopoliticalType_Name: TEST_2601<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 44 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8673427311430765480<br /><br />DB_GeopoliticalType_ID: 8673427311430765480<br /><br />Response_GeopoliticalType_NameTEST_2601_up<br /><br />DB_GeopoliticalType_Name: TEST_2601_up<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Record 45 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:34 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8025828952936540849<br /><br />DB_GeopoliticalType_ID: 8025828952936540849<br /><br />Response_GeopoliticalType_Name570038<br /><br />DB_GeopoliticalType_Name: 570038<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 46 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6222249160981861901<br /><br />DB_GeopoliticalType_ID: 6222249160981861901<br /><br />Response_GeopoliticalType_NameTestCountry<br /><br />DB_GeopoliticalType_Name: TestCountry<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 47 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2518059449083670920<br /><br />DB_GeopoliticalType_ID: 2518059449083670920<br /><br />Response_GeopoliticalType_NameTesting<br /><br />DB_GeopoliticalType_Name: Testing<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 48 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4092849556047430372<br /><br />DB_GeopoliticalType_ID: 4092849556047430372<br /><br />Response_GeopoliticalType_Namepqr_11<br /><br />DB_GeopoliticalType_Name: pqr_11<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 49 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3595655578741444771<br /><br />DB_GeopoliticalType_ID: 3595655578741444771<br /><br />Response_GeopoliticalType_Nameaaaa<br /><br />DB_GeopoliticalType_Name: aaaa<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 50 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8990049486538479367<br /><br />DB_GeopoliticalType_ID: 8990049486538479367<br /><br />Response_GeopoliticalType_NameTESTUP_2601<br /><br />DB_GeopoliticalType_Name: TESTUP_2601<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 51 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8050132204931010384<br /><br />DB_GeopoliticalType_ID: 8050132204931010384<br /><br />Response_GeopoliticalType_NameState_Test<br /><br />DB_GeopoliticalType_Name: State_Test<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 52 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6780415970825445434<br /><br />DB_GeopoliticalType_ID: 6780415970825445434<br /><br />Response_GeopoliticalType_NameZip code_1<br /><br />DB_GeopoliticalType_Name: Zip code_1<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 53 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6958607665071798994<br /><br />DB_GeopoliticalType_ID: 6958607665071798994<br /><br />Response_GeopoliticalType_NameTEST_0202_update<br /><br />DB_GeopoliticalType_Name: TEST_0202_update<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 54 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3051911631317465167<br /><br />DB_GeopoliticalType_ID: 3051911631317465167<br /><br />Response_GeopoliticalType_NameTEST_0202<br /><br />DB_GeopoliticalType_Name: TEST_0202<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 55 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3407030096505489817<br /><br />DB_GeopoliticalType_ID: 3407030096505489817<br /><br />Response_GeopoliticalType_NameTest101<br /><br />DB_GeopoliticalType_Name: Test101<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 56 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4473564148189791277<br /><br />DB_GeopoliticalType_ID: 4473564148189791277<br /><br />Response_GeopoliticalType_NameTEST_2614<br /><br />DB_GeopoliticalType_Name: TEST_2614<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Record 57 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:35 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6788199505095391684<br /><br />DB_GeopoliticalType_ID: 6788199505095391684<br /><br />Response_GeopoliticalType_NameTEST_2615<br /><br />DB_GeopoliticalType_Name: TEST_2615<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 58 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4408712585506516760<br /><br />DB_GeopoliticalType_ID: 4408712585506516760<br /><br />Response_GeopoliticalType_NameTEST_2616<br /><br />DB_GeopoliticalType_Name: TEST_2616<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 59 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8995063941753380657<br /><br />DB_GeopoliticalType_ID: 8995063941753380657<br /><br />Response_GeopoliticalType_NameTEST_2617<br /><br />DB_GeopoliticalType_Name: TEST_2617<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 60 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5005432126338271052<br /><br />DB_GeopoliticalType_ID: 5005432126338271052<br /><br />Response_GeopoliticalType_NameTEST_2618<br /><br />DB_GeopoliticalType_Name: TEST_2618<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 61 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4054349435756044118<br /><br />DB_GeopoliticalType_ID: 4054349435756044118<br /><br />Response_GeopoliticalType_NameTEST_2619<br /><br />DB_GeopoliticalType_Name: TEST_2619<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 62 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5061252312847160221<br /><br />DB_GeopoliticalType_ID: 5061252312847160221<br /><br />Response_GeopoliticalType_NameTEST_2620<br /><br />DB_GeopoliticalType_Name: TEST_2620<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 63 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8091765046023644470<br /><br />DB_GeopoliticalType_ID: 8091765046023644470<br /><br />Response_GeopoliticalType_NameTEST_2621<br /><br />DB_GeopoliticalType_Name: TEST_2621<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 64 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3361615245716302063<br /><br />DB_GeopoliticalType_ID: 3361615245716302063<br /><br />Response_GeopoliticalType_NameTEST_2622<br /><br />DB_GeopoliticalType_Name: TEST_2622<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 65 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6134402450520465874<br /><br />DB_GeopoliticalType_ID: 6134402450520465874<br /><br />Response_GeopoliticalType_NameTEST_2625<br /><br />DB_GeopoliticalType_Name: TEST_2625<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 66 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3094484559446648738<br /><br />DB_GeopoliticalType_ID: 3094484559446648738<br /><br />Response_GeopoliticalType_NameTEST_2626<br /><br />DB_GeopoliticalType_Name: TEST_2626<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 67 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 7381117892280142933<br /><br />DB_GeopoliticalType_ID: 7381117892280142933<br /><br />Response_GeopoliticalType_NameTEST_2628<br /><br />DB_GeopoliticalType_Name: TEST_2628<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 68 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4075229106335214727<br /><br />DB_GeopoliticalType_ID: 4075229106335214727<br /><br />Response_GeopoliticalType_NameTEST_2630<br /><br />DB_GeopoliticalType_Name: TEST_2630<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 69 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6812713828902853497<br /><br />DB_GeopoliticalType_ID: 6812713828902853497<br /><br />Response_GeopoliticalType_NameTEST_2633<br /><br />DB_GeopoliticalType_Name: TEST_2633<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 70 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 7340239013958850007<br /><br />DB_GeopoliticalType_ID: 7340239013958850007<br /><br />Response_GeopoliticalType_NameTEST_2637<br /><br />DB_GeopoliticalType_Name: TEST_2637<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Record 71 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:36 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8719468671997954701<br /><br />DB_GeopoliticalType_ID: 8719468671997954701<br /><br />Response_GeopoliticalType_NameTEST_2639<br /><br />DB_GeopoliticalType_Name: TEST_2639<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 72 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4642945901059023449<br /><br />DB_GeopoliticalType_ID: 4642945901059023449<br /><br />Response_GeopoliticalType_NameTEST_<br /><br />DB_GeopoliticalType_Name: TEST_<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 73 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2480539291451807598<br /><br />DB_GeopoliticalType_ID: 2480539291451807598<br /><br />Response_GeopoliticalType_NameTEST_2640<br /><br />DB_GeopoliticalType_Name: TEST_2640<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 74 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2695765162969638147<br /><br />DB_GeopoliticalType_ID: 2695765162969638147<br /><br />Response_GeopoliticalType_NameTEST_2642<br /><br />DB_GeopoliticalType_Name: TEST_2642<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 75 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5529081404033778997<br /><br />DB_GeopoliticalType_ID: 5529081404033778997<br /><br />Response_GeopoliticalType_NameTEST_2644<br /><br />DB_GeopoliticalType_Name: TEST_2644<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 76 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6834225503546184519<br /><br />DB_GeopoliticalType_ID: 6834225503546184519<br /><br />Response_GeopoliticalType_NameTEST_2646<br /><br />DB_GeopoliticalType_Name: TEST_2646<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 77 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2886486512645722083<br /><br />DB_GeopoliticalType_ID: 2886486512645722083<br /><br />Response_GeopoliticalType_NameTEST_1<br /><br />DB_GeopoliticalType_Name: TEST_1<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 78 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4954594392745603836<br /><br />DB_GeopoliticalType_ID: 4954594392745603836<br /><br />Response_GeopoliticalType_NameTEST_11<br /><br />DB_GeopoliticalType_Name: TEST_11<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 79 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 462693475099322844<br /><br />DB_GeopoliticalType_ID: 462693475099322844<br /><br />Response_GeopoliticalType_NameTEST_2647<br /><br />DB_GeopoliticalType_Name: TEST_2647<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 80 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5225418190006647446<br /><br />DB_GeopoliticalType_ID: 5225418190006647446<br /><br />Response_GeopoliticalType_NameTEST_2649<br /><br />DB_GeopoliticalType_Name: TEST_2649<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 81 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 4850935906720823356<br /><br />DB_GeopoliticalType_ID: 4850935906720823356<br /><br />Response_GeopoliticalType_NameTEST_2650<br /><br />DB_GeopoliticalType_Name: TEST_2650<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 82 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 7614398036474513101<br /><br />DB_GeopoliticalType_ID: 7614398036474513101<br /><br />Response_GeopoliticalType_NameTEST_2655<br /><br />DB_GeopoliticalType_Name: TEST_2655<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 83 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6805826917606709594<br /><br />DB_GeopoliticalType_ID: 6805826917606709594<br /><br />Response_GeopoliticalType_NameTEST_2660<br /><br />DB_GeopoliticalType_Name: TEST_2660<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 84 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 7519292822514504145<br /><br />DB_GeopoliticalType_ID: 7519292822514504145<br /><br />Response_GeopoliticalType_NameTEST_2670<br /><br />DB_GeopoliticalType_Name: TEST_2670<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Record 85 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:37 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3020881600882972627<br /><br />DB_GeopoliticalType_ID: 3020881600882972627<br /><br />Response_GeopoliticalType_NameTEST_2675<br /><br />DB_GeopoliticalType_Name: TEST_2675<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 86 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8394832369975731731<br /><br />DB_GeopoliticalType_ID: 8394832369975731731<br /><br />Response_GeopoliticalType_NameTEST_2680<br /><br />DB_GeopoliticalType_Name: TEST_2680<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 87 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 8561501573138214033<br /><br />DB_GeopoliticalType_ID: 8561501573138214033<br /><br />Response_GeopoliticalType_NametestDemo1010<br /><br />DB_GeopoliticalType_Name: testDemo1010<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 88 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3800216020863645630<br /><br />DB_GeopoliticalType_ID: 3800216020863645630<br /><br />Response_GeopoliticalType_NameTEST_1502<br /><br />DB_GeopoliticalType_Name: TEST_1502<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 89 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 6869529943884401549<br /><br />DB_GeopoliticalType_ID: 6869529943884401549<br /><br />Response_GeopoliticalType_NameCounty<br /><br />DB_GeopoliticalType_Name: County<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 90 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 1013209367022256118<br /><br />DB_GeopoliticalType_ID: 1013209367022256118<br /><br />Response_GeopoliticalType_NameTestfac123456123456<br /><br />DB_GeopoliticalType_Name: Testfac123456123456<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 91 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2401863410676680181<br /><br />DB_GeopoliticalType_ID: 2401863410676680181<br /><br />Response_GeopoliticalType_NameZip Code test<br /><br />DB_GeopoliticalType_Name: Zip Code test<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 92 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 1664753696335093608<br /><br />DB_GeopoliticalType_ID: 1664753696335093608<br /><br />Response_GeopoliticalType_NameCountry<br /><br />DB_GeopoliticalType_Name: Country<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 93 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 5231021989507556084<br /><br />DB_GeopoliticalType_ID: 5231021989507556084<br /><br />Response_GeopoliticalType_NameState<br /><br />DB_GeopoliticalType_Name: State<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 94 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2791067777746436560<br /><br />DB_GeopoliticalType_ID: 2791067777746436560<br /><br />Response_GeopoliticalType_Name4444<br /><br />DB_GeopoliticalType_Name: 4444<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 95 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 2571011670507700108<br /><br />DB_GeopoliticalType_ID: 2571011670507700108<br /><br />Response_GeopoliticalType_NameTestDemo11234<br /><br />DB_GeopoliticalType_Name: TestDemo11234<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 96 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3900110299896706164<br /><br />DB_GeopoliticalType_ID: 3900110299896706164<br /><br />Response_GeopoliticalType_NameCountryhjhj<br /><br />DB_GeopoliticalType_Name: Countryhjhj<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Record 97 Validation:
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response_GeopoliticalType_ID: 3358453252723534082<br /><br />DB_GeopoliticalType_ID: 3358453252723534082<br /><br />Response_GeopoliticalType_NameTest_1<br /><br />DB_GeopoliticalType_Name: Test_1<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:38 PM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"message":<br />		{<br />			"data":null,<br />			"internalMessage":"Records Fetched Successfully",<br />			"status":"Success"<br />		}<br />	},<br />	"data":<br />	[<br />		<br />		{<br />			"geopoliticalTypeId":"4666943322802842126",<br />			"geopoliticalTypeName":"TestDemo1"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"1809514995558517034",<br />			"geopoliticalTypeName":"Testfac123"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5626623543340673760",<br />			"geopoliticalTypeName":"Testfac1234"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5677767721321847836",<br />			"geopoliticalTypeName":"Testfac12345"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6805912010065330418",<br />			"geopoliticalTypeName":"Testfac123456"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5105081218671993131",<br />			"geopoliticalTypeName":"Testfac1123456"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5862467593942741373",<br />			"geopoliticalTypeName":"Testfac12123456"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"771145157236934460",<br />			"geopoliticalTypeName":"Testfac123123456"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8042590600075494255",<br />			"geopoliticalTypeName":"Testfac1234123456"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3148863876884147820",<br />			"geopoliticalTypeName":"Testfac12345123456"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8584690250994551477",<br />			"geopoliticalTypeName":"123"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"1996071595947135882",<br />			"geopoliticalTypeName":"testDemo1234"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2259648977354520461",<br />			"geopoliticalTypeName":"testDemo12345"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6690374758673250404",<br />			"geopoliticalTypeName":"testDemo123456"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5497749361029808200",<br />			"geopoliticalTypeName":"testDemo1234567"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"7138746106923440977",<br />			"geopoliticalTypeName":"Cntry"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5000413048282192071",<br />			"geopoliticalTypeName":"~!@#$%%^^&*()_+"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"1566237385679684303",<br />			"geopoliticalTypeName":"State_22"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"7533726485663673222",<br />			"geopoliticalTypeName":"State_55"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8767435217274765857",<br />			"geopoliticalTypeName":"State_23"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4752868281223122229",<br />			"geopoliticalTypeName":"State_24"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3778639521099818348",<br />			"geopoliticalTypeName":"null"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"7085509041212086147",<br />			"geopoliticalTypeName":"testDemo156797"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5293161206884766191",<br />			"geopoliticalTypeName":"testDemo1567974"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"1481028335113252022",<br />			"geopoliticalTypeName":"testDemo15679747"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"9020550388075925992",<br />			"geopoliticalTypeName":"WWW"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4384020772476775804",<br />			"geopoliticalTypeName":"assaas"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"1004178993697399935",<br />			"geopoliticalTypeName":"Province112"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6651507555915652951",<br />			"geopoliticalTypeName":"@#$%^&*()!~"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2041228465843992979",<br />			"geopoliticalTypeName":"@#$%^&*()!~_+<>?:|"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6407318481719147565",<br />			"geopoliticalTypeName":"@#$%^&*()!~_+<>?:|<br />			{<br />				<br />			}"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2309193814132873585",<br />			"geopoliticalTypeName":"Province124"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8951854531084536680",<br />			"geopoliticalTypeName":"State_1"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6041580999245490754",<br />			"geopoliticalTypeName":"testDemo156797471"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6757057028367238589",<br />			"geopoliticalTypeName":"testDemo101"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"121537443590293727",<br />			"geopoliticalTypeName":"Country_test116"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6358680709181532525",<br />			"geopoliticalTypeName":"Country_test"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"7081094004798107168",<br />			"geopoliticalTypeName":"Country_44"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"9111626374372724557",<br />			"geopoliticalTypeName":"Test_23"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8015944039675775760",<br />			"geopoliticalTypeName":"Zip"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4786574017350876018",<br />			"geopoliticalTypeName":"zip"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"1782530494356124840",<br />			"geopoliticalTypeName":"Country_test117"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3864672120141213644",<br />			"geopoliticalTypeName":"TEST_2601"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8673427311430765480",<br />			"geopoliticalTypeName":"TEST_2601_up"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8025828952936540849",<br />			"geopoliticalTypeName":"570038"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6222249160981861901",<br />			"geopoliticalTypeName":"TestCountry"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2518059449083670920",<br />			"geopoliticalTypeName":"Testing"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4092849556047430372",<br />			"geopoliticalTypeName":"pqr_11"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3595655578741444771",<br />			"geopoliticalTypeName":"aaaa"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8990049486538479367",<br />			"geopoliticalTypeName":"TESTUP_2601"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8050132204931010384",<br />			"geopoliticalTypeName":"State_Test"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6780415970825445434",<br />			"geopoliticalTypeName":"Zip code_1"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6958607665071798994",<br />			"geopoliticalTypeName":"TEST_0202_update"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3051911631317465167",<br />			"geopoliticalTypeName":"TEST_0202"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3407030096505489817",<br />			"geopoliticalTypeName":"Test101"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4473564148189791277",<br />			"geopoliticalTypeName":"TEST_2614"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6788199505095391684",<br />			"geopoliticalTypeName":"TEST_2615"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4408712585506516760",<br />			"geopoliticalTypeName":"TEST_2616"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8995063941753380657",<br />			"geopoliticalTypeName":"TEST_2617"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5005432126338271052",<br />			"geopoliticalTypeName":"TEST_2618"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4054349435756044118",<br />			"geopoliticalTypeName":"TEST_2619"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5061252312847160221",<br />			"geopoliticalTypeName":"TEST_2620"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8091765046023644470",<br />			"geopoliticalTypeName":"TEST_2621"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3361615245716302063",<br />			"geopoliticalTypeName":"TEST_2622"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6134402450520465874",<br />			"geopoliticalTypeName":"TEST_2625"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3094484559446648738",<br />			"geopoliticalTypeName":"TEST_2626"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"7381117892280142933",<br />			"geopoliticalTypeName":"TEST_2628"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4075229106335214727",<br />			"geopoliticalTypeName":"TEST_2630"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6812713828902853497",<br />			"geopoliticalTypeName":"TEST_2633"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"7340239013958850007",<br />			"geopoliticalTypeName":"TEST_2637"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8719468671997954701",<br />			"geopoliticalTypeName":"TEST_2639"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4642945901059023449",<br />			"geopoliticalTypeName":"TEST_"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2480539291451807598",<br />			"geopoliticalTypeName":"TEST_2640"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2695765162969638147",<br />			"geopoliticalTypeName":"TEST_2642"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5529081404033778997",<br />			"geopoliticalTypeName":"TEST_2644"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6834225503546184519",<br />			"geopoliticalTypeName":"TEST_2646"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2886486512645722083",<br />			"geopoliticalTypeName":"TEST_1"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4954594392745603836",<br />			"geopoliticalTypeName":"TEST_11"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"462693475099322844",<br />			"geopoliticalTypeName":"TEST_2647"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5225418190006647446",<br />			"geopoliticalTypeName":"TEST_2649"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"4850935906720823356",<br />			"geopoliticalTypeName":"TEST_2650"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"7614398036474513101",<br />			"geopoliticalTypeName":"TEST_2655"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6805826917606709594",<br />			"geopoliticalTypeName":"TEST_2660"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"7519292822514504145",<br />			"geopoliticalTypeName":"TEST_2670"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3020881600882972627",<br />			"geopoliticalTypeName":"TEST_2675"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8394832369975731731",<br />			"geopoliticalTypeName":"TEST_2680"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"8561501573138214033",<br />			"geopoliticalTypeName":"testDemo1010"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3800216020863645630",<br />			"geopoliticalTypeName":"TEST_1502"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"6869529943884401549",<br />			"geopoliticalTypeName":"County"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"1013209367022256118",<br />			"geopoliticalTypeName":"Testfac123456123456"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2401863410676680181",<br />			"geopoliticalTypeName":"Zip Code test"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"1664753696335093608",<br />			"geopoliticalTypeName":"Country"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"5231021989507556084",<br />			"geopoliticalTypeName":"State"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2791067777746436560",<br />			"geopoliticalTypeName":"4444"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"2571011670507700108",<br />			"geopoliticalTypeName":"TestDemo11234"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3900110299896706164",<br />			"geopoliticalTypeName":"Countryhjhj"<br />		},<br />		<br />		{<br />			"geopoliticalTypeId":"3358453252723534082",<br />			"geopoliticalTypeName":"Test_1"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='2'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_02</span>
+						<span class='test-time'>Jul 17, 2019 02:11:39 PM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jul 17, 2019 02:11:39 PM</span>
+	<span class='label end-time'>Jul 17, 2019 02:11:39 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+790ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>2:11:39 PM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Geopolitical Type service is successfully retrieving the Geopolitical type details when GeopoliticalTypeCd is passed in URI</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:39 PM</td>
+				<td class='step-details'>
+						Response status validation passed: 202
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>2:11:39 PM</td>
+				<td class='step-details'>
+						DB connection success
+					
+				</td>
+			</tr>
+			<tr class='log' status='fail'>
+				<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+				<td class='timestamp'>2:11:39 PM</td>
+				<td class='step-details'>
+						Total number of records matching between DB: 97 & Response: 1
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- subview left -->
+	<div class='subview-right left'>
+		<div class='view-summary'>
+			<div id='step-filters' class="right sr-filters">
+				<a class="btn-floating waves-effect waves-light green" status="pass" alt="pass" title="pass"><i class="material-icons">check_circle</i></a>
+				<a class="btn-floating waves-effect waves-light red" status="fail" alt="fail" title="fail"><i class="material-icons">cancel</i></a>
+				<a class="btn-floating waves-effect waves-light red darken-4" status="fatal" alt="fatal" title="fatal"><i class="material-icons">cancel</i></a>
+				<a class="btn-floating waves-effect waves-light pink text-lighten-1" status="error" alt="error" title="error"><i class="material-icons">error</i></a>
+				<a class="btn-floating waves-effect waves-light orange" alt="warning" status="warning" title="warning"><i class="material-icons">warning</i></a>
+				<a class="btn-floating waves-effect waves-light teal" status="skip" alt="skip" title="skip"><i class="material-icons">redo</i></a>
+				<a class="btn-floating waves-effect waves-light grey" status="clear" alt="Clear filters" title="Clear filters"><i class="material-icons">clear</i></a>
+			</div>
+			<h5 class='test-name'></h5>
+		</div>
+	</div>
+	<!-- subview right -->
+</div>
+<!-- test view --><!-- category view --><!-- exception view --><div id='dashboard-view' class='view hide'>
+	<div class='card-panel transparent np-v'>
+		<h5>Dashboard</h5>
+
+		<div class='row'>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Tests
+					<div class='panel-lead'>2</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Steps
+					<div class='panel-lead'>0</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Start
+					<div class='panel-lead'>Jul 17, 2019 02:11:18 PM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+			 		End
+			 		<div class='panel-lead'>Jul 17, 2019 02:11:39 PM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Time Taken
+					<div class='panel-lead'>0h 0m 21s+350ms</div>
+				</div>
+			</div>
+			<div class='col s4'>
+				<div class='card-panel dashboard-environment'>
+					<span class='right label cyan white-text'>Environment</span><p>&nbsp;</p>
+					
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+							<tr>
+								<td>Host Name</td>
+								<td>COS-3572253-L1</td>
+							</tr>
+							<tr>
+								<td>User Name</td>
+								<td>3572253</td>
+							</tr>
+							<tr>
+								<td>Environment</td>
+								<td>L3</td>
+							</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- dashboard view -->
+<!-- testrunner-logs view -->		</div>
+		<!-- container -->
+		<script>
+			var statusGroup = {
+                parentCount: 2,
+				passParent: 1,
+				failParent: 1,
+				fatalParent: 0,
+				errorParent: 0,
+				warningParent: 0,
+				skipParent: 0,
+				exceptionsParent: 1,
+				childCount: 0,
+				passChild: 0,
+				failChild: 0,
+				fatalChild: 0,
+				errorChild: 0,
+				warningChild: 0,
+				skipChild: 0,
+				infoChild: 0,
+				debugChild: 0,
+				exceptionsChild: 0,
+				grandChildCount: 0,
+				passGrandChild: 0,
+				failGrandChild: 0,
+				fatalGrandChild: 0,
+				errorGrandChild: 0,
+				warningGrandChild: 0,
+				skipGrandChild: 0,
+				infoGrandChild: 0,
+				debugGrandChild: 0,
+				exceptionsGrandChild: 0,
+			};
+		</script>
+		<script>
+			var timeline = {
+			        "TC_01":18.202,"TC_02":0.79
+			};
+		</script>
+		<script src='https://cdn.rawgit.com/extent-framework/extent-github-cdn/b65cd69/v3html/js/extent.js' type='text/javascript'></script>
+		<script type='text/javascript'>
+		</script>
+	</body>
+</html>
