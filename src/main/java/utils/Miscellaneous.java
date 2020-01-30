@@ -2,10 +2,11 @@ package utils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -17,6 +18,14 @@ public class Miscellaneous {
 	public static String getCurrentDateTime() {
 		String currentDateTime = new SimpleDateFormat("dd-MMMM-yyyy_HH.mm.ss").format(Calendar.getInstance().getTime());
 		return currentDateTime;
+	}
+	
+	public String dateFormat(String getDate) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		Date date = formatter.parse(getDate); 
+		SimpleDateFormat formatter1 = new SimpleDateFormat("MM/dd/yyyy");  
+	    String strDate= formatter1.format(date); 
+		return strDate;
 	}
 	
 	public static String geoFieldInputNames(String[] inputValues, String[] inputFieldNames)
@@ -52,7 +61,6 @@ public class Miscellaneous {
 		prop.load(fileInput);
 		String testlevel = prop.getProperty("level");//System.getProperty("level");//prop.getProperty("level");
 		if (testlevel.isEmpty()){
-			System.out.println("Please pass the level you need to execute the TCs");
 			new SkipException("exiting test");
 		}
 		return testlevel;

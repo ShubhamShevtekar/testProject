@@ -1,15 +1,15 @@
 package scenarios.GEO;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -20,10 +20,6 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import utils.DbConnect;
@@ -36,7 +32,6 @@ import utils.RetrieveEndPoints;
 import utils.TestResultValidation;
 import utils.ValidationFields;
 import wsMethods.GetResponse;
-import wsMethods.PostMethod;
 
 public class GeoRltspTypeGet extends Reporting{
 	
@@ -49,11 +44,19 @@ public class GeoRltspTypeGet extends Reporting{
 	String writableInputFields, writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
 	static Logger logger = Logger.getLogger(GeoRltspTypeGet.class);
+	String actuatorQueryVersion;
+	TestResultValidation resultValidation = new TestResultValidation();
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
+		
+		// *** getting actautor version
+					String tokenKey = tokenValues[0];
+					String tokenVal = token;
+					//String actuatorQueryVersionURL=RetrieveEndPoints.getEndPointUrl("queryActuator", fileName, level+".query.version");
+					//actuatorQueryVersion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,/*actuatorQueryVersionURL);*/
 	}
 	
 	@BeforeMethod
@@ -64,6 +67,7 @@ public class GeoRltspTypeGet extends Reporting{
 		if(runFlag.equalsIgnoreCase("Yes")) {
 			String testCaseName = m.getName();
 			test = extent.createTest(testCaseName);
+			
 		}
 	}
 	
@@ -78,7 +82,6 @@ public class GeoRltspTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -88,11 +91,12 @@ public class GeoRltspTypeGet extends Reporting{
 			logger.info("URI passed: "+getEndPoinUrl);
         	test.pass("URI passed: "+getEndPoinUrl);
 			//***send request and get response
+        	Thread.sleep(5000);
 			Response res = GetResponse.sendRequestGet(tokenValues[0], token, getEndPoinUrl, fileName, testCaseID);
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 			JsonPath js = new JsonPath(responsestr);
-			String Wsstatus= js.getString("meta.message.status");
+			String Wsstatus= js.getString("meta.message.status");String actualRespVersionNum = js.getString("meta.version");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
@@ -104,18 +108,17 @@ public class GeoRltspTypeGet extends Reporting{
 	        }else{
 	        test.fail("Response validation failed as meta not found");
 	        }
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
+	        	test.pass("Response API version number validation passed");
 	        	//***get the DB query
 	    		String geoRsTypeGetQuery = query.geoRsTypeGetQuery();
 	    		//***get the fields needs to be validate in DB
 	    		List<String> fields = ValidationFields.geoRsTypeGetMethodDbFields();
 	    		//***get the result from DB
 	    		List<String> getResultDB = DbConnect.getResultSetFor(geoRsTypeGetQuery, fields, fileName, testCaseID);
-	    		
-	    		
 	    		if(getResultDB.size() == responseRows.size()*fields.size())
 	    		{
 	    			logger.info("Total number of records matching between DB & Response: "+responseRows.size());
@@ -185,6 +188,13 @@ public class GeoRltspTypeGet extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response status validation failed: "+Wscode);
+	        	if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                    logger.error("Response validation failed as API version number is not matching with expected");
+                             logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                             logger.error("------------------------------------------------------------------");
+                                      test.fail("Response validation failed as API version number is not matching with expected");       
+                    }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -215,7 +225,6 @@ public class GeoRltspTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -230,7 +239,7 @@ public class GeoRltspTypeGet extends Reporting{
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 			JsonPath js = new JsonPath(responsestr);
-			String Wsstatus= js.getString("meta.message.status");
+			String Wsstatus= js.getString("meta.message.status");String actualRespVersionNum = js.getString("meta.version");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
@@ -242,18 +251,17 @@ public class GeoRltspTypeGet extends Reporting{
 	        }else{
 	        test.fail("Response validation failed as meta not found");
 	        }
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
+	        	test.pass("Response API version number validation passed");
 	        	//***get the DB query
 	    		String geoRsTypeGetQuery = query.geoRsTypePostQuery(relationshipTypeCode);
 	    		//***get the fields needs to be validate in DB
 	    		List<String> fields = ValidationFields.geoRsTypeGetMethodDbFields();
 	    		//***get the result from DB
 	    		List<String> getResultDB = DbConnect.getResultSetFor(geoRsTypeGetQuery, fields, fileName, testCaseID);
-	    		
-	    		
 	    		if(getResultDB.size() == responseRows.size()*fields.size())
 	    		{
 	    			logger.info("Total number of records matching between DB & Response: "+responseRows.size());
@@ -323,6 +331,13 @@ public class GeoRltspTypeGet extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response status validation failed: "+Wscode);
+	        	if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                    logger.error("Response validation failed as API version number is not matching with expected");
+                             logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                             logger.error("------------------------------------------------------------------");
+                                      test.fail("Response validation failed as API version number is not matching with expected");       
+                    }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -353,7 +368,6 @@ public class GeoRltspTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -368,7 +382,7 @@ public class GeoRltspTypeGet extends Reporting{
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 			JsonPath js = new JsonPath(responsestr);
-			String Wsstatus= js.getString("meta.message.status");
+			String Wsstatus= js.getString("meta.message.status");String actualRespVersionNum = js.getString("meta.version");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
@@ -386,10 +400,11 @@ public class GeoRltspTypeGet extends Reporting{
 	        {
 	        	logger.info("As expected total number of records available in response: "+responseRows.size());
 	        	test.pass("As expected total number of records available in response: "+responseRows.size());
-		        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+		        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		        {
 		        	logger.info("Response status code 400 validation passed: "+Wscode);
 		        	test.pass("Response status code 400 validation passed: "+Wscode);
+		        	test.pass("Response API version number validation passed");
 		        	//***error message validation
 					String expectMessage = resMsgs.getErrorMsg;
 					if(internalMsg.equals(expectMessage))
@@ -418,6 +433,13 @@ public class GeoRltspTypeGet extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response status validation failed: "+Wscode);
+		        	if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+	                    logger.error("Response validation failed as API version number is not matching with expected");
+	                             logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	                             logger.error("------------------------------------------------------------------");
+	                                      test.fail("Response validation failed as API version number is not matching with expected");       
+	                    }
+
 		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 							responsestr1, "Fail", internalMsg );
 		        	Assert.fail("Test Failed");
@@ -454,7 +476,6 @@ public class GeoRltspTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);

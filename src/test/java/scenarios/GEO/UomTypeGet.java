@@ -1,15 +1,15 @@
 package scenarios.GEO;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -20,10 +20,6 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import utils.DbConnect;
@@ -36,7 +32,6 @@ import utils.RetrieveEndPoints;
 import utils.TestResultValidation;
 import utils.ValidationFields;
 import wsMethods.GetResponse;
-import wsMethods.PostMethod;
 
 public class UomTypeGet extends Reporting{
 	
@@ -49,11 +44,19 @@ public class UomTypeGet extends Reporting{
 	String writableInputFields, writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
 	static Logger logger = Logger.getLogger(UomTypeGet.class);
+	String actuatorQueryVersion;
+	TestResultValidation resultValidation = new TestResultValidation();
+	
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
+		/// *** getting actautor version
+				String tokenKey = tokenValues[0];
+				String tokenVal = token;
+				//String actuatorQueryVersionURL=RetrieveEndPoints.getEndPointUrl("queryActuator", fileName, level+".query.version");
+				//actuatorQueryVersion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,/*actuatorQueryVersionURL);*/
 	}
 	
 	@BeforeMethod
@@ -78,7 +81,6 @@ public class UomTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -88,6 +90,7 @@ public class UomTypeGet extends Reporting{
 			logger.info("URI passed: "+getEndPoinUrl);
         	test.pass("URI passed: "+getEndPoinUrl);
 			//***send request and get response
+        	Thread.sleep(5000);
 			Response res = GetResponse.sendRequestGet(tokenValues[0], token, getEndPoinUrl, fileName, testCaseID);
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
@@ -97,11 +100,13 @@ public class UomTypeGet extends Reporting{
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
 	        String meta =  js.getString("meta");
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null)
+	        String actualRespVersionNum = js.getString("meta.version"); 
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
+	        	test.pass("Response API version number validation passed"); 
 	        	//***get the DB query
 	    		String uomTypeGetQuery = query.uomTypeGetQuery();
 	    		//***get the fields needs to be validate in DB
@@ -191,7 +196,12 @@ public class UomTypeGet extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+		        	logger.error("Response validation failed as API version number is not matching with expected");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as API version number is not matching with expected");	
+		        	}
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -222,7 +232,6 @@ public class UomTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -242,11 +251,13 @@ public class UomTypeGet extends Reporting{
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
 	        String meta =  js.getString("meta");
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null)
+	        String actualRespVersionNum = js.getString("meta.version"); 
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
+	        	test.pass("Response API version number validation passed"); 
 	        	//***get the DB query
 	    		String uomTypePostQuery = query.uomTypePostQuery(uomTypeCd);
 	    		//***get the fields needs to be validate in DB
@@ -336,7 +347,12 @@ public class UomTypeGet extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+		        	logger.error("Response validation failed as API version number is not matching with expected");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as API version number is not matching with expected");	
+		        	}
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -367,7 +383,6 @@ public class UomTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -398,10 +413,12 @@ public class UomTypeGet extends Reporting{
 	        {
 	        	logger.info("As expected total number of records available in response: "+responseRows.size());
 	        	test.pass("As expected total number of records available in response: "+responseRows.size());
-		        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+	        	 String actualRespVersionNum = js.getString("meta.version"); 
+		        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS")&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		        {
 		        	logger.info("Response status code 200 validation passed: "+Wscode);
 		        	test.pass("Response status code200 validation passed: "+Wscode);
+		        	test.pass("Response API version number validation passed"); 
 		        	//***error message validation
 					String expectMessage = resMsgs.getErrorMsg;
 					if(internalMsg.equals(expectMessage))
@@ -415,7 +432,7 @@ public class UomTypeGet extends Reporting{
 		        		test.pass("Expected error message is getting received in response when passing the invalid uomTypeCd in URI");
 		        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	writableInputFields, "NA",
 		    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-						test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+						test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 					}else {
 						logger.error("Expected error message is not getting received in response");
 						logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
@@ -425,7 +442,13 @@ public class UomTypeGet extends Reporting{
 								responsestr, "Fail", internalMsg );
 			        	Assert.fail("Test Failed");
 			        }
-		        }else {
+		        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+		        	logger.error("Response validation failed as API version number is not matching with expected");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as API version number is not matching with expected");	
+		        	}
+		        else {
 		        	logger.error("Response status validation failed: "+Wscode);
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
@@ -466,7 +489,6 @@ public class UomTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -502,7 +524,7 @@ public class UomTypeGet extends Reporting{
 	        		test.pass("Expected error message is getting received in response when passing the invalid URI");
 	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "NA",
 	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-					test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 				}else {
 					logger.error("Expected error message is not getting received in response");
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
@@ -551,7 +573,6 @@ public class UomTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -566,17 +587,21 @@ public class UomTypeGet extends Reporting{
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 			logger.info("Response Received: "+responsestr1);
+			 test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String Wsstatus= js.getString("meta.message.status");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
 	        String meta =  js.getString("meta");
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null)
+	        String actualRespVersionNum = js.getString("meta.version"); 
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
+	        	test.pass("Response API version number validation passed"); 
 	        	//***get the DB query
 	    		String uomTypePostQuery = query.uomTypePostQuery(uomTypeCd);
 	    		//***get the fields needs to be validate in DB
@@ -667,12 +692,17 @@ public class UomTypeGet extends Reporting{
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
 		       }
+		       	else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+		        	logger.error("Response validation failed as API version number is not matching with expected");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as API version number is not matching with expected");	
+		        	}
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
 	        }
-	        test.info("Response Recieved:");
-			test.info(responsestr1.replaceAll("\n", "<br />"));
+	      
 			logger.info("------------------------------------------------------------------");
 		}catch (Exception e) {
 			e.printStackTrace();

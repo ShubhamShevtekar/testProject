@@ -1,15 +1,14 @@
 package scenarios.GEO;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -19,6 +18,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.fedex.jms.client.reader.JMSReader;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -33,43 +33,30 @@ import utils.TestResultValidation;
 import utils.ValidationFields;
 import wsMethods.GetResponse;
 import wsMethods.PostMethod;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
-
 public class GeoOrgStdPut extends Reporting{
-	
 	String scenarioName = getClass().getSimpleName();
 	String TestCaseDescription, scenarioType, userId, geoOrgStdCode, geoOrgStdName;//, token;
 	Queries query = new Queries();
-	//String[] tokenValues = new String[2];
 	String fileName = this.getClass().getSimpleName();
 	ExcelUtil ex = new ExcelUtil();
 	String runFlag = null;
-	String writableInputFields, writableDBFields=null;
+	JMSReader jmsReader = new JMSReader();
+	String writableInputFields, writableDBFields=null, writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
 	static Logger logger = Logger.getLogger(GeoOrgStdPut.class);
+	String actuatorcommandversion;
+	TestResultValidation resultValidation = new TestResultValidation();
+	
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
-		//***get token properties
-/*		tokenValues = RetrieveEndPoints.getTokenProperties(fileName);
-		//***get token
-		URL url;
-		try {
-			url = new URL(tokenValues[1]);
-			URLConnection con = url.openConnection();
-			InputStream in = con.getInputStream();
-			String encoding = con.getContentEncoding();
-			encoding = encoding == null ? "UTF-8" : encoding;
-			token = IOUtils.toString(in, encoding);
-		} catch (IOException e) {
-			e.printStackTrace();
-			test.fail("Unable to get the token, exception thrown: "+e.toString());
-		}*/
+		// *** getting actautor version
+				String tokenKey = tokenValues[0];
+				String tokenVal = token;
+				//String actuatorCommandeVersionURL=RetrieveEndPoints.getEndPointUrl("commandActuator", fileName, level+".command.version");
+				//actuatorcommandversion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,//actuatorCommandeVersionURL);
 	}
 	
 	@BeforeMethod
@@ -83,7 +70,7 @@ public class GeoOrgStdPut extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=1)
 	public void TC_01()
 	{	
 		String testCaseID = "TC_01";
@@ -93,7 +80,6 @@ public class GeoOrgStdPut extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is getting updated when valid values are passed for all attributes in JSON Request.", ExtentColor.PURPLE));
 		boolean testResult=false;
 		//***get test case ID with method name
 		try {
@@ -107,7 +93,6 @@ public class GeoOrgStdPut extends Reporting{
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPut", fileName, level+".geoOrgStd.put");
-		
 		//***send request and get response
 		Response res = GetResponse.sendRequestPut(payload, tokenValues[0], token, getEndPoinUrl, fileName, testCaseID);
 		String responsestr=res.asString(); 
@@ -115,18 +100,17 @@ public class GeoOrgStdPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		String meta =  js.getString("meta");
-		String timestamp = js.getString("meta.timestamp");
+		String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 		String Wsstatus= js.getString("meta.message.status");
         String internalMsg = js.getString("meta.message.internalMessage");
         int Wscode= res.statusCode();
-        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && timestamp != null)
+        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
         {
         	logger.info("Response status validation passed: "+Wscode);
         	test.pass("Response status validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
         	test.pass("Response timestamp validation passed"); 
-//***get the DB query
+        	//***get the DB query
     		String geoOrgStdPostQuery = query.geoOrgStdPostQuery(geoOrgStdCode);
     		//***get the fields needs to be validate in DB
     		List<String> fields = ValidationFields.geoOrgStdDBFields();
@@ -135,14 +119,13 @@ public class GeoOrgStdPut extends Reporting{
     		List<String> getResultDB = DbConnect.getResultSetFor(geoOrgStdPostQuery, fields, fileName, testCaseID);
     		if(js.getString("data.orgStdCd")!=null)
     		{
-    			
     			String geoOrgStdCode1 = js.getString("data.orgStdCd");
     			//***success message validation
     			String expectMessage = resMsgs.geoOrgStdPutSuccessMsg+geoOrgStdCode1;
     			if(internalMsg.equals(expectMessage) && geoOrgStdCode1.equals(geoOrgStdCode))
     			{
-    				logger.info("Success message with Geopitical Org Std Cosde is getting received as expected in response");
-    				test.pass("Success message with Geopitical Org Std Cosde is getting received as expected in response");
+    				logger.info("Success message with Geopitical Org Std Code is getting received as expected in response");
+    				test.pass("Success message with Geopitical Org Std Code is getting received as expected in response");
     			}else {
     				logger.info("Success message is not getting received as expected in response");
     				test.fail("Success message is not getting received as expected in response");
@@ -199,12 +182,18 @@ public class GeoOrgStdPut extends Reporting{
     				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
     				logger.error("------------------------------------------------------------------");
     	        	test.fail("Response validation failed as meta not found");
-    	       }else if(timestamp == null){
-    	    	logger.error("Response validation failed as timestamp not found");
+    	       }else if(meta.contains("timestamp")){
+    	    	logger.error("Response validation failed as timestamp found");
     			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
     			logger.error("------------------------------------------------------------------");
-    	    	test.fail("Response validation failed as timestamp not found");
-    	       }
+    	    	test.fail("Response validation failed as timestamp found");
+    	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
     	    	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
     					responsestr1, "Fail", internalMsg );
     	    	Assert.fail("Test Failed");
@@ -221,7 +210,7 @@ public class GeoOrgStdPut extends Reporting{
     		Assert.fail("Test Failed");
     	}
     	}
-	@Test
+	@Test(priority=2)
 	public void TC_02()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -231,8 +220,6 @@ public class GeoOrgStdPut extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not getting updated when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
 		//***get test case ID with method name
 		try {
 		//***get the test data from sheet
@@ -252,29 +239,25 @@ public class GeoOrgStdPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		String meta =  js.getString("meta");
-		String timestamp = js.getString("meta.timestamp");
+		String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 		String Wsstatus= res.getStatusLine();
 		int errorMsgLength = js.get("errors.size");
 		List<String> errorMsg1 = new ArrayList<>();
 		List<String> errorMsg2 = new ArrayList<>();
-		String expectMessage = resMsgs.geoOrgStdCodeBlankMsg;
+		String expectMessage = resMsgs.requiredFieldMsg;
 		for(int i=0; i<errorMsgLength; i++){
 			errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
-		//String fieldName = js.getString("errors.fieldName");
-        //String errorMsg = js.getString("errors.message");
         int Wscode= res.statusCode();
-        if(Wscode == 400 &&  meta != null && timestamp != null)
+        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
         	test.pass("Response timestamp validation passed"); 
-//***error message validation
-			
+        				//	***error message validation
         	if(errorMsg1.get(0).equals("orgStdCd") && errorMsg2.get(0).equals(expectMessage))
 			{
 				logger.info("Expected error message is getting received in response when sending the blank GeoOrgStdCode");
@@ -299,8 +282,6 @@ public class GeoOrgStdPut extends Reporting{
 	        	Assert.fail("Test Failed");
 	        }
 	    }  else {
-	    	
-        	
 	    	{
 		    	if(Wscode!=400){
 	        		logger.error("Response status validation failed: "+Wscode);
@@ -312,12 +293,17 @@ public class GeoOrgStdPut extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "geoOrgStdCode"+expectMessage );
         	Assert.fail("Test Failed");
@@ -337,18 +323,16 @@ public class GeoOrgStdPut extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_03()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
-			//String testCaseID = "TC_03";
 			logger.info("Executing Test Case: "+testCaseID);
 			if(!runFlag.equalsIgnoreCase("Yes")) {
 				logger.info("Skipped Test Case No. "+testCaseID);
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is successfully created when valid values are passed for all attributes in JSON Request.", ExtentColor.PURPLE));
 			boolean testResult=false;
 			//***get test case ID with method name
 			
@@ -370,20 +354,17 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= js.getString("meta.message.status");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        int Wscode= res.statusCode();
-	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && timestamp != null)
-	        {
-
+	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***get the DB query
+	        	//***get the DB query
 	    		String geoOrgStdPostQuery = query.geoOrgStdPostQuery(geoOrgStdCode);
 	    		//***get the fields needs to be validate in DB
 	    		List<String> fields = ValidationFields.geoOrgStdDBFields();
@@ -397,8 +378,8 @@ public class GeoOrgStdPut extends Reporting{
 	    			String expectMessage = resMsgs.geoOrgStdPutSuccessMsg+geoOrgStdCode1;
 	    			if(internalMsg.equals(expectMessage) && geoOrgStdCode1.equals(geoOrgStdCode))
 	    			{
-	    				logger.info("Success message with Geopitical Org Std Cosde is getting received as expected in response");
-	    				test.pass("Success message with Geopitical Org Std Cosde is getting received as expected in response");
+	    				logger.info("Success message with Geopitical Org Std Code is getting received as expected in response");
+	    				test.pass("Success message with Geopitical Org Std Code is getting received as expected in response");
 	    			}else {
 	    				logger.info("Success message is not getting received as expected in response");
 	    				test.fail("Success message is not getting received as expected in response");
@@ -453,9 +434,7 @@ public class GeoOrgStdPut extends Reporting{
 	    					"", "", Wsstatus, ""+Wscode, responsestr1, "Fail", "" );
 	    			Assert.fail("Test Failed");
 				}
-	        }}
-	        
-	       
+	        }
 	        else{
 	        	if(Wscode!=200){
 	        		logger.error("Response status validation failed: "+Wscode);
@@ -467,12 +446,18 @@ public class GeoOrgStdPut extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -488,9 +473,7 @@ public class GeoOrgStdPut extends Reporting{
 	    	Assert.fail("Test Failed");
 		}
 	}
-
-		
-		@Test
+		@Test(priority=2)
 		public void TC_04()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -501,8 +484,6 @@ public class GeoOrgStdPut extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not created when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-			boolean testResult=false;
 			//***get test case ID with method name
 			try {
 			//***get the test data from sheet
@@ -522,8 +503,7 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= res.getStatusLine();
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
@@ -533,16 +513,15 @@ public class GeoOrgStdPut extends Reporting{
 				errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
-			//String fieldName = js.getString("errors.fieldName");
-	        //String errorMsg = js.getString("errors.message");
+			
 	        int Wscode= res.statusCode();
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***error message validation
+	        	//***error message validation
 				
 				if(errorMsg1.get(0).equals("meta") && errorMsg2.get(0).equals(expectMessage))
 				{
@@ -570,12 +549,18 @@ public class GeoOrgStdPut extends Reporting{
 						logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 						logger.error("------------------------------------------------------------------");
 			        	test.fail("Response validation failed as meta not found");
-			       }else if(timestamp == null){
-		        	logger.error("Response validation failed as timestamp not found");
+			       }else if(meta.contains("timestamp")){
+		        	logger.error("Response validation failed as timestamp found");
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
-		        	test.fail("Response validation failed as timestamp not found");
-			       }
+		        	test.fail("Response validation failed as timestamp found");
+			       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+	                    logger.error("Response validation failed as API version number is not matching with expected");
+                        logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                        logger.error("------------------------------------------------------------------");
+                                 test.fail("Response validation failed as API version number is not matching with expected");       
+               }
+
 		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 							responsestr, "Fail", "meta"+expectMessage );
 	        	Assert.fail("Test Failed");
@@ -594,7 +579,7 @@ public class GeoOrgStdPut extends Reporting{
 			}
 		}
 		
-		@Test
+		@Test(priority=2)
 		public void TC_05()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -605,8 +590,6 @@ public class GeoOrgStdPut extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not created when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-			boolean testResult=false;
 			//***get test case ID with method name
 			try {
 			//***get the test data from sheet
@@ -626,8 +609,7 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= res.getStatusLine();
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
@@ -637,18 +619,14 @@ public class GeoOrgStdPut extends Reporting{
 				errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
-			//String fieldName = js.getString("errors.fieldName");
-	        //String errorMsg = js.getString("errors.message");
 	        int Wscode= res.statusCode();
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***error message validation
-	        	
-				
+	        	//***error message validation
 	        	if(errorMsg1.get(0).equals("orgStdCd") && errorMsg2.get(0).equals(expectMessage))
 				{
 					logger.info("Expected error message is getting received in response when the orgStdCd attribute is not passed in JSON");
@@ -698,9 +676,7 @@ public class GeoOrgStdPut extends Reporting{
 	        	Assert.fail("Test Failed");
 			}
 		}
-		
-		
-		@Test 
+		@Test(priority=2) 
 		public void TC_06()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -711,7 +687,6 @@ public class GeoOrgStdPut extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is successfully created when valid values are passed for all attributes in JSON Request.", ExtentColor.PURPLE));
 			boolean testResult=false;
 			//***get test case ID with method name
 			
@@ -733,19 +708,17 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= js.getString("meta.message.status");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        int Wscode= res.statusCode();
-	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && timestamp != null)
+	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
-
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***get the DB query
+	        	//***get the DB query
 	    		String geoOrgStdPostQuery = query.geoOrgStdPostQuery(geoOrgStdCode);
 	    		//***get the fields needs to be validate in DB
 	    		List<String> fields = ValidationFields.geoOrgStdDBFields();
@@ -759,8 +732,8 @@ public class GeoOrgStdPut extends Reporting{
 	    			String expectMessage = resMsgs.geoOrgStdPutSuccessMsg+geoOrgStdCode1;
 	    			if(internalMsg.equals(expectMessage) && geoOrgStdCode1.equals(geoOrgStdCode))
 	    			{
-	    				logger.info("Success message with Geopitical Org Std Cosde is getting received as expected in response");
-	    				test.pass("Success message with Geopitical Org Std Cosde is getting received as expected in response");
+	    				logger.info("Success message with Geopitical Org Std Code is getting received as expected in response");
+	    				test.pass("Success message with Geopitical Org Std Code is getting received as expected in response");
 	    			}else {
 	    				logger.info("Success message is not getting received as expected in response");
 	    				test.fail("Success message is not getting received as expected in response");
@@ -826,12 +799,18 @@ public class GeoOrgStdPut extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -847,10 +826,7 @@ public class GeoOrgStdPut extends Reporting{
 	    	Assert.fail("Test Failed");
 		}
 	}
-
-
-		
-		@Test
+		@Test(priority=2)
 		public void TC_07()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -861,8 +837,6 @@ public class GeoOrgStdPut extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not created when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-			boolean testResult=false;
 			//***get test case ID with method name
 			try {
 			//***get the test data from sheet
@@ -882,8 +856,7 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= res.getStatusLine();
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
@@ -893,19 +866,14 @@ public class GeoOrgStdPut extends Reporting{
 				errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
-			//String fieldName = js.getString("errors.fieldName");
-	        //String errorMsg = js.getString("errors.message");
 	        int Wscode= res.statusCode();
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
-
-		    
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***error message validation
-				
+	        	//***error message validation
 	        	if(errorMsg1.get(0).equals("userName") && errorMsg2.get(0).equals(expectMessage))
 				{
 					logger.info("Expected error message is getting received in response when the user name is null or Empty in JSON");
@@ -931,9 +899,6 @@ public class GeoOrgStdPut extends Reporting{
 		        	Assert.fail("Test Failed");
 		        }
 		    }else {
-		    	
-	        	
-		    	{
 			    	if(Wscode!=400){
 		        		logger.error("Response status validation failed: "+Wscode);
 						logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
@@ -944,17 +909,22 @@ public class GeoOrgStdPut extends Reporting{
 						logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 						logger.error("------------------------------------------------------------------");
 			        	test.fail("Response validation failed as meta not found");
-			       }else if(timestamp == null){
-		        	logger.error("Response validation failed as timestamp not found");
+			       }else if(meta.contains("timestamp")){
+		        	logger.error("Response validation failed as timestamp found");
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
-		        	test.fail("Response validation failed as timestamp not found");
-			       }
+		        	test.fail("Response validation failed as timestamp found");
+			       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+	                    logger.error("Response validation failed as API version number is not matching with expected");
+                        logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                        logger.error("------------------------------------------------------------------");
+                                 test.fail("Response validation failed as API version number is not matching with expected");       
+               }
+
 		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 							responsestr, "Fail", "userId"+expectMessage );
 	        	Assert.fail("Test Failed");
 		        }
-		    }
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -967,10 +937,7 @@ public class GeoOrgStdPut extends Reporting{
 	        	Assert.fail("Test Failed");
 			}
 		}
-
-		
-		
-		@Test
+		@Test(priority=2)
 		public void TC_08()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -981,8 +948,6 @@ public class GeoOrgStdPut extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not created when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-			boolean testResult=false;
 			//***get test case ID with method name
 			try {
 			//***get the test data from sheet
@@ -1002,29 +967,25 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= res.getStatusLine();
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
-			String expectMessage = resMsgs.lengthExceeds10Char;
+			String expectMessage = resMsgs.lengthExceeds10Char2;
 			for(int i=0; i<errorMsgLength; i++){
 				errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
-			//String fieldName = js.getString("errors.fieldName");
-	        //String errorMsg = js.getString("errors.message");
 	        int Wscode= res.statusCode();
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***error message validation
-				
+	        	//***error message validation
 				if(errorMsg1.get(0).equals("orgStdCd") && errorMsg2.get(0).equals(expectMessage))
 				{
 					logger.info("Expected error message is getting received in response when the orgStdCd is more than 10 characters length in JSON");
@@ -1060,12 +1021,18 @@ public class GeoOrgStdPut extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "geoOrgStdCode"+expectMessage );
         	Assert.fail("Test Failed");
@@ -1083,8 +1050,7 @@ public class GeoOrgStdPut extends Reporting{
         	Assert.fail("Test Failed");
 		}
 	}
-		
-		@Test
+		@Test(priority=2)
 		public void TC_09()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1095,8 +1061,6 @@ public class GeoOrgStdPut extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not created when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-			boolean testResult=false;
 			//***get test case ID with method name
 			try {
 			//***get the test data from sheet
@@ -1116,35 +1080,30 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= res.getStatusLine();
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
-			String expectMessage = resMsgs.lengthExceeds65Char;
+			String expectMessage = resMsgs.lengthExceeds65Char2;
 			for(int i=0; i<errorMsgLength; i++){
 				errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
-			//String fieldName = js.getString("errors.fieldName");
-	        //String errorMsg = js.getString("errors.message");
 	        int Wscode= res.statusCode();
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***error message validation
-			
+	        	//	***error message validation
 				if(errorMsg1.get(0).equals("orgStdNm") && errorMsg2.get(0).equals(expectMessage))
 				{
 					logger.info("Expected error message is getting received in response when the orgStdNm is ore than 65 characters length in JSON");
 	    			logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
 	    			logger.info("------------------------------------------------------------------");
-	    			
 					String[] inputFieldValues = {userId, geoOrgStdCode, geoOrgStdName};
 	        		String[] inputFieldNames = {"Input_UserName: ", "Input_GeoOrgStdCode: ", "Input_GeoOrgStdName: "};
 	        		writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
@@ -1174,12 +1133,18 @@ public class GeoOrgStdPut extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "geoOrgStdCode"+expectMessage );
 	    	Assert.fail("Test Failed");
@@ -1198,7 +1163,7 @@ public class GeoOrgStdPut extends Reporting{
 		}
 	}
 		
-		@Test
+		@Test(priority=2)
 		public void TC_10()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1209,8 +1174,6 @@ public class GeoOrgStdPut extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not created when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-			boolean testResult=false;
 			//***get test case ID with method name
 			try {
 			//***get the test data from sheet
@@ -1230,8 +1193,7 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= res.getStatusLine();
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
@@ -1241,18 +1203,15 @@ public class GeoOrgStdPut extends Reporting{
 				errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
-			//String fieldName = js.getString("errors.fieldName");
-	        //String errorMsg = js.getString("errors.message");
 	        int Wscode= res.statusCode();
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***error message validation
-				
+	        	//***error message validation
 				if(errorMsg1.get(0).equals("userName") && errorMsg2.get(0).equals(expectMessage))
 				{
 					logger.info("Expected error message is getting received in response when the User Name is more than 25 characters length in JSON");
@@ -1288,12 +1247,18 @@ public class GeoOrgStdPut extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "geoOrgStdCode"+expectMessage );
 	    	Assert.fail("Test Failed");
@@ -1311,21 +1276,16 @@ public class GeoOrgStdPut extends Reporting{
 	    	Assert.fail("Test Failed");
 		}
 	}
-		
-		
-		@Test
+		@Test(priority=2)
 		public void TC_11()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
-			//String testCaseID = "TC_02";
 			logger.info("Executing Test Case: "+testCaseID);
 			if(!runFlag.equalsIgnoreCase("Yes")) {
 				logger.info("Skipped Test Case No. "+testCaseID);
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not created when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-			boolean testResult=false;
 			//***get test case ID with method name
 			try {
 			//***get the test data from sheet
@@ -1349,8 +1309,6 @@ public class GeoOrgStdPut extends Reporting{
 	        String Wsstatus= res.getStatusLine();
 	        String internalMsg = js.getString("error");
 	        int Wscode= res.statusCode();
-	        
-	        
 	        if(Wscode == 404)
 		    {
 	        	logger.info("Response status code 404 validation passed: "+Wscode);
@@ -1383,11 +1341,11 @@ public class GeoOrgStdPut extends Reporting{
 		        }
 		    }else {
 	        	
-		    	logger.error("Response status code 400 validation failed: "+Wscode);
+		    	logger.error("Response status code 404 validation failed: "+Wscode);
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 				
-		    	test.fail("Response status code 400 validation failed: "+Wscode);
+		    	test.fail("Response status code 404 validation failed: "+Wscode);
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -1406,9 +1364,7 @@ public class GeoOrgStdPut extends Reporting{
 	        	Assert.fail("Test Failed");
 			}
 		}
-		
-		
-		@Test
+		@Test(priority=2)
 		public void TC_12()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1418,8 +1374,6 @@ public class GeoOrgStdPut extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not getting updated when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-			boolean testResult=false;
 			//***get test case ID with method name
 			try {
 			//***get the test data from sheet
@@ -1439,8 +1393,7 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= res.getStatusLine();
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
@@ -1450,17 +1403,14 @@ public class GeoOrgStdPut extends Reporting{
 				errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
-			//String fieldName = js.getString("errors.fieldName");
-	        //String errorMsg = js.getString("errors.message");
 	        int Wscode= res.statusCode();
-	        if(Wscode == 404 &&  meta != null && timestamp != null)
-
+	        if(Wscode == 404 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 404 validation passed: "+Wscode);
-	        	test.pass("Response status code 400 validation passed: "+Wscode);
+	        	test.pass("Response status code 404 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***error message validation
+	        	//***error message validation
 				
 				if(errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage))
 				{
@@ -1486,7 +1436,7 @@ public class GeoOrgStdPut extends Reporting{
 		        	Assert.fail("Test Failed");
 		        }
 		    }else  {
-	    		if(Wscode!=400){
+	    		if(Wscode!=404){
 	        		logger.error("Response status validation failed: "+Wscode);
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
@@ -1496,12 +1446,18 @@ public class GeoOrgStdPut extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "geoOrgStdCode"+expectMessage );
 	    	Assert.fail("Test Failed");
@@ -1519,9 +1475,7 @@ public class GeoOrgStdPut extends Reporting{
 	    	Assert.fail("Test Failed");
 		}
 	}
-		
-		
-		@Test
+		@Test(priority=2)
 		public void TC_13()
 		{	
 			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1531,8 +1485,6 @@ public class GeoOrgStdPut extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Org Std service is not getting updated when the Org Std Code is empty in JSON Request.", ExtentColor.PURPLE));
-			boolean testResult=false;
 			//***get test case ID with method name
 			try {
 			//***get the test data from sheet
@@ -1552,8 +1504,7 @@ public class GeoOrgStdPut extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String Wsstatus= res.getStatusLine();
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
@@ -1563,24 +1514,19 @@ public class GeoOrgStdPut extends Reporting{
 				errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
-			//String fieldName = js.getString("errors.fieldName");
-	        //String errorMsg = js.getString("errors.message");
 	        int Wscode= res.statusCode();
-	        if(Wscode == 404 &&  meta != null && timestamp != null)
-
+	        if(Wscode == 404 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 404 validation passed: "+Wscode);
 	        	test.pass("Response status code 404 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
-//***error message validation
-				
+	        	//***error message validation
 				if(errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage))
 				{
 					logger.info("Expected error message is getting received in response when special characters are provided for orgStdCd in JSON");
 	    			logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
 	    			logger.info("------------------------------------------------------------------");
-	    			
 					String[] inputFieldValues = {userId, geoOrgStdCode, geoOrgStdName};
 	        		String[] inputFieldNames = {"Input_UserName: ", "Input_GeoOrgStdCode: ", "Input_GeoOrgStdName: "};
 	        		writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
@@ -1599,7 +1545,7 @@ public class GeoOrgStdPut extends Reporting{
 		        	Assert.fail("Test Failed");
 		        }
 		    }else  {
-	    		if(Wscode!=400){
+	    		if(Wscode!=404){
 	        		logger.error("Response status validation failed: "+Wscode);
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
@@ -1609,12 +1555,18 @@ public class GeoOrgStdPut extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "geoOrgStdCode"+expectMessage );
 	    	Assert.fail("Test Failed");
@@ -1633,12 +1585,102 @@ public class GeoOrgStdPut extends Reporting{
 		}
 	}
 	
-	
-	
-	
-	
-	
-	//***get the values from test data sheet
+		@Test(priority=1)
+		public void TC_14()
+		{	
+			String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
+			logger.info("Executing Test Case: "+testCaseID);
+			if(!runFlag.equalsIgnoreCase("Yes")) {
+				logger.info("Skipped Test Case No. "+testCaseID);
+				logger.info("------------------------------------------------------------------");
+				throw new SkipException("Execution skipped as per test flag set");
+			}
+			boolean testResult=false;
+			//***get test case ID with method name
+			try {
+				//***get the test data from sheet
+				testDataFields(scenarioName, testCaseID);
+				test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+				
+				//***send request and get response
+				JSONObject getJMSResult =jmsReader.messageGetsPublished("GEOPL_ORG_STD");
+				
+				if(getJMSResult!=null){
+					String reqFormatted = Miscellaneous.jsonFormat(getJMSResult.toString());
+					test.info("JMS Response Recieved:");
+					test.info(reqFormatted.replaceAll("\n", "<br />"));
+					String orgStdCd=getJMSResult.getJSONObject("data").getString("orgStdCd");
+					String orgStdNm=getJMSResult.getJSONObject("data").getString("orgStdNm");
+					if(orgStdCd!=null){
+						//***get the DB query
+						String geoOrgStdPostQuery = query.geoOrgStdPostQuery(orgStdCd);
+			    		//***get the fields needs to be validate in DB
+			    		List<String> fields = ValidationFields.geoOrgStdGetMethodDbFields();
+			    		//***get the result from DB
+			    		List<String> getResultDB = DbConnect.getResultSetFor(geoOrgStdPostQuery, fields, fileName, testCaseID);
+			    		System.out.println("getResultDB1::::::::::::::::::::"+getResultDB);
+			    		String[] JMSValue = {orgStdCd,orgStdNm};
+						System.out.println("JMSValue::::::::::::::::::::"+JMSValue);
+			    		testResult = TestResultValidation.testValidationForJMS(JMSValue,getResultDB) ;
+			    		if(testResult){
+			    			//***write result to excel
+		        			String[] responseDbFieldValues = {orgStdCd,getResultDB.get(0),orgStdNm,getResultDB.get(1)};
+		        			String[] responseDbFieldNames = {"Response_orgStdCd: ", "DB_orgStdCd: ", 
+		        					"Response_orgStdNm: ", "DB_orgStdNm: "};
+		        			writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues, responseDbFieldNames);
+			    			logger.info("Comparison between JMS response & DB data matching and passed");
+			    			logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+			    			logger.info("------------------------------------------------------------------");
+			    			test.pass("Comparison between JMS response & DB data matching and passed");
+			    			test.pass(writableResult.replaceAll("\n", "<br />"));  
+		        			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "",
+		        					"", "", writableResult, "Pass", "" );
+							test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+			    		}else{
+			    			String[] responseDbFieldValues = {orgStdCd,getResultDB.get(0),orgStdNm,getResultDB.get(1)};
+		        			String[] responseDbFieldNames = {"Response_orgStdCd: ", "DB_orgStdCd: ", 
+		        					"Response_orgStdNm: ", "DB_orgStdNm: "};
+		        			writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues, responseDbFieldNames);
+			    			logger.error("Comparison between JMS & DB data not matching and failed");
+			    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+			    			logger.error("------------------------------------------------------------------");
+			    			test.fail("Comparison between input data & DB data not matching and failed");
+			    			test.fail("Comparison between input data & DB data not matching and failed");
+			    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "",
+		        					"", "", writableResult, "Fail", "Comparison between JMS & DB data not matching and failed" );
+			    			Assert.fail("Test Failed");
+			    		}
+					}else {
+		    			logger.error("Org Std Cd is not available in response");
+		    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+		    			logger.error("------------------------------------------------------------------");
+						test.fail("Org Std Cd is not available in response");
+		    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "",
+		    					"", "", "", "", "", "Fail", "" );
+		    			Assert.fail("Test Failed");
+					}
+				}else {
+	    			logger.error("Posted request is not reached to JMS queue");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Posted request is not reached to JMS queue");
+	    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "",
+	    					"", "", "", "", "", "Fail", "" );
+	    			Assert.fail("Test Failed");
+				}
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				logger.error("Exception thrown when executing the test case: "+e);
+				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+				logger.error("------------------------------------------------------------------");
+				test.fail("Exception thrown when executing the test case: "+e);
+	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "",
+						"", "Fail", ""+e );
+	        	Assert.fail("Test Failed");
+			}
+		}
+		//***get the values from test data sheet
 		public void testDataFields(String scenarioName, String testCaseId)
 		{
 			HashMap<String, LinkedHashMap<String, String>> inputData1 = null;

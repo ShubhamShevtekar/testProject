@@ -1,0 +1,3390 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8' /> 
+	<meta name='description' content='' />
+	<meta name='robots' content='noodp, noydir' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+	<meta id="timeStampFormat" name="timeStampFormat" content='MMM d, yyyy hh:mm:ss a'/>
+	
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css' />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<link href='https://cdn.rawgit.com/extent-framework/extent-github-cdn/b65cd69/v3html/css/extent.css' type='text/css' rel='stylesheet' />
+	
+	<title>CntryOrgStdPost</title>
+
+	<style type='text/css'>
+		/* json-tree */
+		.jstBracket,.jstComma,.jstValue{white-space:pre-wrap}.jstValue{font-size:10px;font-weight:400;font-family:"Lucida Console",Monaco,monospace}.jstProperty{color:#666;word-wrap:break-word}.jstBool{color:#2525CC}.jstNum{color:#D036D0}.jstNull{color:gray}.jstStr{color:#2DB669}.jstFold:after{content:' -';cursor:pointer}.jstExpand{white-space:normal}.jstExpand:after{content:' +';cursor:pointer}.jstFolded{white-space:normal!important}.jstHiddenBlock{display:none}
+	</style>
+	
+	<script type="text/javascript">
+		/*! json-tree - v0.2.2 - 2017-09-25, MIT LICENSE */
+		var JSONTree=function(){var n={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"},t=0,r=0;this.create=function(n,t){return r+=1,N(u(n,0,!1),{class:"jstValue"})};var e=function(t){return t.replace(/[&<>'"]/g,function(t){return n[t]})},s=function(){return r+"_"+t++},u=function(n,t,r){if(null===n)return f(r?t:0);switch(typeof n){case"boolean":return l(n,r?t:0);case"number":return i(n,r?t:0);case"string":return o(n,r?t:0);default:return n instanceof Array?a(n,t,r):c(n,t,r)}},c=function(n,t,r){var e=s(),u=Object.keys(n).map(function(r){return j(r,n[r],t+1,!0)}).join(m()),c=[g("{",r?t:0,e),N(u,{id:e}),p("}",t)].join("\n");return N(c,{})},a=function(n,t,r){var e=s(),c=n.map(function(n){return u(n,t+1,!0)}).join(m());return[g("[",r?t:0,e),N(c,{id:e}),p("]",t)].join("\n")},o=function(n,t){var r=e(JSON.stringify(n));return N(v(r,t),{class:"jstStr"})},i=function(n,t){return N(v(n,t),{class:"jstNum"})},l=function(n,t){return N(v(n,t),{class:"jstBool"})},f=function(n){return N(v("null",n),{class:"jstNull"})},j=function(n,t,r){var s=v(e(JSON.stringify(n))+": ",r),c=N(u(t,r,!1),{});return N(s+c,{class:"jstProperty"})},m=function(){return N(",\n",{class:"jstComma"})},N=function(n,t){return d("span",t,n)},d=function(n,t,r){return"<"+n+Object.keys(t).map(function(n){return" "+n+'="'+t[n]+'"'}).join("")+">"+r+"</"+n+">"},g=function(n,t,r){return N(v(n,t),{class:"jstBracket"})+N("",{class:"jstFold",onclick:"JSONTree.toggle('"+r+"')"})};this.toggle=function(n){var t=document.getElementById(n),r=t.parentNode,e=t.previousElementSibling;""===t.className?(t.className="jstHiddenBlock",r.className="jstFolded",e.className="jstExpand"):(t.className="",r.className="",e.className="jstFold")};var p=function(n,t){return N(v(n,t),{})},v=function(n,t){return Array(2*t+1).join(" ")+n};return this}();
+	</script>
+</head>
+	<body class='extent standard default hide-overflow '>
+		<div id='theme-selector' alt='Click to toggle theme. To enable by default, use theme configuration.' title='Click to toggle theme. To enable by default, use theme configuration.'>
+			<span><i class='material-icons'>desktop_windows</i></span>
+		</div>
+<nav>
+	<div class="nav-wrapper">
+		<a href="#!" class="brand-logo black"><img src="https://cdn.rawgit.com/extent-framework/extent-github-cdn/d74480e/commons/img/logo.png"></a>
+		<!-- slideout menu -->
+		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
+			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
+						<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></a></li>
+		</ul>
+		<!-- report name -->
+		<span class='report-name'>Report</span>
+		<!-- report headline -->
+		<span class='report-headline'></span>
+		<!-- nav-right -->
+		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
+			<a href='#!'>
+			<span class='label blue darken-3 suite-start-time'>Sep 17, 2019 08:14:47 AM</span>
+			</a>
+		</ul>
+	</div>
+</nav>		<!-- container -->
+		<div class='container'>
+<div id='test-view' class='view'>
+	<section id='controls'>
+		<div class='controls grey lighten-4'>
+			<!-- test toggle -->
+			<div class='chip transparent'>
+				<a class='dropdown-button tests-toggle' data-activates='tests-toggle' data-constrainwidth='true' data-beloworigin='true' data-hover='true' href='#'>
+				<i class='material-icons'>warning</i> Status
+				</a>
+				<ul id='tests-toggle' class='dropdown-content'>
+										<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+					<li status='fail'><a href='#!'>Fail <i class='material-icons red-text'>cancel</i></a></li>
+					<li class='divider'></li>
+					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
+				</ul>
+			</div>
+			<!-- test toggle -->
+			<!-- category toggle -->
+			<!-- category toggle -->
+			<!-- clear filters -->
+			<div class='chip transparent hide'>
+				<a class='' id='clear-filters' alt='Clear Filters' title='Clear Filters'>
+				<i class='material-icons'>close</i> Clear
+				</a>
+			</div>
+			<!-- clear filters -->
+			<!-- enable dashboard -->
+			<div id='toggle-test-view-charts' class='chip transparent'>
+				<a class='pink-text' id='enable-dashboard' alt='Enable Dashboard' title='Enable Dashboard'>
+				<i class='material-icons'>track_changes</i> Dashboard
+				</a>
+			</div>
+			<!-- enable dashboard -->
+			<!-- search -->
+			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
+				<a href="#" class='search-div'>
+				<i class='material-icons'>search</i> Search
+				</a>
+				<div class='input-field left hide'>
+					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+				</div>
+			</div>
+			<!-- search -->
+		</div>
+	</section>
+<div id='test-view-charts' class='subview-full'>
+    <div id='charts-row' class='row nm-v nm-h'>
+        <div class='col s12 m12 l12 np-h'>
+            <div class='card-panel nm-v'>
+                <div class='left panel-name'>Tests</div>
+                <div class='chart-box' style="max-height:94px;">
+                    <canvas id='parent-analysis' width='90' height='70'></canvas>
+                </div>
+                <div class='block text-small'>
+                    <span class='tooltipped' data-position='top' data-tooltip='85.185%'><span class='strong'>23</span> test(s) passed</span>
+                </div>
+                <div class='block text-small'>
+                    <span class='strong tooltipped' data-position='top' data-tooltip='14.815%'>4</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="timeline-chart" class="row nm-v nm-h">
+        <div class="col s12 m12 l12 np-h">
+            <div class="card-panel">
+                <div class='left panel-name'>Timeline (seconds)</div>
+                <div class="chart-box" style="width:98%;max-height:145px;">
+                    <canvas id="timeline" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>	<div class='subview-left left'>
+		<div class='view-summary'>
+			<ul id='test-collection' class='test-collection'>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='1'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_01</span>
+						<span class='test-time'>Sep 17, 2019 08:14:49 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:14:49 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:14:55 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 6s+336ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:50 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Validate that the Country ORG STD  service is successfully created when valid values are passed for all attributes in JSON Request.</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:50 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:50 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3572253"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"E0",<br />		"countryShortName":"RDX",<br />		"countryFullName":"REDEX",<br />		"orgStandardCode":"ISO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:52 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:52 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3572253",<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:04.705+0000",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"CntryOrgStd Details successfully saved with OrgStdCd :ISO",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geoplId":5983483868026494221,<br />		"orgStdCd":"ISO"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:53 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:53 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:53 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:54 AM</td>
+				<td class='step-details'>
+						DB connection success
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:54 AM</td>
+				<td class='step-details'>
+						Success message with Org STD Code is getting received as expected in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:54 AM</td>
+				<td class='step-details'>
+						Input Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:54 AM</td>
+				<td class='step-details'>
+						Input_UserName: 3572253<br /><br />Response_GeoId: 5983483868026494221<br /><br />Input_CountryShortName: RDX<br /><br />Input_CountryFullame: REDEX<br /><br />Input_orgStandardCode: ISO<br /><br />Input_effectiveDate: 2020-08-01<br /><br />Input_expirationDate: 2020-08-30<br /><br />Input_LastUpdateUserName: 3572253<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:54 AM</td>
+				<td class='step-details'>
+						DB Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:54 AM</td>
+				<td class='step-details'>
+						DB_UserName: 3572253<br /><br />DB_GeoId: 5983483868026494221<br /><br />DB_CountryShortName: RDX<br /><br />DB_CountryFullame: REDEX<br /><br />DB_orgStandardCode: ISO<br /><br />DB_effectiveDate: 2020-08-01<br /><br />DB_expirationDate: 2020-08-30<br /><br />DB_LastUpdateUserName: 3572253<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:54 AM</td>
+				<td class='step-details'>
+						Comparison between input data & DB data matching and passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:54 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:55 AM</td>
+				<td class='step-details'>
+						DB connection success
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:55 AM</td>
+				<td class='step-details'>
+						Comparison between input data & DB Audit table data matching and passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:55 AM</td>
+				<td class='step-details'>
+						Input Audit Table Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:55 AM</td>
+				<td class='step-details'>
+						Input_UserName: 3572253<br /><br />Response_GeoId: 5983483868026494221<br /><br />Input_CountryShortName: RDX<br /><br />Input_CountryFullame: REDEX<br /><br />Input_orgStandardCode: ISO<br /><br />Input_effectiveDate: 2020-08-01<br /><br />Input_expirationDate: 2020-08-30<br /><br />Input_LastUpdateUserName: 3572253<br /><br />Expected RevisionType CD:0<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:55 AM</td>
+				<td class='step-details'>
+						DB Audit Table Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:55 AM</td>
+				<td class='step-details'>
+						DB_UserName: 3572253<br /><br />DB_GeoId: 5983483868026494221<br /><br />DB_CountryShortName: RDX<br /><br />DB_CountryFullame: REDEX<br /><br />DB_orgStandardCode: ISO<br /><br />DB_effectiveDate: 2020-08-01<br /><br />DB_expirationDate: 2020-08-30<br /><br />DB_LastUpdateUserName: 3572253<br /><br />DB_RevisionType CD:0<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:55 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='2'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_02</span>
+						<span class='test-time'>Sep 17, 2019 08:14:56 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:14:56 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:14:57 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+673ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:56 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Validate that the Country ORG STD service is not created when the country code is empty in JSON Request.</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:56 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:56 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3572253"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"",<br />		"countryShortName":"jkp",<br />		"countryFullName":"Test Automation",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:56 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:56 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:09.115+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"countryCode",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:57 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:57 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:57 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:57 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:57 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='3'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_03</span>
+						<span class='test-time'>Sep 17, 2019 08:14:57 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:14:57 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:14:59 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 2s+21ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:57 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Country ORG STD service is successfully created when the empty value is passed in JSON for countryShortName </span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:57 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:57 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3572253"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"E1",<br />		"countryShortName":"",<br />		"countryFullName":"TAM1",<br />		"orgStandardCode":"ISO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:58 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:58 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3572253",<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:10.466+0000",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"CntryOrgStd Details successfully saved with OrgStdCd :ISO",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geoplId":3835500493529580613,<br />		"orgStdCd":"ISO"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:58 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:58 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:58 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:59 AM</td>
+				<td class='step-details'>
+						DB connection success
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:59 AM</td>
+				<td class='step-details'>
+						Success message with Org STD Code is getting received as expected in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:59 AM</td>
+				<td class='step-details'>
+						Input Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:59 AM</td>
+				<td class='step-details'>
+						Input_UserName: 3572253<br /><br />Response_GeoId: 3835500493529580613<br /><br />Input_CountryShortName: <br /><br />Input_CountryFullame: TAM1<br /><br />Input_orgStandardCode: ISO<br /><br />Input_effectiveDate: 2020-08-01<br /><br />Input_expirationDate: 2020-08-30<br /><br />Input_LastUpdateUserName: 3572253<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:59 AM</td>
+				<td class='step-details'>
+						DB Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:14:59 AM</td>
+				<td class='step-details'>
+						DB_UserName: 3572253<br /><br />DB_GeoId: 3835500493529580613<br /><br />DB_CountryShortName: <br /><br />DB_CountryFullame: TAM1<br /><br />DB_orgStandardCode: ISO<br /><br />DB_effectiveDate: 2020-08-01<br /><br />DB_expirationDate: 2020-08-30<br /><br />DB_LastUpdateUserName: 3572253<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:59 AM</td>
+				<td class='step-details'>
+						Comparison between input data & DB data matching and passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:14:59 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='4'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_04</span>
+						<span class='test-time'>Sep 17, 2019 08:14:59 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:14:59 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:02 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 2s+262ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:00 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Country ORG STD service is successfully created when empty value is passed for countryFullName in JSON Request.</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:00 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:00 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"E2",<br />		"countryShortName":"TAM",<br />		"countryFullName":"",<br />		"orgStandardCode":"ISO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:00 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:00 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0",<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:12.937+0000",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"CntryOrgStd Details successfully saved with OrgStdCd :ISO",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geoplId":7803684249364220053,<br />		"orgStdCd":"ISO"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:00 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:00 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:00 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:01 AM</td>
+				<td class='step-details'>
+						DB connection success
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						Success message with Org STD Code is getting received as expected in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						Input Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						Input_UserName: 3770052.0<br /><br />Response_GeoId: 7803684249364220053<br /><br />Input_CountryShortName: TAM<br /><br />Input_CountryFullame: <br /><br />Input_orgStandardCode: ISO<br /><br />Input_effectiveDate: 2020-08-01<br /><br />Input_expirationDate: 2020-08-30<br /><br />Input_LastUpdateUserName:3770052.0<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						DB Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						DB_UserName: 3770052.0<br /><br />DB_GeoId: 7803684249364220053<br /><br />DB_CountryShortName: TAM<br /><br />DB_CountryFullame: <br /><br />DB_orgStandardCode: ISO<br /><br />DB_effectiveDate: 2020-08-01<br /><br />DB_expirationDate: 2020-08-30<br /><br />DB_LastUpdateUserName: 3770052.0<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						Comparison between input data & DB data matching and passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='5'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_05</span>
+						<span class='test-time'>Sep 17, 2019 08:15:02 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:02 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:03 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+718ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the empty value is passed in JSON for orgStandardCode</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:02 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"US",<br />		"countryShortName":"US",<br />		"countryFullName":"United States of America",<br />		"orgStandardCode":"",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:15.199+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"orgStandardCode",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='6'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_06</span>
+						<span class='test-time'>Sep 17, 2019 08:15:03 AM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:03 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:04 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+765ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Country ORG STD service is successfully created when the empty value is passed in JSON for effectiveDate</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:03 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3572253"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"E3",<br />		"countryShortName":"TAB",<br />		"countryFullName":"TAB1",<br />		"orgStandardCode":"ISO",<br />		"effectiveDate":"",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:04 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:04 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3572253",<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:16.373+0000",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"CntryOrgStd Details successfully saved with OrgStdCd :ISO",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geoplId":8005148961391053914,<br />		"orgStdCd":"ISO"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:04 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:04 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:04 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='fail'>
+				<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+				<td class='timestamp'>8:15:04 AM</td>
+				<td class='step-details'>
+						Exception thrown when executing the test case: java.lang.NullPointerException
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='7'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_07</span>
+						<span class='test-time'>Sep 17, 2019 08:15:04 AM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:04 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:05 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+780ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:05 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Country ORG STD service is successfully created when the empty value is passed in JSON for expirationDate</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:05 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:05 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"E4",<br />		"countryShortName":"TAV",<br />		"countryFullName":"TAV1",<br />		"orgStandardCode":"ISO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":""<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:05 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:05 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0",<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:17.642+0000",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"CntryOrgStd Details successfully saved with OrgStdCd :ISO",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geoplId":7273137009392834860,<br />		"orgStdCd":"ISO"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:05 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:05 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:05 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='fail'>
+				<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+				<td class='timestamp'>8:15:05 AM</td>
+				<td class='step-details'>
+						Exception thrown when executing the test case: java.lang.NullPointerException
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='8'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_08</span>
+						<span class='test-time'>Sep 17, 2019 08:15:06 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:06 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:06 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+718ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when invalid countryCode (Not exist in Country table) is passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"MUL",<br />		"countryShortName":"US",<br />		"countryFullName":"United States of America",<br />		"orgStandardCode":"ISO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:18.793+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Resource Not Found",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"countryCode",<br />			"message":" is not a valid value"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						Response status code 404 validation passed: 404
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:06 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='9'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_09</span>
+						<span class='test-time'>Sep 17, 2019 08:15:07 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:07 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:07 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+717ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when invalid orgStandardCode (not exist in Geopl ORG STD) is passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"US",<br />		"countryShortName":"MUL",<br />		"countryFullName":"MUL",<br />		"orgStandardCode":"POCasd",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:19.886+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Resource Not Found",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"orgStandardCode",<br />			"message":" is not a valid value"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						Response status code 404 validation passed: 404
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:07 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='10'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_10</span>
+						<span class='test-time'>Sep 17, 2019 08:15:08 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:08 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:08 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+718ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when invalid  effectiveDate is passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"US",<br />		"countryShortName":"MUL",<br />		"countryFullName":"MUL",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-18-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:20.879+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Json Parser Error",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"Error",<br />			"message":"Invalid Date Format"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:08 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='11'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_11</span>
+						<span class='test-time'>Sep 17, 2019 08:15:09 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:09 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:09 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+634ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when invalid expirationDate is passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"US",<br />		"countryShortName":"MUL",<br />		"countryFullName":"MUL",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-88-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:21.801+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Json Parser Error",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"Error",<br />			"message":"Invalid Date Format"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:09 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='12'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_12</span>
+						<span class='test-time'>Sep 17, 2019 08:15:10 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:10 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:10 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+765ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the meta data section is not passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"US",<br />		"countryShortName":"MUL",<br />		"countryFullName":"MUL",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:22.831+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"meta",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:10 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='13'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_13</span>
+						<span class='test-time'>Sep 17, 2019 08:15:11 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:11 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:11 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+672ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the countryCode attribute is not passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryShortName":"MUL",<br />		"countryFullName":"MUL",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:23.947+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"countryCode",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:11 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='14'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_14</span>
+						<span class='test-time'>Sep 17, 2019 08:15:12 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:12 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:14 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 2s+44ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:12 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Country ORG STD service is successfully created when the countryShortName attribute is not passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:12 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:12 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"E5",<br />		"countryFullName":"TAC1",<br />		"orgStandardCode":"ISO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:12 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:12 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0",<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:25.068+0000",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"CntryOrgStd Details successfully saved with OrgStdCd :ISO",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geoplId":4877815090957735695,<br />		"orgStdCd":"ISO"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:12 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:12 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:12 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						DB connection success
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						Success message with Org STD Code is getting received as expected in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						Input Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						Input_UserName: 3770052.0<br /><br />Response_GeoId: 4877815090957735695<br /><br />Input_CountryShortName: <br /><br />Input_CountryFullame: TAC1<br /><br />Input_orgStandardCode: ISO<br /><br />Input_effectiveDate: 2020-08-01<br /><br />Input_expirationDate: 2020-08-30<br /><br />Input_LastUpdateUserName: 3770052.0<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						DB Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						DB_UserName: 3770052.0<br /><br />DB_GeoId: 4877815090957735695<br /><br />DB_CountryShortName: <br /><br />DB_CountryFullame: TAC1<br /><br />DB_orgStandardCode: ISO<br /><br />DB_effectiveDate: 2020-08-01<br /><br />DB_expirationDate: 2020-08-30<br /><br />DB_LastUpdateUserName: 3770052.0<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						Comparison between input data & DB data matching and passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='15'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_15</span>
+						<span class='test-time'>Sep 17, 2019 08:15:14 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:14 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:16 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 2s+29ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Country ORG STD service is successfully created when countryFullName attributes IS NOT PASSED in JSON Request.</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:14 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"E6",<br />		"countryShortName":"TAC",<br />		"orgStandardCode":"ISO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:15 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:15 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0",<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:27.361+0000",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"CntryOrgStd Details successfully saved with OrgStdCd :ISO",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geoplId":3740330332866690210,<br />		"orgStdCd":"ISO"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:15 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:15 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:15 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:16 AM</td>
+				<td class='step-details'>
+						DB connection success
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:16 AM</td>
+				<td class='step-details'>
+						Success message with Org STD Code is getting received as expected in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:16 AM</td>
+				<td class='step-details'>
+						Input Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:16 AM</td>
+				<td class='step-details'>
+						Input_UserName: 3770052.0<br /><br />Response_GeoId: 3740330332866690210<br /><br />Input_CountryShortName: TAC<br /><br />Input_CountryFullame: <br /><br />Input_orgStandardCode: ISO<br /><br />Input_effectiveDate: 2020-08-01<br /><br />Input_expirationDate: 2020-08-30<br /><br />Input_LastUpdateUserName:3770052.0<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:16 AM</td>
+				<td class='step-details'>
+						DB Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:16 AM</td>
+				<td class='step-details'>
+						DB_UserName: 3770052.0<br /><br />DB_GeoId: 3740330332866690210<br /><br />DB_CountryShortName: TAC<br /><br />DB_CountryFullame: <br /><br />DB_orgStandardCode: ISO<br /><br />DB_effectiveDate: 2020-08-01<br /><br />DB_expirationDate: 2020-08-30<br /><br />DB_LastUpdateUserName: 3770052.0<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:16 AM</td>
+				<td class='step-details'>
+						Comparison between input data & DB data matching and passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:16 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='16'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_16</span>
+						<span class='test-time'>Sep 17, 2019 08:15:16 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:16 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:17 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+499ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the orgStandardCode attribute is not passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"TT",<br />		"countryShortName":"MUL11",<br />		"countryFullName":"NID",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:29.480+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"orgStandardCode",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:17 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='17'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_17</span>
+						<span class='test-time'>Sep 17, 2019 08:15:17 AM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:17 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:18 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+733ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:18 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Country ORG STD service is successfully created  when the effectiveDate attribute is not passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:18 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:18 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"E7",<br />		"countryShortName":"TAX",<br />		"countryFullName":"TAX1",<br />		"orgStandardCode":"ISO",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:18 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:18 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0",<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:30.717+0000",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"CntryOrgStd Details successfully saved with OrgStdCd :ISO",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geoplId":5731048004767773979,<br />		"orgStdCd":"ISO"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:18 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:18 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:18 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='fail'>
+				<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+				<td class='timestamp'>8:15:18 AM</td>
+				<td class='step-details'>
+						Exception thrown when executing the test case: java.lang.NullPointerException
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  fail' status='fail' bdd='false' test-id='18'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_18</span>
+						<span class='test-time'>Sep 17, 2019 08:15:19 AM</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:19 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:20 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+859ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:19 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Country ORG STD service is successfully created when the expirationDate attribute is not passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:19 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:19 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"E8",<br />		"countryShortName":"TAZ",<br />		"countryFullName":"TAZ1",<br />		"orgStandardCode":"ISO",<br />		"effectiveDate":"2020-08-01"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:20 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:20 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0",<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:32.210+0000",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"CntryOrgStd Details successfully saved with OrgStdCd :ISO",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geoplId":4516678603653494857,<br />		"orgStdCd":"ISO"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:20 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:20 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:20 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='fail'>
+				<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+				<td class='timestamp'>8:15:20 AM</td>
+				<td class='step-details'>
+						Exception thrown when executing the test case: java.lang.NullPointerException
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='19'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_19</span>
+						<span class='test-time'>Sep 17, 2019 08:15:20 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:20 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:21 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+766ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the user name is null or Empty in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":""<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"tx",<br />		"countryShortName":"MUL11",<br />		"countryFullName":"ANID",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2020-08-30"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:33.273+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"userName",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:21 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='20'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_20</span>
+						<span class='test-time'>Sep 17, 2019 08:15:21 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:21 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:22 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+999ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the countryCode is more than 10 characters length in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"TAXQQQQQQQQQQQ",<br />		"countryShortName":"US",<br />		"countryFullName":"United States of America",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2019-08-31"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:34.540+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"countryCode",<br />			"message":" cannot be greater than 10 characters"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:22 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='21'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_21</span>
+						<span class='test-time'>Sep 17, 2019 08:15:22 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:22 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:23 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+516ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the countryShortName is more than 65 characters length in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"VV",<br />		"countryShortName":"United States of AmericaUnited States of AmericaUnited States of America",<br />		"countryFullName":"United States of America",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2019-08-31"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:35.530+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"countryShortName",<br />			"message":" cannot be greater than 65 characters"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:23 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='22'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_22</span>
+						<span class='test-time'>Sep 17, 2019 08:15:23 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:23 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:24 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+624ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the countryFullName is more than 120 characters length in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"tx",<br />		"countryShortName":"MUL11",<br />		"countryFullName":"United States of AmericaUnited States of AmericaUnited States of AmericaUnited States of AmericaUnited States of AmericaUnited States of America",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2019-08-31"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:36.356+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"countryFullName",<br />			"message":" cannot be greater than 120 characters"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='23'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_23</span>
+						<span class='test-time'>Sep 17, 2019 08:15:24 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:24 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:25 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+608ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the orgStandardCode is more than 10 characters length in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:24 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"tx",<br />		"countryShortName":"MUL11",<br />		"countryFullName":"ANID",<br />		"orgStandardCode":"POCFDGFDGFDGFD",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2019-08-31"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:37.186+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"orgStandardCode",<br />			"message":" cannot be greater than 10 characters"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='24'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_24</span>
+						<span class='test-time'>Sep 17, 2019 08:15:25 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:25 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:26 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+516ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the effectiveDate is other than timestamp format in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"tx",<br />		"countryShortName":"MUL11",<br />		"countryFullName":"ANID",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"ASDASDA",<br />		"expirationDate":"2019-08-31"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:25 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:38.152+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Json Parser Error",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"Error",<br />			"message":"Invalid Date Format"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='25'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_25</span>
+						<span class='test-time'>Sep 17, 2019 08:15:26 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:26 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:26 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+609ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the expirationDate is other than timestamp format in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"tx",<br />		"countryShortName":"MUL11",<br />		"countryFullName":"ANID",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"ASDASDA"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:38.986+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Json Parser Error",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"Error",<br />			"message":"Invalid Date Format"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:26 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='26'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_26</span>
+						<span class='test-time'>Sep 17, 2019 08:15:27 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:27 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:27 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+632ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the User Name is more than 25 characters length in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"12345678901234567890123456"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"US",<br />		"countryShortName":"US",<br />		"countryFullName":"United States of America",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2019-08-31"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timestamp":"2019-09-17T07:15:39.766+0000",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"userName",<br />			"message":" cannot be greater than 25 characters"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						Response timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:27 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='27'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_27</span>
+						<span class='test-time'>Sep 17, 2019 08:15:28 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Sep 17, 2019 08:15:28 AM</span>
+	<span class='label end-time'>Sep 17, 2019 08:15:28 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+437ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:28 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Exception is received when the URI is not correct</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:28 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:28 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3770052.0"<br />	},<br />	"countryOrgStdDTO":<br />	{<br />		"countryCode":"US",<br />		"countryShortName":"US",<br />		"countryFullName":"United States of America",<br />		"orgStandardCode":"WHO",<br />		"effectiveDate":"2020-08-01",<br />		"expirationDate":"2019-08-31"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:28 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>8:15:28 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"timestamp":1568704540726,<br />	"status":404,<br />	"error":"Not Found",<br />	"message":"No message available",<br />	"path":"/cntryOrgS"<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:28 AM</td>
+				<td class='step-details'>
+						Response status code 404 validation passed: 404
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:28 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank Country Code
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>8:15:28 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- subview left -->
+	<div class='subview-right left'>
+		<div class='view-summary'>
+			<div id='step-filters' class="right sr-filters">
+				<a class="btn-floating waves-effect waves-light green" status="pass" alt="pass" title="pass"><i class="material-icons">check_circle</i></a>
+				<a class="btn-floating waves-effect waves-light red" status="fail" alt="fail" title="fail"><i class="material-icons">cancel</i></a>
+				<a class="btn-floating waves-effect waves-light red darken-4" status="fatal" alt="fatal" title="fatal"><i class="material-icons">cancel</i></a>
+				<a class="btn-floating waves-effect waves-light pink text-lighten-1" status="error" alt="error" title="error"><i class="material-icons">error</i></a>
+				<a class="btn-floating waves-effect waves-light orange" alt="warning" status="warning" title="warning"><i class="material-icons">warning</i></a>
+				<a class="btn-floating waves-effect waves-light teal" status="skip" alt="skip" title="skip"><i class="material-icons">redo</i></a>
+				<a class="btn-floating waves-effect waves-light grey" status="clear" alt="Clear filters" title="Clear filters"><i class="material-icons">clear</i></a>
+			</div>
+			<h5 class='test-name'></h5>
+		</div>
+	</div>
+	<!-- subview right -->
+</div>
+<!-- test view --><!-- category view --><!-- exception view --><div id='dashboard-view' class='view hide'>
+	<div class='card-panel transparent np-v'>
+		<h5>Dashboard</h5>
+
+		<div class='row'>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Tests
+					<div class='panel-lead'>27</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Steps
+					<div class='panel-lead'>0</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Start
+					<div class='panel-lead'>Sep 17, 2019 08:14:47 AM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+			 		End
+			 		<div class='panel-lead'>Sep 17, 2019 08:15:28 AM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Time Taken
+					<div class='panel-lead'>0h 0m 41s+164ms</div>
+				</div>
+			</div>
+			<div class='col s4'>
+				<div class='card-panel dashboard-environment'>
+					<span class='right label cyan white-text'>Environment</span><p>&nbsp;</p>
+					
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+							<tr>
+								<td>Host Name</td>
+								<td>SYN-FLX-001</td>
+							</tr>
+							<tr>
+								<td>User Name</td>
+								<td>FedExUser</td>
+							</tr>
+							<tr>
+								<td>Environment</td>
+								<td>L3</td>
+							</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- dashboard view -->
+<!-- testrunner-logs view -->		</div>
+		<!-- container -->
+		<script>
+			var statusGroup = {
+                parentCount: 27,
+				passParent: 23,
+				failParent: 4,
+				fatalParent: 0,
+				errorParent: 0,
+				warningParent: 0,
+				skipParent: 0,
+				exceptionsParent: 4,
+				childCount: 0,
+				passChild: 0,
+				failChild: 0,
+				fatalChild: 0,
+				errorChild: 0,
+				warningChild: 0,
+				skipChild: 0,
+				infoChild: 0,
+				debugChild: 0,
+				exceptionsChild: 0,
+				grandChildCount: 0,
+				passGrandChild: 0,
+				failGrandChild: 0,
+				fatalGrandChild: 0,
+				errorGrandChild: 0,
+				warningGrandChild: 0,
+				skipGrandChild: 0,
+				infoGrandChild: 0,
+				debugGrandChild: 0,
+				exceptionsGrandChild: 0,
+			};
+		</script>
+		<script>
+			var timeline = {
+			        "TC_01":6.336,"TC_02":0.673,"TC_03":2.021,"TC_04":2.262,"TC_05":0.718,"TC_06":0.765,"TC_07":0.78,"TC_08":0.718,"TC_09":0.717,"TC_10":0.718,"TC_11":0.634,"TC_12":0.765,"TC_13":0.672,"TC_14":2.044,"TC_15":2.029,"TC_16":0.499,"TC_17":0.733,"TC_18":0.859,"TC_19":0.766,"TC_20":0.999,"TC_21":0.516,"TC_22":0.624,"TC_23":0.608,"TC_24":0.516,"TC_25":0.609,"TC_26":0.632,"TC_27":0.437
+			};
+		</script>
+		<script src='https://cdn.rawgit.com/extent-framework/extent-github-cdn/b65cd69/v3html/js/extent.js' type='text/javascript'></script>
+		<script type='text/javascript'>
+		</script>
+	</body>
+</html>

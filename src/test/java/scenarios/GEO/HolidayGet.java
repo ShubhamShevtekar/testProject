@@ -29,6 +29,7 @@ import utils.Queries;
 import utils.Reporting;
 import utils.ResponseMessages;
 import utils.RetrieveEndPoints;
+import utils.TestResultValidation;
 import utils.ValidationFields;
 import wsMethods.GetResponse;
 
@@ -43,11 +44,19 @@ public class HolidayGet extends Reporting{
 	String writableInputFields, writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
 	static Logger logger = Logger.getLogger(HolidayGet.class);
+	String actuatorQueryVersion;
+	TestResultValidation resultValidation = new TestResultValidation();
+	
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
+		/// *** getting actautor version
+				String tokenKey = tokenValues[0];
+				String tokenVal = token;
+				//String actuatorQueryVersionURL=RetrieveEndPoints.getEndPointUrl("queryActuator", fileName, level+".query.version");
+				//actuatorQueryVersion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,/*actuatorQueryVersionURL);*/
 	}
 	
 	@BeforeMethod
@@ -81,11 +90,12 @@ public class HolidayGet extends Reporting{
 			logger.info("URI passed: "+getEndPoinUrl);
         	test.pass("URI passed: "+getEndPoinUrl);
 			//***send request and get response
+        	Thread.sleep(5000);
 			Response res = GetResponse.sendRequestGet(tokenValues[0], token, getEndPoinUrl, fileName, testCaseID);
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 			JsonPath js = new JsonPath(responsestr);
-			String Wsstatus= js.getString("meta.message.status");
+			String Wsstatus= js.getString("meta.message.status");String actualRespVersionNum = js.getString("meta.version");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
@@ -96,10 +106,11 @@ public class HolidayGet extends Reporting{
 	        }else{
 	        test.fail("Response validation failed as meta not found");
 	        }
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
+	        	test.pass("Response API version number validation passed");
 	        	//***get the DB query
 	    		String holidayGetQuery = query.holidayGetQuery();
 	    		//***get the fields needs to be validate in DB
@@ -179,10 +190,22 @@ public class HolidayGet extends Reporting{
 		        	Assert.fail("Test Failed");
 		        }
 	        }else {
-	        	logger.error("Response status validation failed: "+Wscode);
-				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
-				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response status validation failed: "+Wscode);
+	        	if (Wscode != 200) {
+					logger.error("Response status validation failed: " + Wscode);
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response status validation failed: " + Wscode);
+				} else if (meta == null) {
+					logger.error("Response validation failed as meta not found");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as meta not found");
+				} else if (!actualRespVersionNum.equalsIgnoreCase("1.0.0")) {
+					logger.error("Response validation failed as API version number is not matching with expected");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as API version number is not matching with expected");
+				}
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -227,7 +250,7 @@ public class HolidayGet extends Reporting{
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 			JsonPath js = new JsonPath(responsestr);
-			String Wsstatus= js.getString("meta.message.status");
+			String Wsstatus= js.getString("meta.message.status");String actualRespVersionNum = js.getString("meta.version");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
@@ -238,10 +261,11 @@ public class HolidayGet extends Reporting{
 	        }else{
 	        test.fail("Response validation failed as meta not found");
 	        }
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
+	        	test.pass("Response API version number validation passed");
 	        	//***get the DB query
 	    		String holidayPostQuery = query.holidayPostQuery(holidayName);
 	    		//***get the fields needs to be validate in DB
@@ -325,6 +349,13 @@ public class HolidayGet extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response status validation failed: "+Wscode);
+	        	if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                    logger.error("Response validation failed as API version number is not matching with expected");
+                             logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                             logger.error("------------------------------------------------------------------");
+                                      test.fail("Response validation failed as API version number is not matching with expected");       
+                    }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -369,7 +400,7 @@ public class HolidayGet extends Reporting{
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 			JsonPath js = new JsonPath(responsestr);
-			String Wsstatus= js.getString("meta.message.status");
+			String Wsstatus= js.getString("meta.message.status");String actualRespVersionNum = js.getString("meta.version");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
@@ -386,10 +417,11 @@ public class HolidayGet extends Reporting{
 	        {
 	        	logger.info("As expected total number of records available in response: "+responseRows.size());
 	        	test.pass("As expected total number of records available in response: "+responseRows.size());
-		        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+		        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		        {
 		        	logger.info("Response status code 400 validation passed: "+Wscode);
 		        	test.pass("Response status code 400 validation passed: "+Wscode);
+		        	test.pass("Response API version number validation passed");
 		        	//***error message validation
 					String expectMessage = resMsgs.getErrorMsg;
 					if(internalMsg.equals(expectMessage))
@@ -418,6 +450,13 @@ public class HolidayGet extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response status validation failed: "+Wscode);
+		        	if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+	                    logger.error("Response validation failed as API version number is not matching with expected");
+	                             logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	                             logger.error("------------------------------------------------------------------");
+	                                      test.fail("Response validation failed as API version number is not matching with expected");       
+	                    }
+
 		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 							responsestr1, "Fail", internalMsg );
 		        	Assert.fail("Test Failed");

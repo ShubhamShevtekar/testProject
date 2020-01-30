@@ -1,24 +1,19 @@
 package utils;
 
-import static org.testng.Assert.fail;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.*;
-import oracle.jdbc.*;
-import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Properties;
 
 
 public class DbConnect extends Reporting {
@@ -33,7 +28,7 @@ public class DbConnect extends Reporting {
 	public static void getProperty(String fileName, String testCaseID)
 	{
 		try {
-			testlevel = Miscellaneous.getEnv();
+			testlevel = Miscellaneous.getEnv();//System.getProperty("level");
 			
 			//get DB details as per environment
 			File file1 = new File("src/main/resources/DB_Properties/database.properties");
@@ -80,9 +75,9 @@ public class DbConnect extends Reporting {
 		try {
 		Class.forName("oracle.jdbc.driver.OracleDriver"); 
 		Connection con=DriverManager.getConnection(jdbcUrl,dbUser,dbPassword);
-		if(con != null) {
-            test.pass("DB connection success");
-        }
+//		if(con != null) {
+//            test.pass("DB connection success");
+//        }
 		Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result = stmt.executeQuery(query);
 		result.last();
@@ -108,6 +103,22 @@ public class DbConnect extends Reporting {
 		return queryResult;
 	}
 	
+	
+	public static Connection getSqlStatement(String fileName, String testCaseID)
+	{
+		getProperty(fileName, testCaseID);
+		Connection con=null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver"); 
+			con=DriverManager.getConnection(jdbcUrl,dbUser,dbPassword);
+		}catch(ClassNotFoundException | SQLException e) {
+			ex.writeExcel(fileName, testCaseID, "", "", "", "", "", "", "", "", "Fail", "DB Connection Exception: "+e.toString());
+			test.fail("DB connection failed: "+e);
+			Assert.fail("Test Failed");
+		}
+		return con;
+	}
+	
 //	public static HashMap<String, LinkedHashMap<String, String>> getResultSetForGet(String query, List<String> fields, String fileName, String testCaseID)
 //	{
 //		HashMap<String, LinkedHashMap<String, String>> DB_Get = new LinkedHashMap<String, LinkedHashMap<String, String>>();
@@ -116,7 +127,6 @@ public class DbConnect extends Reporting {
 //			Class.forName("oracle.jdbc.driver.OracleDriver"); 
 //			Connection con=DriverManager.getConnection(jdbcUrl,dbUser,dbPassword);
 //			if(con != null) {
-//	            System.out.println("!! Connected With Oracle Database !!\n");
 //	            test.pass("DB connection success");
 //	        }
 //			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -155,7 +165,6 @@ public class DbConnect extends Reporting {
 			Class.forName("oracle.jdbc.driver.OracleDriver"); 
 			Connection con=DriverManager.getConnection(jdbcUrl,dbUser,dbPassword);
 			if(con != null) {
-	            System.out.println("!! Connected With Oracle Database !!\n");
 	            test.pass("DB connection success");
 	        }
 			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -173,6 +182,42 @@ public class DbConnect extends Reporting {
 				Assert.fail("Test Failed");
 			}
 		return getPrimKey;
+	}
+	
+	
+	public static List<String> getResultSetFor1(String query, List<String> fields, String fileName, String testCaseID)
+	{
+		getProperty(fileName, testCaseID);
+		List<String> queryResult = new ArrayList<>();
+		try {
+		Class.forName("oracle.jdbc.driver.OracleDriver"); 
+		Connection con1=DriverManager.getConnection(jdbcUrl,dbUser,dbPassword);
+		if(con1 != null) {
+            test.pass("DB connection success");
+        }
+		Statement stmt = con1.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result = stmt.executeQuery(query);
+		result.last();
+		int rows = result.getRow();
+		result.beforeFirst();
+		String checkNull = null;
+		while(result.next()) {
+			int j=0;
+			for(int i=0; i<fields.size(); i++)
+			{
+				checkNull = result.getString(fields.get(i));
+				if(StringUtils.isBlank(checkNull)) {
+					checkNull="";
+				}	
+				queryResult.add(checkNull.trim());
+			}
+        }
+		}catch(ClassNotFoundException | SQLException e) {
+			ex.writeExcel(fileName, testCaseID, "", "", "", "", "", "", "", "", "Fail", "DB Connection Exception: "+e.toString());
+			test.fail("DB connection failed: "+e);
+			Assert.fail("Test Failed");
+		}
+		return queryResult;
 	}
 
 }

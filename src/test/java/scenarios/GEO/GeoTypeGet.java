@@ -1,15 +1,15 @@
 package scenarios.GEO;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -20,10 +20,6 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import utils.DbConnect;
@@ -49,11 +45,19 @@ public class GeoTypeGet extends Reporting{
 	String writableInputFields, writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
 	static Logger logger = Logger.getLogger(GeoTypeGet.class);
+	String actuatorQueryVersion;
+	TestResultValidation resultValidation = new TestResultValidation();
+
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
+		/// *** getting actautor version
+				String tokenKey = tokenValues[0];
+				String tokenVal = token;
+				//String actuatorQueryVersionURL=RetrieveEndPoints.getEndPointUrl("queryActuator", fileName, level+".query.version");
+				//actuatorQueryVersion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,/*actuatorQueryVersionURL);*/
 	}
 	
 	@BeforeMethod
@@ -78,7 +82,6 @@ public class GeoTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -91,6 +94,8 @@ public class GeoTypeGet extends Reporting{
 			Response res = GetResponse.sendRequestGet(tokenValues[0], token, getEndPoinUrl, fileName, testCaseID);
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String Wsstatus= js.getString("meta.message.status");
 	        String internalMsg = js.getString("meta.message.internalMessage");
@@ -103,10 +108,12 @@ public class GeoTypeGet extends Reporting{
 	        }else{
 	        test.fail("Response validation failed as meta not found");
 	        }
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+	        String actualRespVersionNum = js.getString("meta.version"); 
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
+	        	test.pass("Response API version number validation passed");
 	        	//***get the DB query
 	    		String geoTypeGetQuery = query.geoTypeGetQuery();
 	    		//***get the fields needs to be validate in DB
@@ -179,7 +186,14 @@ public class GeoTypeGet extends Reporting{
 							responsestr1, "Fail", internalMsg );
 		        	Assert.fail("Test Failed");
 		        }
-	        }else {
+	        }  else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+	        	logger.error("Response validation failed as Api Version Number is  present:");
+    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+    			logger.error("------------------------------------------------------------------");
+	        	test.fail("Response validation failed as API version number is not matching with actual");
+	        	}
+	        
+	        else {
 	        	logger.error("Response status validation failed: "+Wscode);
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
@@ -188,8 +202,7 @@ public class GeoTypeGet extends Reporting{
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
 	        }
-	        test.info("Response Recieved:");
-			test.info(responsestr1.replaceAll("\n", "<br />"));
+	        
 			logger.info("------------------------------------------------------------------");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -214,7 +227,6 @@ public class GeoTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -240,10 +252,12 @@ public class GeoTypeGet extends Reporting{
 	        }else{
 	        test.fail("Response validation failed as meta not found");
 	        }
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+	        String actualRespVersionNum = js.getString("meta.version"); 
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
+	        	test.pass("Response API version number validation passed");
 	        	//***get the DB query
 	    		String geoTypeGetQuery = query.geoTypePostQuery(geopoliticalTypeNm);
 	    		//***get the fields needs to be validate in DB
@@ -307,7 +321,14 @@ public class GeoTypeGet extends Reporting{
 		        			z++;
 		        		}
 		        	}
-	    		}else {
+	    		} else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+		        	logger.error("Response validation failed as Api Version Number is  present:");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+		        	test.fail("Response validation failed as API version number is not matching with actual");
+		        	}
+	    		
+	    		else {
 		        	logger.error("Total number of records matching between DB: "+getResultDB.size()/fields.size()+" & Response: "+responseRows.size());
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
@@ -351,7 +372,6 @@ public class GeoTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -383,7 +403,8 @@ public class GeoTypeGet extends Reporting{
 	        {
 	        	logger.info("As expected total number of records available in response: "+responseRows.size());
 	        	test.pass("As expected total number of records available in response: "+responseRows.size());
-		        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS"))
+	        	 String actualRespVersionNum = js.getString("meta.version"); 
+		        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		        {
 		        	logger.info("Response status code 400 validation passed: "+Wscode);
 		        	test.pass("Response status code 400 validation passed: "+Wscode);
@@ -400,7 +421,7 @@ public class GeoTypeGet extends Reporting{
 		        		test.pass("Expected error message is getting received in response when passing the invalid geopoliticalTypeNm in URI");
 		        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	writableInputFields, "NA",
 		    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-						test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+						test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 					}else {
 						logger.error("Expected error message is not getting received in response");
 						logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
@@ -410,7 +431,14 @@ public class GeoTypeGet extends Reporting{
 								responsestr, "Fail", internalMsg );
 			        	Assert.fail("Test Failed");
 			        }
-		        }else {
+		        } else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+		        	logger.error("Response validation failed as Api Version Number is  present:");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+		        	test.fail("Response validation failed as API version number is not matching with actual");
+		        	}
+		        
+		        else {
 		        	logger.error("Response status validation failed: "+Wscode);
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
@@ -451,7 +479,6 @@ public class GeoTypeGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -485,7 +512,7 @@ public class GeoTypeGet extends Reporting{
 	        		test.pass("Expected error message is getting received in response when passing the invalid URI");
 	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "NA",
 	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-					test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 				}else {
 					logger.error("Expected error message is not getting received in response");
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
@@ -503,6 +530,176 @@ public class GeoTypeGet extends Reporting{
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wsstatus,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
+	        }
+		}catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: "+e);
+			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: "+e);
+        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "",
+					"", "Fail", ""+e );
+        	Assert.fail("Test Failed");
+		}
+	}
+	
+	@Test
+	public void TC_05()
+	{	
+		//***get test case ID with method name
+		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();		
+		logger.info("Executing Test Case: "+testCaseID);
+		if(!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. "+testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+		
+		try {
+			//***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			//***send the data to create request and get request
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoGet", fileName, level+".geoType.get");
+			logger.info("URI passed: "+getEndPoinUrl);
+        	test.pass("URI passed: "+getEndPoinUrl);
+			//***send request and get response
+			String expiredToken = "v1%3AAPP3534861%3ACNs7wqTWQDe1xJivTxQcPl9%2Bb94XKxfVKC9WQbULqn5hKunN9PKQwv%2BE7ZXK%2FQwqpsf66XzflXZVcQOpMk%2BtufNG3awVeYy9FQeqY%2Btosnt7ONkSHd8I3sIUXHEEuVXEBKJe1pUoVOauy1BvIPMQeYDP2HmxtaiZ5zlXuu2nXI4%3D%3AAPP3534861";
+			Response res = GetResponse.sendRequestGet(tokenValues[0], expiredToken, getEndPoinUrl, fileName, testCaseID);
+			String responsestr=res.asString(); 
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus= res.getStatusLine();
+			String errorMsg1 = js.getString("error");
+			String	errorMsg2 = js.getString("message");
+			
+	        int Wscode= res.statusCode();
+	        String expectMessage = resMsgs.countryExpiredTokenGraphQLMsg;
+	        String meta = js.getString("meta");
+	        String timestamp = js.getString("meta.timestamp");
+	        if(Wscode == 401)
+		    {
+	        	logger.info("Response status code 401 validation passed: "+Wscode);
+	        	test.pass("Response status code 401 validation passed: "+Wscode);
+	      
+	        	//***error message validation
+				
+	        	if(errorMsg1.equals("Unauthorized") && errorMsg2.contains(expectMessage))
+				{
+	        		
+	        		logger.info("No records are getting received in response when sending the expired token");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the expired token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
+					logger.error("Expected error message is not getting received in response");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Expected error message is not getting received in response");
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
+		    }else {
+		    	
+	        		logger.error("Response status validation failed: "+Wscode);
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+					logger.error("------------------------------------------------------------------");
+		        	test.fail("Response status validation failed: "+Wscode);
+	        	
+	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+						responsestr, "Fail", "geoTypeName"+expectMessage );
+        	Assert.fail("Test Failed");
+	        }
+		}catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: "+e);
+			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: "+e);
+        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "",
+					"", "Fail", ""+e );
+        	Assert.fail("Test Failed");
+		}
+	}
+	
+	@Test
+	public void TC_06()
+	{	
+		//***get test case ID with method name
+		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();		
+		logger.info("Executing Test Case: "+testCaseID);
+		if(!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. "+testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+		
+		try {
+			//***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			//***send the data to create request and get request
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoGet", fileName, level+".geoType.get");
+			logger.info("URI passed: "+getEndPoinUrl);
+        	test.pass("URI passed: "+getEndPoinUrl);
+			//***send request and get response
+			String invalidToken = "v1%3AAPP3534861%3AX9Z6LxTsQaqGSBgYt75nuRYV6RxUd2HQqrTcnlebLHKAK8Ohv8yB0jn0uryBIkdLkuFjZfNA5jjL%2FHd%2B3PHx9u36ozad4QEKz2Ag7P71uBX6xvSqmpEM1pRdBpcKXGGcwQ4JPSdDXX15Av%2FH3pUJoVZbgfKuBizus%2F4jhk9BGA%3D%3AAPP3534862";
+			Response res = GetResponse.sendRequestGet(tokenValues[0], invalidToken, getEndPoinUrl, fileName, testCaseID);
+			String responsestr=res.asString(); 
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus= res.getStatusLine();
+			String errorMsg1 = js.getString("error");
+			String	errorMsg2 = js.getString("message");
+			
+	        int Wscode= res.statusCode();
+	        String expectMessage = resMsgs.countryInvalidTokenGraphQLMsg;
+	        String meta = js.getString("meta");
+	        String timestamp = js.getString("meta.timestamp");
+	        if(Wscode == 401)
+		    {
+	        	logger.info("Response status code 401 validation passed: "+Wscode);
+	        	test.pass("Response status code 401 validation passed: "+Wscode);
+	      
+	        	//***error message validation
+				
+	        	if(errorMsg1.equals("Unauthorized") && errorMsg2.contains(expectMessage))
+				{
+	        		
+	        		logger.info("No records are getting received in response when sending the invalid token");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the invalid token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	writableInputFields, "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
+					logger.error("Expected error message is not getting received in response");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Expected error message is not getting received in response");
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
+		    }else {
+		    	
+	        		logger.error("Response status validation failed: "+Wscode);
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+					logger.error("------------------------------------------------------------------");
+		        	test.fail("Response status validation failed: "+Wscode);
+	        	
+	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+						responsestr, "Fail", "geoTypeName"+expectMessage );
+        	Assert.fail("Test Failed");
 	        }
 		}catch (Exception e) {
 			e.printStackTrace();

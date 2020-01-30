@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
-  <test thread-count="5" name="Default test(failed)">
+  <test name="Default test(failed)">
     <classes>
-      <class name="scenarios.GEO.AffilTypeGet">
+      <class name="scenarios.GEO.CountryGraphQL">
         <methods>
           <include name="getToken"/>
-          <include name="getCurrentDate"/>
           <include name="startRepo"/>
+          <include name="getCurrentDate"/>
+          <include name="after"/>
+          <include name="TC_10"/>
+          <include name="zipFolder"/>
+          <include name="cleanFolder"/>
+          <include name="TC_03"/>
+          <include name="TC_01"/>
+          <include name="TC_12"/>
+          <include name="TC_02"/>
+          <include name="TC_13"/>
           <include name="startReport"/>
+          <include name="TC_11"/>
+          <include name="TC_06"/>
+          <include name="before"/>
           <include name="endReport"/>
           <include name="beforeSuite"/>
-          <include name="TC_05"/>
-          <include name="before"/>
         </methods>
-      </class> <!-- scenarios.GEO.AffilTypeGet -->
+      </class> <!-- scenarios.GEO.CountryGraphQL -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

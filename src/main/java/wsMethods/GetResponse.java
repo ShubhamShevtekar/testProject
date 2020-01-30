@@ -4,7 +4,6 @@ import static io.restassured.RestAssured.given;
 
 import org.testng.Assert;
 
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
@@ -74,5 +73,44 @@ public class GetResponse extends Reporting{
 			Assert.fail("Test Failed");
 		}
 		return res;
+	}
+	
+	public static Response sendGraphQLRequest(String payload, String key, String token, String url, String fileName, String testCaseID)
+	{
+		Response res = null;
+		try {
+			res = given()
+	            .header(key,token).and().header("Content-Type","application/json")
+	            .when()
+	            .body(payload)
+	            .post(url)
+	            .then()
+	            .extract().response();
+		}catch(Exception e){
+			e.printStackTrace();
+			ex.writeExcel(fileName, testCaseID, "", "", "", "", "", "", "", "", "Fail", "Send Request Exception: "+e.toString());
+			test.fail("Exception thrown when send request: "+e.toString());
+			Assert.fail("Test Failed");
+		}
+		return res;		
+	}
+	
+	public static Response sendActuatorRequestCommand(String key, String token, String url, String fileName)
+	{
+		Response res = null;
+		try {
+			res = given()
+	            .header(key,token).and().header("Content-Type","application/json")
+	            .when()
+	            .get(url)
+	            .then()
+	            .extract().response();
+		}catch(Exception e){
+			e.printStackTrace();
+			ex.writeExcel(fileName, "", "", "", "", "", "", "", "", "", "Fail", "Actuator Version Request Exception: "+e.toString());
+			test.fail("Exception thrown when send Actuator version URL: "+e.toString());
+			Assert.fail("Test Failed");
+		}
+		return res;		
 	}
 }

@@ -1,15 +1,15 @@
 package scenarios.GEO;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -19,10 +19,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import com.fedex.jms.client.reader.JMSReader;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -42,34 +39,31 @@ public class MonthOfYearPost extends Reporting{
 	
 	String scenarioName = getClass().getSimpleName();
 	String TestCaseDescription, scenarioType, userId, monthOfYearNumber, monthOfYearShortName;//, token;
+	JMSReader jmsReader = new JMSReader();
 	Queries query = new Queries();
 	//String[] tokenValues = new String[2];
 	String fileName = this.getClass().getSimpleName();
 	ExcelUtil ex = new ExcelUtil();
 	String runFlag = null;
-	String writableInputFields, writableDB_Fields=null;
+	
+	String writableInputFields, writableDB_Fields=null,writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
 	static Logger logger = Logger.getLogger(MonthOfYearPost.class);
+	String actuatorcommandversion;
+	TestResultValidation resultValidation = new TestResultValidation();
+	
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
-		//***get token properties
-/*		tokenValues = RetrieveEndPoints.getTokenProperties(fileName);
-		//***get token
-		URL url;
-		try {
-			url = new URL(tokenValues[1]);
-			URLConnection con = url.openConnection();
-			InputStream in = con.getInputStream();
-			String encoding = con.getContentEncoding();
-			encoding = encoding == null ? "UTF-8" : encoding;
-			token = IOUtils.toString(in, encoding);
-		} catch (IOException e) {
-			e.printStackTrace();
-			test.fail("Unable to get the token, exception thrown: "+e.toString());
-		}*/
+		
+		// *** getting actautor version
+		String tokenKey = tokenValues[0];
+		String tokenVal = token;
+		//String actuatorCommandeVersionURL=RetrieveEndPoints.getEndPointUrl("commandActuator", fileName, level+".command.version");
+		//actuatorcommandversion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,//actuatorCommandeVersionURL);
+		
 	}
 	
 	@BeforeMethod
@@ -83,7 +77,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=1)
 	public void TC_01()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();		
@@ -114,14 +108,14 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); 
+			String actualRespVersionNum = js.getString("meta.version"); 
 	        String Wsstatus= js.getString("meta.message.status");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        int Wscode= res.statusCode();
 	        
-	        
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null && timestamp!=null)
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null && (!meta.contains("timestamp")) 
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
@@ -203,12 +197,19 @@ public class MonthOfYearPost extends Reporting{
 	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 	    			logger.error("------------------------------------------------------------------");
 	            	test.fail("Response validation failed as meta not found");
-	           }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+	           }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 	    		logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 	    		logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-	           }
+	        	test.fail("Response validation failed as timestamp found");
+	           }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
+	        	
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -225,7 +226,8 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+
+	@Test(priority=3)
 	public void TC_02()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -266,15 +268,16 @@ public class MonthOfYearPost extends Reporting{
 			}
 	        int Wscode= res.statusCode();
 	        String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+	        String actualRespVersionNum = js.getString("meta.version"); 
 	        
-	        
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");  
+	        	test.pass("Response API version number validation passed"); 
 	        	//***error message validation
 				if(errorMsg1.get(0).equals("monthOfYearNumber") && errorMsg2.get(0).equals(expectMessage))
 				{
@@ -308,12 +311,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "orgStdCd"+expectMessage );
 	        	Assert.fail("Test Failed");
@@ -330,7 +339,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_03()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();		
@@ -361,8 +370,10 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); 
+			
+			String actualRespVersionNum = js.getString("meta.version"); 
+			
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
@@ -376,12 +387,14 @@ public class MonthOfYearPost extends Reporting{
 	        int Wscode= res.statusCode();
 	        
 	        
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response API version number validation passed"); 
 
 	        	//***error message validation
 				if(errorMsg1.get(0).equals("monthOfYearShortName") && errorMsg2.get(0).equals(expectMessage))
@@ -389,10 +402,10 @@ public class MonthOfYearPost extends Reporting{
 					String[] inputFieldValues = {userId, monthOfYearNumber, monthOfYearShortName};
 					String[] inputFieldNames = {"Input_UserName: ", "Input_monthOfYearNumber: ", "Input_monthOfYearShortName: "};
 	        		writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
-	        		logger.info("Expected error message is getting received in response when the meta data section is not passed in JSON");
+	        		logger.info("Expected error message is getting received in response ");
 	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
 	    			logger.info("------------------------------------------------------------------");
-	        		test.pass("Expected error message is getting received in response when the meta data section is not passed in JSON");
+	        		test.pass("Expected error message is getting received in response");
 	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
 	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
 					test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
@@ -416,12 +429,18 @@ public class MonthOfYearPost extends Reporting{
 	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 	    			logger.error("------------------------------------------------------------------");
 	            	test.fail("Response validation failed as meta not found");
-	           }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+	           }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 	    		logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 	    		logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-	           }
+	        	test.fail("Response validation failed as timestamp found");
+	           }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail",  "monthOfYearShortName"+expectMessage );
 	        	Assert.fail("Test Failed");
@@ -438,7 +457,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_04()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -469,7 +488,7 @@ public class MonthOfYearPost extends Reporting{
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String actualRespVersionNum = js.getString("meta.version"); 
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
@@ -483,12 +502,14 @@ public class MonthOfYearPost extends Reporting{
 	        int Wscode= res.statusCode();
 	        
 	        
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");  
+	        	test.pass("Response API version number validation passed"); 
 
 	        	//***error message validation
 				if(errorMsg1.get(0).equals("meta") && errorMsg2.get(0).equals(expectMessage))
@@ -523,12 +544,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "meta"+expectMessage  );
 	        	Assert.fail("Test Failed");
@@ -545,7 +572,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_05()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -576,7 +603,7 @@ public class MonthOfYearPost extends Reporting{
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String actualRespVersionNum = js.getString("meta.version"); 
 			
 			String Wsstatus= res.getStatusLine();
 	     //   String internalMsg = js.getString("errorMessages.e");
@@ -590,7 +617,8 @@ public class MonthOfYearPost extends Reporting{
 				errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
@@ -629,12 +657,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "monthOfYearNumber"+expectMessage );
 	        	Assert.fail("Test Failed");
@@ -651,7 +685,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_06()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();		
@@ -682,8 +716,8 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); 
+			String actualRespVersionNum = js.getString("meta.version"); 
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
@@ -697,12 +731,14 @@ public class MonthOfYearPost extends Reporting{
 	        int Wscode= res.statusCode();
 	        
 	        
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response API version number validation passed"); 
 
 	        	//***error message validation
 				if(errorMsg1.get(0).equals("monthOfYearShortName") && errorMsg2.get(0).equals(expectMessage))
@@ -710,10 +746,10 @@ public class MonthOfYearPost extends Reporting{
 					String[] inputFieldValues = {userId, monthOfYearNumber, monthOfYearShortName};
 					String[] inputFieldNames = {"Input_UserName: ", "Input_monthOfYearNumber: ", "Input_monthOfYearShortName: "};
 	        		writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
-	        		logger.info("Expected error message is getting received in response when the meta data section is not passed in JSON");
+	        		logger.info("Expected error message is getting received in response");
 	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
 	    			logger.info("------------------------------------------------------------------");
-	        		test.pass("Expected error message is getting received in response when the meta data section is not passed in JSON");
+	        		test.pass("Expected error message is getting received in response");
 	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
 	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
 					test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
@@ -727,7 +763,7 @@ public class MonthOfYearPost extends Reporting{
 		        	Assert.fail("Test Failed");
 		        }
 		    }else {
-	        	if(Wscode!=200){
+	        	if(Wscode!=400){
 	        		logger.error("Response status validation failed: "+Wscode);
 	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 	    			logger.error("------------------------------------------------------------------");
@@ -737,12 +773,18 @@ public class MonthOfYearPost extends Reporting{
 	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 	    			logger.error("------------------------------------------------------------------");
 	            	test.fail("Response validation failed as meta not found");
-	           }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+	           }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 	    		logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 	    		logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-	           }
+	        	test.fail("Response validation failed as timestamp found");
+	           }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", "monthOfYearShortName"+expectMessage );
 	        	Assert.fail("Test Failed");
@@ -759,7 +801,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_07()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -789,8 +831,7 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); String actualRespVersionNum = js.getString("meta.version"); 
 			String Wsstatus= res.getStatusLine();
 	       // String internalMsg = js.getString("errorMessages.e");
 	        int Wscode= res.statusCode();
@@ -804,12 +845,12 @@ public class MonthOfYearPost extends Reporting{
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
 			
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp")) && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");   test.pass("Response API version number validation passed"); 
 	        	//***error message validation
 	        	if(errorMsg1.get(0).equals("userName") && errorMsg2.get(0).equals(expectMessage))
 				{
@@ -843,12 +884,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "userName"+expectMessage );
 	        	Assert.fail("Test Failed");
@@ -865,7 +912,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_08()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -895,8 +942,8 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); String actualRespVersionNum = js.getString("meta.version"); 
+			
 			String Wsstatus= res.getStatusLine();
 	       // String internalMsg = js.getString("errorMessages.e");
 	        int Wscode= res.statusCode();
@@ -909,22 +956,22 @@ public class MonthOfYearPost extends Reporting{
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
 	        
-			 if(Wscode == 400 &&  meta != null && timestamp != null)
+			 if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp")) && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");   test.pass("Response API version number validation passed"); 
 	        	//***error message validation
 				if(errorMsg1.get(0).equals("monthOfYearNumber") && errorMsg2.get(0).equals(expectMessage))
 				{
 					String[] inputFieldValues = {userId, monthOfYearNumber, monthOfYearShortName};
 					String[] inputFieldNames = {"Input_UserName: ", "Input_monthOfYearNumber: ", "Input_monthOfYearShortName: "};
 	        		writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
-	        		logger.info("Expected error message is getting received in response when the monthOfyearNumber attribute is not passed in JSON");
+	        		logger.info("Expected error message is getting received in response when the monthOfyearNumber is more than 38 characters length in JSON");
 	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
 	    			logger.info("------------------------------------------------------------------");
-	        		test.pass("Expected error message is getting received in response when the monthOfyearNumber attribute is not passed in JSON");
+	        		test.pass("Expected error message is getting received in response when the monthOfyearNumber is more than 38 characters length in JSON");
 	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
 	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
 					test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
@@ -948,12 +995,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "Error"+ expectMessage );
 	        	Assert.fail("Test Failed");
@@ -970,7 +1023,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_09()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -1001,7 +1054,8 @@ public class MonthOfYearPost extends Reporting{
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String actualRespVersionNum = js.getString("meta.version"); 
+			
 			
 			String Wsstatus= res.getStatusLine();
 	       // String internalMsg = js.getString("errorMessages.e");
@@ -1015,12 +1069,14 @@ public class MonthOfYearPost extends Reporting{
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
 	        
-			 if(Wscode == 400 &&  meta != null && timestamp != null)
+			 if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))
+					 && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");   
+	        	test.pass("Response API version number validation passed"); 
 	        	//***error message validation
 	        	if(errorMsg1.get(0).equals("monthOfYearShortName") && errorMsg2.get(0).equals(expectMessage))
 				{
@@ -1054,12 +1110,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "monthOfYearShortName"+ expectMessage );
 	        	Assert.fail("Test Failed");
@@ -1076,7 +1138,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_10()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -1107,7 +1169,8 @@ public class MonthOfYearPost extends Reporting{
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String actualRespVersionNum = js.getString("meta.version"); 
+			
 			String Wsstatus= res.getStatusLine();
 	       // String internalMsg = js.getString("errorMessages.e");
 	        int Wscode= res.statusCode();
@@ -1121,12 +1184,14 @@ public class MonthOfYearPost extends Reporting{
 			}
 			//String 
 	        
-			if(Wscode == 400 &&  meta != null && timestamp != null)
+			if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))
+					&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 			{
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response API version number validation passed"); 
 	        	//***error message validation
 	        	if(errorMsg1.get(0).equals("userName") && errorMsg2.get(0).equals(expectMessage))
 				{
@@ -1160,12 +1225,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail",  "userName"+  expectMessage );
 	        	Assert.fail("Test Failed");
@@ -1183,7 +1254,7 @@ public class MonthOfYearPost extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=3)
 	public void TC_11()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -1267,7 +1338,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_12()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -1297,8 +1368,9 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); 
+			String actualRespVersionNum = js.getString("meta.version"); 
+			
 			String Wsstatus= res.getStatusLine();
 	      //  String internalMsg = js.getString("errorMessages.e");
 	        int Wscode= res.statusCode();
@@ -1311,12 +1383,14 @@ public class MonthOfYearPost extends Reporting{
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
 	        
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp")) 
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");  
+	        	test.pass("Response API version number validation passed"); 
 	        	//***error message validation
 				if(errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage))
 				{
@@ -1350,12 +1424,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "Error"+ expectMessage );
 	        	Assert.fail("Test Failed");
@@ -1373,7 +1453,7 @@ public class MonthOfYearPost extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=3)
 	public void TC_13()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();		
@@ -1406,17 +1486,20 @@ public class MonthOfYearPost extends Reporting{
 			JsonPath js = new JsonPath(responsestr);
 	        String Wsstatus= js.getString("meta.message.status");
 	        String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+	        String actualRespVersionNum = js.getString("meta.version"); 
+			
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        int Wscode= res.statusCode();
 	        
 	        
-	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && timestamp != null)
+	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && (!meta.contains("timestamp")) 
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");  
+	        	test.pass("Response API version number validation passed"); 
 	        	//***get the DB query
 	    		String monthOfYearPostQuery = query.monthOfYearPostQuery(monthOfYearNumber);
 	    		//***get the fields needs to be validate in DB
@@ -1492,12 +1575,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -1514,7 +1603,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_14()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -1544,8 +1633,9 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); 
+			String actualRespVersionNum = js.getString("meta.version"); 
+			
 			String Wsstatus= res.getStatusLine();
 	       // String internalMsg = js.getString("errorMessages.e");
 	        int Wscode= res.statusCode();
@@ -1558,12 +1648,14 @@ public class MonthOfYearPost extends Reporting{
 				errorMsg2.add(js.getString("errors["+i+"].message"));
 			}
 	        
-			 if(Wscode == 400 &&  meta != null && timestamp != null)
+			 if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp")) 
+					 && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");  
+	        	test.pass("Response API version number validation passed"); 
 	        	//***error message validation
 	        	if(errorMsg1.get(0).equals("monthOfYearNumber") && errorMsg2.get(0).equals(expectMessage))
 				{
@@ -1597,12 +1689,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail", "monthOfYearNumber"+expectMessage  );
 	        	Assert.fail("Test Failed");
@@ -1619,7 +1717,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_15()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();		
@@ -1650,8 +1748,9 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); 
+			String actualRespVersionNum = js.getString("meta.version"); 
+			
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
@@ -1665,12 +1764,14 @@ public class MonthOfYearPost extends Reporting{
 	        int Wscode= res.statusCode();
 	        
 	        
-	        if(Wscode == 400 &&  meta != null && timestamp != null)
+	        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp")) 
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");   
+	        	test.pass("Response API version number validation passed"); 
 
 	        	//***error message validation
 				if(errorMsg1.get(0).equals("monthOfYearShortName") && errorMsg2.get(0).equals(expectMessage))
@@ -1678,10 +1779,10 @@ public class MonthOfYearPost extends Reporting{
 					String[] inputFieldValues = {userId, monthOfYearNumber, monthOfYearShortName};
 					String[] inputFieldNames = {"Input_UserName: ", "Input_monthOfYearNumber: ", "Input_monthOfYearShortName: "};
 	        		writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
-	        		logger.info("Expected error message is getting received in response when the meta data section is not passed in JSON");
+	        		logger.info("Expected error message is getting received in response when the null value is passed in JSON for monthOfyearShortName");
 	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
 	    			logger.info("------------------------------------------------------------------");
-	        		test.pass("Expected error message is getting received in response when the meta data section is not passed in JSON");
+	        		test.pass("Expected error message is getting received in response when the null value is passed in JSON for monthOfyearShortName");
 	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
 	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
 					test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
@@ -1705,12 +1806,18 @@ public class MonthOfYearPost extends Reporting{
 	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 	    			logger.error("------------------------------------------------------------------");
 	            	test.fail("Response validation failed as meta not found");
-	           }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+	           }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 	    		logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 	    		logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-	           }
+	        	test.fail("Response validation failed as timestamp found");
+	           }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", "monthOfYearShortName"+expectMessage );
 	        	Assert.fail("Test Failed");
@@ -1727,7 +1834,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_16()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();	
@@ -1757,8 +1864,9 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); 
+			String actualRespVersionNum = js.getString("meta.version"); 
+			
 			
 			String Wsstatus= res.getStatusLine();
 	      //  String internalMsg = js.getString("errorMessages.e");
@@ -1773,12 +1881,14 @@ public class MonthOfYearPost extends Reporting{
 			}
 			
 	        
-			 if(Wscode == 400 &&  meta != null && timestamp != null)
+			 if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))
+					 && actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 		    {
 	        	logger.info("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response status code 400 validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
 	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response API version number validation passed"); 
 	//***error message validation
 				
 	        	if(errorMsg1.get(0).equals("userName") && errorMsg2.get(0).equals(expectMessage))
@@ -1813,12 +1923,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 						responsestr, "Fail",  "userName"+ expectMessage );
 	        	Assert.fail("Test Failed");
@@ -1835,7 +1951,7 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=3)
 	public void TC_17()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();		
@@ -1866,19 +1982,22 @@ public class MonthOfYearPost extends Reporting{
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String meta =  js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
+			String meta =  js.getString("meta"); 
+			String actualRespVersionNum = js.getString("meta.version"); 
+			
 	        String Wsstatus= js.getString("meta.message.status");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        int Wscode= res.statusCode();
 	        
 	        
-	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && timestamp != null)
+	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && (!meta.contains("timestamp"))
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");  
+	        	test.pass("Response API version number validation passed"); 
 	        	
 	        	//***get the DB query
 	    		String monthOfYearPostQuery = query.monthOfYearPostQuery(monthOfYearNumber);
@@ -1955,12 +2074,18 @@ public class MonthOfYearPost extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }else if(timestamp == null){
-	        	logger.error("Response validation failed as timestamp not found");
+		       }else if(meta.contains("timestamp")){
+	        	logger.error("Response validation failed as timestamp found");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
-	        	test.fail("Response validation failed as timestamp not found");
-		       }
+	        	test.fail("Response validation failed as timestamp found");
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -1977,6 +2102,104 @@ public class MonthOfYearPost extends Reporting{
 		}
 	}
 	
+
+	@Test(priority=2)
+	public void TC_18()
+	{	
+		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: "+testCaseID);
+		if(!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. "+testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+		boolean testResult=false;
+		//***get test case ID with method name
+		try {
+			//***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			
+			//***get JMS response
+			 JSONObject getJMSResult =jmsReader.messageGetsPublished("MONTH_OF_YEAR");
+			
+ 		  if(getJMSResult!=null){
+			String reqFormatted = Miscellaneous.jsonFormat(getJMSResult.toString());
+			test.info("JMS Response Recieved:");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+			 
+			String monthOfYearShortName =   getJMSResult.getJSONObject("data").getString("monthOfYearShortName");
+			int  monthOfYearNumber1=getJMSResult.getJSONObject("data").getInt("monthOfYearNumber");
+			//***Need to convert monthOfYearNumber1 int value to String
+			String monthOfYearNumber= Integer.toString(monthOfYearNumber1);
+			
+			if(monthOfYearNumber!=null){
+				//***get the DB query
+				String moyJMSQuery = query.monthOfYearPostQuery(monthOfYearNumber);
+				//***get the fields needs to be validate in DB
+				List<String> fields = ValidationFields.monthOfYearGetMethodDbFields();
+	    		//***get the result from DB
+	    		List<String> getResultDB = DbConnect.getResultSetFor(moyJMSQuery, fields, fileName, testCaseID);
+	    		String[] JMSValue = {monthOfYearNumber, monthOfYearShortName};
+	    		testResult = TestResultValidation.testValidationForJMS(JMSValue,getResultDB) ;
+	    		String[] responseDbFieldValues = {monthOfYearNumber,getResultDB.get(0),monthOfYearShortName,getResultDB.get(1)};
+    			String[] responseDbFieldNames = {"Response_monthOfYearNumber: ", "DB_monthOfYearNumber: ", 
+    					"Response_monthOfYearShortNamem: ", "DB_monthOfYearShortName: "};
+	    		if(testResult){
+	    			//***write result to excel
+        			writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues, responseDbFieldNames);
+	    			logger.info("Comparison between JMS response & DB data matching are passed");
+	    			logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	    			test.pass(writableResult.replaceAll("\n", "<br />"));  
+	    			test.pass("Comparison between JMS response & DB data matching are passed");
+        			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "",
+        					"", "", writableResult, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+	    		}else{
+        			writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues, responseDbFieldNames);
+	    			logger.error("Comparison between JMS & DB data not matching and failed");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+	    			test.fail(writableResult.replaceAll("\n", "<br />")); 
+	    			test.fail("Comparison between input data & DB data not matching and failed");
+	    			test.fail("Comparison between input data & DB data not matching and failed");
+	    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "",
+        					"", "", writableResult, "Fail", "Comparison between JMS & DB data matching are Failed " );
+	    			Assert.fail("Test Failed");
+	    		}
+			}else {
+    			logger.error("monthOfYearNumber is not available in response");
+    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+    			logger.error("------------------------------------------------------------------");
+				test.fail("monthOfYearNumber is not available in response");
+    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "",
+    					"", "", "", "", "", "Fail", "monthOfYearNumber is not available in response" );
+    			Assert.fail("Test Failed");
+			}
+ 		  }
+ 		  else
+ 		  {
+ 			 logger.error("Posted request is not reached to JMS queue");
+ 			//   logger.error("msgSource and DataSegement validation not passed");
+				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+				logger.error("------------------------------------------------------------------");
+				test.fail("Posted request is not reached to JMS queue");
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "",
+						"", "", "", "", "", "Fail", "Posted request is not reached to JMS queue" );
+				Assert.fail("Test Failed");
+ 		  }
+		}catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: "+e);
+			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: "+e);
+        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "",
+					"", "Fail", ""+e );
+        	Assert.fail("Test Failed");
+		}
+	}
 	
 	//***get the values from test data sheet
 	public void testDataFields(String scenarioName, String testCaseId)
