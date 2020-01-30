@@ -3,42 +3,70 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
   <test name="Test(failed)">
     <classes>
-      <class name="scenarios.GEO.LanguagePost">
+      <class name="scenarios.GEO.HolidayGraphQL">
         <methods>
-          <include name="TC_18"/>
-          <include name="TC_19"/>
-          <include name="TC_14"/>
-          <include name="TC_15"/>
-          <include name="TC_16"/>
-          <include name="TC_17"/>
-          <include name="TC_10"/>
-          <include name="TC_11"/>
-          <include name="TC_12"/>
-          <include name="TC_13"/>
+          <include name="getToken"/>
+          <include name="getCurrentDate"/>
+          <include name="zipFolder"/>
+          <include name="TC_06"/>
+          <include name="cleanFolder"/>
+          <include name="TC_05"/>
+          <include name="TC_04"/>
           <include name="startReport"/>
+          <include name="TC_03"/>
+          <include name="startRepo"/>
           <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- scenarios.GEO.HolidayGraphQL -->
+      <class name="scenarios.GEO.UomTypeGraphQL">
+        <methods>
           <include name="getToken"/>
           <include name="startRepo"/>
-          <include name="getCurrentDate"/>
-          <include name="TC_07"/>
-          <include name="TC_08"/>
-          <include name="TC_09"/>
           <include name="TC_03"/>
-          <include name="TC_25"/>
-          <include name="TC_04"/>
+          <include name="before"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
           <include name="TC_05"/>
           <include name="TC_06"/>
-          <include name="TC_21"/>
-          <include name="TC_22"/>
-          <include name="TC_01"/>
-          <include name="TC_23"/>
-          <include name="TC_02"/>
-          <include name="TC_24"/>
-          <include name="TC_20"/>
-          <include name="before"/>
+          <include name="endReport"/>
           <include name="beforeSuite"/>
+          <include name="TC_04"/>
         </methods>
-      </class> <!-- scenarios.GEO.LanguagePost -->
+      </class> <!-- scenarios.GEO.UomTypeGraphQL -->
+      <class name="scenarios.GEO.GeoRltspGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="TC_04"/>
+          <include name="getCurrentDate"/>
+          <include name="startRepo"/>
+          <include name="TC_09"/>
+          <include name="before"/>
+          <include name="startReport"/>
+          <include name="TC_08"/>
+          <include name="endReport"/>
+          <include name="TC_03"/>
+          <include name="beforeSuite"/>
+          <include name="TC_05"/>
+          <include name="TC_06"/>
+          <include name="TC_07"/>
+        </methods>
+      </class> <!-- scenarios.GEO.GeoRltspGraphQL -->
+      <class name="scenarios.GEO.AffilTypeGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="TC_04"/>
+          <include name="before"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
+          <include name="startRepo"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="TC_03"/>
+          <include name="TC_05"/>
+        </methods>
+      </class> <!-- scenarios.GEO.AffilTypeGraphQL -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

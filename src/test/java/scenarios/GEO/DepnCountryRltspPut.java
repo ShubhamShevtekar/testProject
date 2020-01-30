@@ -1,15 +1,15 @@
 package scenarios.GEO;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -19,6 +19,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.fedex.jms.client.reader.JMSReader;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -34,10 +35,6 @@ import utils.ValidationFields;
 import wsMethods.GetResponse;
 import wsMethods.PostMethod;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
-
 public class DepnCountryRltspPut extends Reporting{
 	
 	String scenarioName = getClass().getSimpleName();
@@ -47,29 +44,23 @@ public class DepnCountryRltspPut extends Reporting{
 	String fileName = this.getClass().getSimpleName();
 	ExcelUtil ex = new ExcelUtil();
 	String runFlag = null;
-	String writableInputFields, writableDB_Fields=null;
+	Long dependentRelationshipId=null;
+	String writableInputFields, writableDB_Fields=null,writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
+	JMSReader jmsReader = new JMSReader();
 	static Logger logger = Logger.getLogger(DepnCountryRltspPut.class);
+	String actuatorcommandversion;
+	TestResultValidation resultValidation = new TestResultValidation();
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
-		//***get token properties
-/*		tokenValues = RetrieveEndPoints.getTokenProperties(fileName);
-		//***get token
-		URL url;
-		try {
-			url = new URL(tokenValues[1]);
-			URLConnection con = url.openConnection();
-			InputStream in = con.getInputStream();
-			String encoding = con.getContentEncoding();
-			encoding = encoding == null ? "UTF-8" : encoding;
-			token = IOUtils.toString(in, encoding);
-		} catch (IOException e) {
-			e.printStackTrace();
-			test.fail("Unable to get the token, exception thrown: "+e.toString());
-		}*/
+		// *** getting actautor version
+				String tokenKey = tokenValues[0];
+				String tokenVal = token;
+				//String actuatorCommandeVersionURL=RetrieveEndPoints.getEndPointUrl("commandActuator", fileName, level+".command.version");
+				//actuatorcommandversion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,//actuatorCommandeVersionURL);
 	}
 	
 	@BeforeMethod
@@ -83,7 +74,7 @@ public class DepnCountryRltspPut extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=1)
 	public void TC_01()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -115,7 +106,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		String meta =  js.getString("meta");
+		String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 		String timestamp = js.getString("meta.timestamp");
 		
 		String Wsstatus= js.getString("meta.message.status");
@@ -123,12 +114,12 @@ public class DepnCountryRltspPut extends Reporting{
         int Wscode= res.statusCode();
         
         
-        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null && timestamp!=null)
+        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
         {
         	logger.info("Response status validation passed: "+Wscode);
         	test.pass("Response status validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed");
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed");
         	//***get the DB query
     		String depnCntryRltspPuttQuery = query.depnCntryRltspPostQuery(depnCntryRltspDesc);
     		//***get the fields needs to be validate in DB
@@ -176,7 +167,7 @@ public class DepnCountryRltspPut extends Reporting{
         			test.pass("Comparison between input data & DB data matching and passed");
         			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, writableDB_Fields,
         					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-    				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+    				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
         		}else{
         			
         			logger.error("Comparison between input data & DB data not matching and failed");
@@ -212,12 +203,18 @@ public class DepnCountryRltspPut extends Reporting{
     			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
     			logger.error("------------------------------------------------------------------");
             	test.fail("Response validation failed as meta not found");
-           }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+           }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
     		logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
     		logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-           }
+        	test.fail("Response validation failed as timestamp found");
+           }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 					responsestr1, "Fail", internalMsg );
         	Assert.fail("Test Failed");
@@ -236,7 +233,7 @@ public class DepnCountryRltspPut extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=2)
 	public void TC_02()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -268,7 +265,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		 String meta =  js.getString("meta");
+		 String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String timestamp = js.getString("meta.timestamp");
         String Wsstatus= res.getStatusLine();
         String internalMsg = js.getString("errorMessages.e");
@@ -283,12 +280,12 @@ public class DepnCountryRltspPut extends Reporting{
 			errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
-        if(Wscode == 400 &&  meta != null && timestamp != null)
+        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
 			if(errorMsg1.get(0).equals("dependentRelationshipDescription") && errorMsg2.get(0).equals(expectMessage))	
 			{
@@ -303,7 +300,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when sending the blank DepnCntryRltspDesc");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -328,12 +325,18 @@ public class DepnCountryRltspPut extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as meta not found");
-	       }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+	       }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-	       }
+        	test.fail("Response validation failed as timestamp found");
+	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 					responsestr, "Fail", "dependentRelationshipDescription"+ expectMessage );
         	Assert.fail("Test Failed");
@@ -352,7 +355,7 @@ public class DepnCountryRltspPut extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=2)
 	public void TC_03()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -383,7 +386,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		String meta =  js.getString("meta");
+		String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 		String timestamp = js.getString("meta.timestamp");
 		
         String Wsstatus= res.getStatusLine();
@@ -398,12 +401,12 @@ public class DepnCountryRltspPut extends Reporting{
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
 		
-		 if(Wscode == 400 &&  meta != null && timestamp != null)
+		 if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
 
         	//***error message validation
 			if(errorMsg1.get(0).equals("meta") && errorMsg2.get(0).equals(expectMessage))
@@ -419,7 +422,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when the meta data section is not passed in JSON");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -443,12 +446,18 @@ public class DepnCountryRltspPut extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as meta not found");
-	       }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+	       }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-	       }
+        	test.fail("Response validation failed as timestamp found");
+	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 					responsestr, "Fail", "meta"+expectMessage );
         	Assert.fail("Test Failed");
@@ -469,7 +478,7 @@ public class DepnCountryRltspPut extends Reporting{
 	
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_04()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -500,7 +509,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		String meta =  js.getString("meta");
+		String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 		String timestamp = js.getString("meta.timestamp");
 		
         String Wsstatus= res.getStatusLine();
@@ -515,12 +524,12 @@ public class DepnCountryRltspPut extends Reporting{
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
 		
-		if(Wscode == 400 &&  meta != null && timestamp != null)
+		if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
 
         	//***error message validation
 			if(errorMsg1.get(0).equals("dependentRelationshipDescription") && errorMsg2.get(0).equals(expectMessage))
@@ -536,7 +545,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when the dependentRelationshipDescription attribute is not passed in JSON");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -560,12 +569,18 @@ public class DepnCountryRltspPut extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as meta not found");
-	       }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+	       }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-	       }
+        	test.fail("Response validation failed as timestamp found");
+	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 					responsestr, "Fail",  "dependentRelationshipDescription" +expectMessage );
         	Assert.fail("Test Failed");
@@ -585,7 +600,7 @@ public class DepnCountryRltspPut extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_05()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -616,7 +631,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		String meta =  js.getString("meta");
+		String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 		String timestamp = js.getString("meta.timestamp");
 		
         String Wsstatus= res.getStatusLine();
@@ -631,12 +646,12 @@ public class DepnCountryRltspPut extends Reporting{
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
 		
-        if(Wscode == 400 &&  meta != null && timestamp != null)
+        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
         	if(errorMsg1.get(0).equals("userName") && errorMsg2.get(0).equals(expectMessage))
 			{
@@ -651,7 +666,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when the user name is null or Empty in JSON");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -675,12 +690,18 @@ public class DepnCountryRltspPut extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as meta not found");
-	       }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+	       }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-	       }
+        	test.fail("Response validation failed as timestamp found");
+	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 					responsestr, "Fail",  "userName"+expectMessage );
         	Assert.fail("Test Failed");
@@ -700,7 +721,7 @@ public class DepnCountryRltspPut extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_06()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -731,7 +752,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		String meta =  js.getString("meta");
+		String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 		String timestamp = js.getString("meta.timestamp");
         String Wsstatus= res.getStatusLine();
         String internalMsg = js.getString("errorMessages.e");
@@ -739,18 +760,18 @@ public class DepnCountryRltspPut extends Reporting{
         int errorMsgLength = js.get("errors.size");
 		List<String> errorMsg1 = new ArrayList<>();
 		List<String> errorMsg2 = new ArrayList<>();
-		String expectMessage = resMsgs.lengthExceeds65Char;
+		String expectMessage = resMsgs.lengthExceeds65Char2;
 		for(int i=0; i<errorMsgLength; i++){
 			errorMsg1.add(js.getString("errors["+i+"].fieldName"));
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
         
-		 if(Wscode == 400 &&  meta != null && timestamp != null)
+		 if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
 			if(errorMsg1.get(0).equals("dependentRelationshipDescription") && errorMsg2.get(0).equals(expectMessage))
 			{
@@ -765,7 +786,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when the dependentRelationshipDescription is more than 65 characters length in JSON");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -789,12 +810,18 @@ public class DepnCountryRltspPut extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as meta not found");
-	       }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+	       }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-	       }
+        	test.fail("Response validation failed as timestamp found");
+	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 					responsestr, "Fail",  "dependentRelationshipDescription"+expectMessage );
         	Assert.fail("Test Failed");
@@ -813,7 +840,7 @@ public class DepnCountryRltspPut extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=2)
 	public void TC_07()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -844,7 +871,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		String meta =  js.getString("meta");
+		String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 		String timestamp = js.getString("meta.timestamp");
         String Wsstatus= res.getStatusLine();
         String internalMsg = js.getString("errorMessages.e");
@@ -858,12 +885,12 @@ public class DepnCountryRltspPut extends Reporting{
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
         
-        if(Wscode == 400 &&  meta != null && timestamp != null)
+        if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
 			if(errorMsg1.get(0).equals("userName") && errorMsg2.get(0).equals(expectMessage))
 			{
@@ -878,7 +905,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when the User Name is more than 25 characters length in JSON");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -902,12 +929,18 @@ public class DepnCountryRltspPut extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as meta not found");
-	       }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+	       }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-	       }
+        	test.fail("Response validation failed as timestamp found");
+	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 					responsestr, "Fail", "userName"+expectMessage  );
         	Assert.fail("Test Failed");
@@ -926,7 +959,7 @@ public class DepnCountryRltspPut extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=2)
 	public void TC_08()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -981,7 +1014,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when the URI is not correct");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -1018,7 +1051,7 @@ public class DepnCountryRltspPut extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=2)
 	public void TC_09()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1050,7 +1083,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		 String meta =  js.getString("meta");
+		 String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String timestamp = js.getString("meta.timestamp");
         String Wsstatus= res.getStatusLine();
         String internalMsg = js.getString("errorMessages.e");
@@ -1065,12 +1098,12 @@ public class DepnCountryRltspPut extends Reporting{
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
         
-		 if(Wscode == 404 &&  meta != null && timestamp != null)
+		 if(Wscode == 404 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 404 validation passed: "+Wscode);
         	test.pass("Response status code 404 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
 			if(errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage))
 			{
@@ -1085,7 +1118,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when sending the blank DepnCntryRltspDesc");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -1110,12 +1143,18 @@ public class DepnCountryRltspPut extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as meta not found");
-	       }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+	       }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-	       }
+        	test.fail("Response validation failed as timestamp found");
+	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 					responsestr, "Fail", "Error"+ expectMessage );
         	Assert.fail("Test Failed");
@@ -1135,7 +1174,7 @@ public class DepnCountryRltspPut extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_10()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1167,7 +1206,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		 String meta =  js.getString("meta");
+		 String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 			String timestamp = js.getString("meta.timestamp");
         String Wsstatus= res.getStatusLine();
     //    String internalMsg = js.getString("errorMessages.e");
@@ -1183,12 +1222,12 @@ public class DepnCountryRltspPut extends Reporting{
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
         
-		 if(Wscode == 400 &&  meta != null && timestamp != null)
+		 if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
 			if(errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage))
 			{
@@ -1203,7 +1242,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when sending the blank DepnCntryRltspDesc");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -1228,12 +1267,18 @@ public class DepnCountryRltspPut extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as meta not found");
-	       }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+	       }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-	       }
+        	test.fail("Response validation failed as timestamp found");
+	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 					responsestr, "Fail", "Error"+ expectMessage );
         	Assert.fail("Test Failed");
@@ -1252,7 +1297,7 @@ public class DepnCountryRltspPut extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=2)
 	public void TC_11()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1284,7 +1329,7 @@ public class DepnCountryRltspPut extends Reporting{
 		test.info("Response Recieved:");
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-		String meta =  js.getString("meta");
+		String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
 		String timestamp = js.getString("meta.timestamp");
 		
         String Wsstatus= res.getStatusLine();
@@ -1299,12 +1344,12 @@ public class DepnCountryRltspPut extends Reporting{
 			errorMsg2.add(js.getString("errors["+i+"].message"));
 		}
         
-		 if(Wscode == 400 &&  meta != null && timestamp != null)
+		 if(Wscode == 400 &&  meta != null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
 			if(errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage))
 			{
@@ -1319,7 +1364,7 @@ public class DepnCountryRltspPut extends Reporting{
         		test.pass("Expected error message is getting received in response when sending the blank DepnCntryRltspDesc");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 	        	
 				logger.error("Expected error message is not getting received in response");
@@ -1344,12 +1389,18 @@ public class DepnCountryRltspPut extends Reporting{
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as meta not found");
-	       }else if(timestamp == null){
-        	logger.error("Response validation failed as timestamp not found");
+	       }else if(meta.contains("timestamp")){
+        	logger.error("Response validation failed as timestamp found");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
-        	test.fail("Response validation failed as timestamp not found");
-	       }
+        	test.fail("Response validation failed as timestamp found");
+	       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+               logger.error("Response validation failed as API version number is not matching with expected");
+               logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+               logger.error("------------------------------------------------------------------");
+                        test.fail("Response validation failed as API version number is not matching with expected");       
+      }
+
         	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,"", "", Wsstatus, ""+Wscode,
 					responsestr, "Fail",  "Error"+ expectMessage );
         	Assert.fail("Test Failed");
@@ -1368,6 +1419,110 @@ public class DepnCountryRltspPut extends Reporting{
 		}
 	}
 	
+	// THis TC used to validation JMS response
+	@Test(priority=1)
+	public void TC_12()
+	{	
+		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: "+testCaseID);
+		if(!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. "+testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+		boolean testResult=false;
+		//***get test case ID with method name
+		try {
+			//***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+
+			//***send request and get response
+			
+			
+			 /*String str;    //  statement 1
+			    
+			    str = new String( "{" +
+			    		 "		    \"data\":{" +
+			    		 "		    \"dependentRelationshipDescription\": \"Country1\"," +
+			    		 "		  }}" );   // statement 2
+*/			    
+			   //JSONObject jsonObject = new JSONObject(str);
+			    JSONObject getJMSResult =jmsReader.messageGetsPublished("DEPN_CNTRY_RLTSP");
+			    System.out.println("jms result:"+getJMSResult);
+			    
+			    if(getJMSResult!=null){
+				String reqFormatted = Miscellaneous.jsonFormat(getJMSResult.toString());
+				test.info("JMS Response Recieved:");
+				test.info(reqFormatted.replaceAll("\n", "<br />"));
+			    
+				dependentRelationshipId=getJMSResult.getJSONObject("data").getLong("dependentRelationshipId");
+			String dependentRelationshipDescription=getJMSResult.getJSONObject("data").getString("dependentRelationshipDescription");
+
+			if(dependentRelationshipDescription!=null){
+				//***get the DB query
+				//String uomTypeJMSQuery = query.uomTypePostQuery(uomTypeCd);
+				String depnCntryRltspPostQuery = query.depnCntryRltspPostQuery(dependentRelationshipDescription);
+				//***get the fields needs to be validate in DB
+				List<String> fields = ValidationFields.depnCntryRltspGetMethodDbFieldsJms();
+	    		//***get the result from DB
+	    		List<String> getResultDB = DbConnect.getResultSetFor(depnCntryRltspPostQuery, fields, fileName, testCaseID);
+	    		//System.out.println("getResultDB1::::::::::::::::::::"+getResultDB);
+	    		String dependentRelationshipIdJms= dependentRelationshipId.toString();
+	    		String[] JMSValue = {dependentRelationshipIdJms, dependentRelationshipDescription};
+				//System.out.println("JMSValue::::::::::::::::::::"+JMSValue);
+	    		testResult = TestResultValidation.testValidationForJMS(JMSValue,getResultDB) ;
+	    		
+	    		if(testResult){
+	    			//***write result to excel
+        			String[] responseDbFieldValues = {dependentRelationshipIdJms,getResultDB.get(0),dependentRelationshipDescription,getResultDB.get(1)};
+        			String[] responseDbFieldNames = {"Response_dependentRelationshipId: ", "DB_dependentRelationshipId: ", 
+        					"Response_dependentRelationshipDescription: ", "DB_dependentRelationshipDescription: "};
+        			writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues, responseDbFieldNames);
+
+	    			logger.info("Comparison between JMS response & DB data matching and passed");
+	    			logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	    			test.pass("Comparison between JMS response & DB data matching and passed");
+	    			test.pass(writableResult.replaceAll("\n", "<br />"));  
+        			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "",
+        					"", "", writableResult, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+	    		}else{
+	    			String[] responseDbFieldValues = {dependentRelationshipIdJms,getResultDB.get(0),dependentRelationshipDescription,getResultDB.get(1)};
+        			String[] responseDbFieldNames = {"Response_dependentRelationshipId: ", "DB_dependentRelationshipId: ", 
+        					"Response_dependentRelationshipDescription: ", "DB_dependentRelationshipDescription: "};
+        			writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues, responseDbFieldNames);
+	    			logger.error("Comparison between JMS & DB data not matching and failed");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+	    			test.fail("Comparison between input data & DB data not matching and failed");
+	    			test.fail("Comparison between input data & DB data not matching and failed");
+	    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "",
+        					"", "", writableResult, "Fail", "Comparison between JMS & DB data not matching and failed" );
+	    			Assert.fail("Test Failed");
+	    		}
+			}else {
+    			logger.error("dependentRelationshipDescription is not available in response");
+    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+    			logger.error("------------------------------------------------------------------");
+				test.fail("Scrpt Code is not available in response");
+    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "",
+    					"", "", "", "", "", "Fail", "" );
+    			Assert.fail("Test Failed");
+			}
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: "+e);
+			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: "+e);
+        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "",
+					"", "Fail", ""+e );
+        	Assert.fail("Test Failed");
+		}
+	}
 	
 	//***get the values from test data sheet
 		public void testDataFields(String scenarioName, String testCaseId)

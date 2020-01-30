@@ -12,7 +12,7 @@ import org.testng.Assert;
 public class RetrieveEndPoints extends Reporting {
 	
 	public static String testlevel=null;
-	public static String geoPut, geoPost, geoGet=null;
+	public static String geoPut, geoPost, geoGet=null, graphQLGet=null,commandActuator =null, queryActuator=null, graphQLActuator=null;
 	public static String key, tokenUrl = null;
 	static HashMap<String, String> urlOutParams = new LinkedHashMap<String, String>();
 	static ExcelUtil ex = new ExcelUtil();
@@ -41,6 +41,16 @@ public class RetrieveEndPoints extends Reporting {
 					urlOutParams.put("geoPut", geoPut);
 					geoGet = prop1.getProperty(methodName);
 					urlOutParams.put("geoGet", geoGet);
+					graphQLGet = prop1.getProperty(methodName);
+					urlOutParams.put("graphQLGet", graphQLGet);
+					commandActuator = prop1.getProperty(methodName);
+					urlOutParams.put("commandActuator", commandActuator);
+					queryActuator = prop1.getProperty(methodName);
+					urlOutParams.put("queryActuator", queryActuator);
+					
+					graphQLActuator = prop1.getProperty(methodName);
+					urlOutParams.put("graphQLActuator", graphQLActuator);
+					
 					break;
 		}
 		

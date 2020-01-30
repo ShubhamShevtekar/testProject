@@ -1,15 +1,15 @@
 package scenarios.GEO;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -20,10 +20,6 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import utils.DbConnect;
@@ -36,7 +32,6 @@ import utils.RetrieveEndPoints;
 import utils.TestResultValidation;
 import utils.ValidationFields;
 import wsMethods.GetResponse;
-import wsMethods.PostMethod;
 
 public class MonthOfYearGet extends Reporting{
 	
@@ -49,11 +44,19 @@ public class MonthOfYearGet extends Reporting{
 	String writableInputFields, writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
 	static Logger logger = Logger.getLogger(MonthOfYearGet.class);
+	String actuatorQueryVersion;
+	TestResultValidation resultValidation = new TestResultValidation();
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
+		
+		// *** getting actautor version
+		String tokenKey = tokenValues[0];
+		String tokenVal = token;
+		//String actuatorQueryVersionURL=RetrieveEndPoints.getEndPointUrl("queryActuator", fileName, level+".query.version");
+		//actuatorQueryVersion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,/*actuatorQueryVersionURL);*/
 	}
 	
 	@BeforeMethod
@@ -88,6 +91,7 @@ public class MonthOfYearGet extends Reporting{
 			logger.info("URI passed: "+getEndPoinUrl);
         	test.pass("URI passed: "+getEndPoinUrl);
 			//***send request and get response
+        	Thread.sleep(5000);
 			Response res = GetResponse.sendRequestGet(tokenValues[0], token, getEndPoinUrl, fileName, testCaseID);
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
@@ -96,13 +100,16 @@ public class MonthOfYearGet extends Reporting{
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        List<String> responseRows = js.get("data");
 	       
-	        int Wscode= res.statusCode();
+	        int Wscode= res.statusCode(); 
+	        String actualRespVersionNum = js.getString("meta.version"); 
 	        String meta =  js.getString("meta");
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null)
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta !=null 
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
+	        	 test.pass("Response API version number validation passed"); 
 	        	//***get the DB query
 	    		String monthOfYearGetQuery = query.monthOfYearGetQuery();
 	    		//***get the fields needs to be validate in DB
@@ -186,7 +193,13 @@ public class MonthOfYearGet extends Reporting{
 					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 					logger.error("------------------------------------------------------------------");
 		        	test.fail("Response validation failed as meta not found");
-		       }
+		       }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+                   logger.error("Response validation failed as API version number is not matching with expected");
+                   logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                   logger.error("------------------------------------------------------------------");
+                            test.fail("Response validation failed as API version number is not matching with expected");       
+          }
+
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
@@ -234,7 +247,8 @@ public class MonthOfYearGet extends Reporting{
 			JsonPath js = new JsonPath(responsestr);
 			String Wsstatus= js.getString("status");
 	        String internalMsg = js.getString("error");
-	        int Wscode= res.statusCode();
+	        int Wscode= res.statusCode(); 
+	        
 	        test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			String timestamp = js.getString("timestamp");
@@ -244,6 +258,7 @@ public class MonthOfYearGet extends Reporting{
 	        	logger.info("Response status code 404 validation passed: "+Wscode);
 	        	test.pass("Response status code 404 validation passed: "+Wscode);
 	        	test.pass("Response timestamp validation passed");
+	        	test.pass("Response API version number validation passed"); 
 	        	//***error message validation
 				String expectMessage = resMsgs.invalidUrlMsg;
 				if(internalMsg.equals(expectMessage))
@@ -276,6 +291,7 @@ public class MonthOfYearGet extends Reporting{
 				logger.error("------------------------------------------------------------------");
 	        	test.fail("Response validation failed as timestamp not found");
 		       }
+
 	        
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wsstatus,
 						responsestr1, "Fail", internalMsg );

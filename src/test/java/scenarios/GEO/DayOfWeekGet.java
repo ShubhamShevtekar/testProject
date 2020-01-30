@@ -1,15 +1,15 @@
 package scenarios.GEO;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -20,10 +20,6 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import utils.DbConnect;
@@ -36,7 +32,6 @@ import utils.RetrieveEndPoints;
 import utils.TestResultValidation;
 import utils.ValidationFields;
 import wsMethods.GetResponse;
-import wsMethods.PostMethod;
 
 public class DayOfWeekGet extends Reporting{
 	
@@ -49,11 +44,18 @@ public class DayOfWeekGet extends Reporting{
 	String writableInputFields, writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
 	static Logger logger = Logger.getLogger(DayOfWeekGet.class);
+	String actuatorQueryVersion;
+	TestResultValidation resultValidation = new TestResultValidation();
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
+		/// *** getting actautor version 
+		String tokenKey = tokenValues[0];
+		String tokenVal = token;
+		//String actuatorQueryVersionURL=RetrieveEndPoints.getEndPointUrl("queryActuator", fileName, level+".query.version");
+		//actuatorQueryVersion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,/*actuatorQueryVersionURL);*/
 	}
 	
 	@BeforeMethod
@@ -78,7 +80,6 @@ public class DayOfWeekGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -91,21 +92,23 @@ public class DayOfWeekGet extends Reporting{
 			Response res = GetResponse.sendRequestGet(tokenValues[0], token, getEndPoinUrl, fileName, testCaseID);
 			String responsestr=res.asString(); 
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String Wsstatus= js.getString("meta.message.status");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        List<String> responseRows = js.get("data");
 	        int Wscode= res.statusCode();
-	        String meta=js.getString("meta");
+	        String meta=js.getString("meta");  
+	        String actualRespVersionNum = js.getString("meta.version"); 
 	       
-	        
-	        
-	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta!=null )
+	        if(Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta!=null   
+	        		&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	       
+	        	  test.pass("Response API version number validation passed"); 
 	        	
 	        	//***get the DB query
 	    		String dayOfWeekGetQuery = query.dayOfWeekGetQuery();
@@ -195,13 +198,19 @@ public class DayOfWeekGet extends Reporting{
 		  	        logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 		  	        logger.error("------------------------------------------------------------------");
 		  	        test.fail("Response validation failed as meta not found");
-		  	        }
+		  	        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+	                    logger.error("Response validation failed as API version number is not matching with expected");
+                        logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+                        logger.error("------------------------------------------------------------------");
+                                 test.fail("Response validation failed as API version number is not matching with expected");       
+               }
+
+	        	
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wscode,
 						responsestr1, "Fail", internalMsg );
 	        	Assert.fail("Test Failed");
 	        }
-	        test.info("Response Recieved:");
-			test.info(responsestr1.replaceAll("\n", "<br />"));
+	       
 			logger.info("------------------------------------------------------------------");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -226,7 +235,6 @@ public class DayOfWeekGet extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		boolean testResult=false;
 		try {
 			//***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -246,13 +254,13 @@ public class DayOfWeekGet extends Reporting{
 	        int Wscode= res.statusCode();
 	        test.info("Response Recieved:");
 	        String timestamp=js.getString("timestamp");
-			test.info(responsestr1.replaceAll("\n", "<br />"));		
-			if ( Wscode == 404 && timestamp != null ) {
+			test.info(responsestr1.replaceAll("\n", "<br />"));	
+			if ( Wscode == 404)
+				 {
 				
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
-				test.pass("Response timestamp validation passed");
-
+			
 				// ***error message validation
 				String expectMessage = resMsgs.invalidUrlMsg;
 				if (internalMsg.equals(expectMessage))
@@ -285,7 +293,8 @@ public class DayOfWeekGet extends Reporting{
 		  	        logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 		  	        logger.error("------------------------------------------------------------------");
 		  	        test.fail("Response validation failed as meta not found");
-		  	        }
+		  	        }  
+
 	        	test.fail("Response status validation failed: "+Wscode);
 	        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus, ""+Wsstatus,
 						responsestr1, "Fail", internalMsg );

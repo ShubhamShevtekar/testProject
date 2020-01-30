@@ -1,18 +1,15 @@
 package scenarios.GEO;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
@@ -22,6 +19,7 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.fedex.jms.client.reader.JMSReader;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -46,30 +44,22 @@ public class GeoRltspTypePost extends Reporting{
 	String fileName = this.getClass().getSimpleName();
 	ExcelUtil ex = new ExcelUtil();
 	String runFlag = null;
-	String writableInputFields, writableDBFields=null;
+	String writableInputFields, writableDBFields=null,writableResult=null;
 	ResponseMessages resMsgs = new ResponseMessages();
+	JMSReader jmsReader = new JMSReader();
 	static Logger logger = Logger.getLogger(GeoRltspTypePost.class);
-	
+	String actuatorcommandversion;
+	TestResultValidation resultValidation = new TestResultValidation();
 	@BeforeClass
 	public void before(){
 		DOMConfigurator.configure("log4j.xml");
 		//***create test result excel file
 		ex.createResultExcel(fileName);
-		//***get token properties
-/*		tokenValues = RetrieveEndPoints.getTokenProperties(fileName);
-		//***get token
-		URL url;
-		try {
-			url = new URL(tokenValues[1]);
-			URLConnection con = url.openConnection();
-			InputStream in = con.getInputStream();
-			String encoding = con.getContentEncoding();
-			encoding = encoding == null ? "UTF-8" : encoding;
-			token = IOUtils.toString(in, encoding);
-		} catch (IOException e) {
-			e.printStackTrace();
-			test.fail("Unable to get the token, exception thrown: "+e.toString());
-		}*/
+		// *** getting actautor version
+		String tokenKey = tokenValues[0];
+		String tokenVal = token;
+		//String actuatorCommandeVersionURL=RetrieveEndPoints.getEndPointUrl("commandActuator", fileName, level+".command.version");
+		//actuatorcommandversion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,//actuatorCommandeVersionURL);
 	}
 	
 	@BeforeMethod
@@ -83,7 +73,7 @@ public class GeoRltspTypePost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=1)
 	public void TC_01()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -94,7 +84,6 @@ public class GeoRltspTypePost extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is successfully created when valid values are passed for all attributes in JSON Request.", ExtentColor.PURPLE));
 		boolean testResult=false;
 		//***get test case ID with method name
 		
@@ -105,9 +94,7 @@ public class GeoRltspTypePost extends Reporting{
 		//***send the data to create request and get request
 		String payload = PostMethod.geoRsTypePostRequest(userId, geoRsTypeCode, geoRsTypeDesc);
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
-		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -117,21 +104,18 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-        //String Wsstatus= res.getStatusLine();
 		String Wsstatus= js.getString("meta.message.status");
         String internalMsg = js.getString("meta.message.internalMessage");
         int Wscode= res.statusCode();
-        String meta = js.getString("meta");
-        String timestamp = js.getString("meta.timestamp");
-        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && timestamp != null)
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
+        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
         {
         	logger.info("Response status validation passed: "+Wscode);
         	test.pass("Response status validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***get the DB query
     		String geoRsTypePostQuery = query.geoRsTypePostQuery(geoRsTypeCode);
     		//***get the fields needs to be validate in DB
@@ -167,11 +151,9 @@ public class GeoRltspTypePost extends Reporting{
         		writableDBFields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
         		logger.info("Input Data Values:");
         		test.info("Input Data Values:");
-        		//logger.info(writableInputFields.replaceAll("\n", "<br />"));
         		test.info(writableInputFields.replaceAll("\n", "<br />")); 
         		logger.info("DB Data Values:");
         		test.info("DB Data Values:");
-        		//logger.info(writableDBFields.replaceAll("\n", "<br />"));
         		test.info(writableDBFields.replaceAll("\n", "<br />"));
         		if(testResult)
         		{
@@ -181,7 +163,7 @@ public class GeoRltspTypePost extends Reporting{
         			test.pass("Comparison between input data & DB data matching and passed");
         			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, writableDBFields,
         					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-    				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+    				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
         		}else{
         			logger.error("Comparison between input data & DB data not matching and failed");
         			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
@@ -217,7 +199,7 @@ public class GeoRltspTypePost extends Reporting{
 	        	test.fail("Response validation failed as meta is not present: ");
 	        	
 	        
-	        } else if(timestamp == null){
+	        } else if(meta.contains("timestamp")){
 	        	logger.error("Response validation failed as timestamp is not present:");
     			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
     			logger.error("------------------------------------------------------------------");
@@ -241,7 +223,7 @@ public class GeoRltspTypePost extends Reporting{
 		}
 	}
 	
-	@Test
+	@Test(priority=2)
 	public void TC_02()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -252,7 +234,6 @@ public class GeoRltspTypePost extends Reporting{
 			throw new SkipException("Execution skipped as per test flag set");
 		}
 		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is not created when the Geopolitical Relationship Type Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
 		//***get test case ID with method name
 		try {
 		//***get the test data from sheet
@@ -261,9 +242,7 @@ public class GeoRltspTypePost extends Reporting{
 		//***send the data to create request and get request
 		String payload = PostMethod.geoRsTypePostRequest(userId, geoRsTypeCode, geoRsTypeDesc);
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
-		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -273,15 +252,12 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
         String Wsstatus= res.getStatusLine();
-        String internalMsg = js.getString("errorMessages.e");
         int Wscode= res.statusCode();
-        String expectMessage = resMsgs.requiredField;
-        String meta = js.getString("meta");
-       	String timestamp = js.getString("meta.timestamp");
+        String expectMessage = resMsgs.requiredFieldMsg;
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
        	int errorMsgLength =js.get("errors.size");
        	List <String> errorMgs1= new ArrayList<String>();
        	List <String> errorMgs2= new ArrayList<String>();
@@ -292,12 +268,12 @@ public class GeoRltspTypePost extends Reporting{
        	        	
        	  }
 
-       	if(Wscode == 400 && meta!=null && timestamp!=null)
+       	if(Wscode == 400 && meta!=null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
         	if(errorMgs2.get(0).equals(expectMessage)&&errorMgs1.get(0).equals("geopoliticalRelationshipTypeCd"))
 			{
@@ -310,7 +286,7 @@ public class GeoRltspTypePost extends Reporting{
         		test.pass("Expected error message is getting received in response ");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 				logger.error("Expected error message is not getting received in response");
 				logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
@@ -336,14 +312,20 @@ public class GeoRltspTypePost extends Reporting{
         	test.fail("Response validation failed as meta is not present");
         	
         	
-        }else if(timestamp == null){
+        }else if(meta.contains("timestamp")){
         	logger.error("Response validation failed as timestamp is not present");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
         	test.fail("Response validation failed as timestamp is not present");
         	
         	
-        }
+        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+            logger.error("Response validation failed as API version number is not matching with expected");
+            logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+            logger.error("------------------------------------------------------------------");
+                     test.fail("Response validation failed as API version number is not matching with expected");       
+   }
+
         ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 				responsestr1, "Fail", "geopoliticalRelationshipTypeCd"+expectMessage );
     	Assert.fail("Test Failed");
@@ -363,7 +345,7 @@ public class GeoRltspTypePost extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 		public void TC_03()
 		{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -373,7 +355,6 @@ public class GeoRltspTypePost extends Reporting{
 				logger.info("------------------------------------------------------------------");
 				throw new SkipException("Execution skipped as per test flag set");
 			}
-			//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is successfully created when valid values are passed for all attributes in JSON Request.", ExtentColor.PURPLE));
 			boolean testResult=false;
 			//***get test case ID with method name
 			try {
@@ -383,9 +364,7 @@ public class GeoRltspTypePost extends Reporting{
 			//***send the data to create request and get request
 			String payload = PostMethod.geoRsTypePostRequest(userId, geoRsTypeCode, geoRsTypeDesc);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
-			//logger.info("Input Request created:");
 			test.info("Input Request created:");
-			//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
 			//***get end point url
 			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -395,21 +374,18 @@ public class GeoRltspTypePost extends Reporting{
 			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 			logger.info("Response Recieved:");
 			test.info("Response Recieved:");
-			//logger.info(responsestr1.replaceAll("\n", "<br />"));
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-	        //String Wsstatus= res.getStatusLine();
 			String Wsstatus= js.getString("meta.message.status");
 	        String internalMsg = js.getString("meta.message.internalMessage");
 	        int Wscode= res.statusCode();
-	        String meta = js.getString("meta");
-	        String timestamp = js.getString("meta.timestamp");
-	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && timestamp != null)
+	        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
+	        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	        {
 	        	logger.info("Response status validation passed: "+Wscode);
 	        	test.pass("Response status validation passed: "+Wscode);
 	        	test.pass("Response meta validation passed");
-	        	test.pass("Response timestamp validation passed"); 
+	        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
 	        	//***get the DB query
 	    		String geoRsTypePostQuery = query.geoRsTypePostQuery(geoRsTypeCode);
 	    		//***get the fields needs to be validate in DB
@@ -447,11 +423,9 @@ public class GeoRltspTypePost extends Reporting{
 	        		writableDBFields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
 	        		logger.info("Input Data Values:");
 	        		test.info("Input Data Values:");
-	        		//logger.info(writableInputFields.replaceAll("\n", "<br />"));
 	        		test.info(writableInputFields.replaceAll("\n", "<br />")); 
 	        		logger.info("DB Data Values:");
 	        		test.info("DB Data Values:");
-	        		//logger.info(writableDBFields.replaceAll("\n", "<br />"));
 	        		test.info(writableDBFields.replaceAll("\n", "<br />"));
 	        		if(testResult)
 	        		{
@@ -461,7 +435,7 @@ public class GeoRltspTypePost extends Reporting{
 	        			test.pass("Comparison between input data & DB data matching and passed");
 	        			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, writableDBFields,
 	        					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-	    				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+	    				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 	        		}else{
 	        			logger.error("Comparison between input data & DB data not matching and failed");
 	        			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
@@ -497,7 +471,7 @@ public class GeoRltspTypePost extends Reporting{
 	        	test.fail("Response validation failed as meta is not present: ");
 	        	
 	        
-	        } else if(timestamp == null){
+	        } else if(meta.contains("timestamp")){
 	        	logger.error("Response validation failed as timestamp is not present:");
     			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
     			logger.error("------------------------------------------------------------------");
@@ -522,7 +496,7 @@ public class GeoRltspTypePost extends Reporting{
 		}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_04()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -533,7 +507,6 @@ public class GeoRltspTypePost extends Reporting{
 			throw new SkipException("Execution skipped as per test flag set");
 		}
 		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is not created when the Geopolitical Relationship Type Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
 		//***get test case ID with method name
 		try {
 		//***get the test data from sheet
@@ -544,7 +517,6 @@ public class GeoRltspTypePost extends Reporting{
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
 		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -554,14 +526,12 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
         String Wsstatus= res.getStatusLine();
         int Wscode= res.statusCode();
         String expectMessage = resMsgs.recordExistsMsg;
-        String meta = js.getString("meta");
-       	String timestamp = js.getString("meta.timestamp");
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
        	int errorMsgLength =js.get("errors.size");
        	List <String> errorMgs1= new ArrayList<String>();
        	List <String> errorMgs2= new ArrayList<String>();
@@ -572,12 +542,12 @@ public class GeoRltspTypePost extends Reporting{
        	        	
        	  }
 
-       	if(Wscode == 400 && meta!=null && timestamp!=null)
+       	if(Wscode == 400 && meta!=null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
         	if(errorMgs2.get(0).equals(expectMessage)&&errorMgs1.get(0).equals("NA"))
 			{
@@ -590,7 +560,7 @@ public class GeoRltspTypePost extends Reporting{
         		test.pass("Expected error message is getting received in response ");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 				logger.error("Expected error message is not getting received in response");
 				logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
@@ -616,14 +586,20 @@ public class GeoRltspTypePost extends Reporting{
         	test.fail("Response validation failed as meta is not present");
         	
         	
-        }else if(timestamp == null){
+        }else if(meta.contains("timestamp")){
         	logger.error("Response validation failed as timestamp is not present");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
         	test.fail("Response validation failed as timestamp is not present");
         	
         	
-        }
+        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+            logger.error("Response validation failed as API version number is not matching with expected");
+            logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+            logger.error("------------------------------------------------------------------");
+                     test.fail("Response validation failed as API version number is not matching with expected");       
+   }
+
         ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 				responsestr1, "Fail", "Error"+expectMessage );
     	Assert.fail("Test Failed");
@@ -644,7 +620,7 @@ public class GeoRltspTypePost extends Reporting{
 	
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_05()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -654,8 +630,6 @@ public class GeoRltspTypePost extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is not created when the Geopolitical Relationship Type Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
 		//***get test case ID with method name
 		try {
 		//***get the test data from sheet
@@ -664,9 +638,7 @@ public class GeoRltspTypePost extends Reporting{
 		//***send the data to create request and get request
 		String payload = PostMethod.geoRsTypePostRequestWithoutgeopoliticalRelationshipTypeCd(userId, geoRsTypeCode, geoRsTypeDesc);
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
-		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -676,14 +648,12 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
         String Wsstatus= res.getStatusLine();
         int Wscode= res.statusCode();
         String expectMessage = resMsgs.requiredField;
-        String meta = js.getString("meta");
-       	String timestamp = js.getString("meta.timestamp");
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
        	int errorMsgLength =js.get("errors.size");
        	List <String> errorMgs1= new ArrayList<String>();
        	List <String> errorMgs2= new ArrayList<String>();
@@ -694,12 +664,12 @@ public class GeoRltspTypePost extends Reporting{
        	        	
        	  }
 
-	if(Wscode == 400 && meta!=null && timestamp!=null)
+	if(Wscode == 400 && meta!=null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
         	if(errorMgs2.get(0).equals(expectMessage)&&errorMgs1.get(0).equals("geopoliticalRelationshipTypeCd"))
 			{
@@ -712,7 +682,7 @@ public class GeoRltspTypePost extends Reporting{
         		test.pass("Expected error message is getting received in response ");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 				logger.error("Expected error message is not getting received in response");
 				logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
@@ -738,14 +708,20 @@ public class GeoRltspTypePost extends Reporting{
         	test.fail("Response validation failed as meta is not present");
         	
         	
-        }else if(timestamp == null){
+        }else if(meta.contains("timestamp")){
         	logger.error("Response validation failed as timestamp is not present");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
         	test.fail("Response validation failed as timestamp is not present");
         	
         	
-        }
+        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+            logger.error("Response validation failed as API version number is not matching with expected");
+            logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+            logger.error("------------------------------------------------------------------");
+                     test.fail("Response validation failed as API version number is not matching with expected");       
+   }
+
         ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 				responsestr1, "Fail", "geopoliticalRelationshipTypeCd"+expectMessage );
     	Assert.fail("Test Failed");
@@ -766,7 +742,7 @@ public class GeoRltspTypePost extends Reporting{
 	
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_06()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -776,7 +752,6 @@ public class GeoRltspTypePost extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is successfully created when valid values are passed for all attributes in JSON Request.", ExtentColor.PURPLE));
 		boolean testResult=false;
 		//***get test case ID with method name
 		try {
@@ -786,9 +761,7 @@ public class GeoRltspTypePost extends Reporting{
 		//***send the data to create request and get request
 		String payload = PostMethod.geoRsTypePostRequestWithoutareaRelationshipTypeDescription(userId, geoRsTypeCode, geoRsTypeDesc);
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
-		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -799,21 +772,18 @@ public class GeoRltspTypePost extends Reporting{
 		
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
-        //String Wsstatus= res.getStatusLine();
 		String Wsstatus= js.getString("meta.message.status");
         String internalMsg = js.getString("meta.message.internalMessage");
         int Wscode= res.statusCode();
-        String meta = js.getString("meta");
-        String timestamp = js.getString("meta.timestamp");
-        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && timestamp != null)
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
+        if(Wscode == 200 && meta != null && Wsstatus.equalsIgnoreCase("SUCCESS") && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
         {
         	logger.info("Response status validation passed: "+Wscode);
         	test.pass("Response status validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***get the DB query
     		String geoRsTypePostQuery = query.geoRsTypePostQuery(geoRsTypeCode);
     		//***get the fields needs to be validate in DB
@@ -853,11 +823,9 @@ public class GeoRltspTypePost extends Reporting{
         		writableDBFields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
         		logger.info("Input Data Values:");
         		test.info("Input Data Values:");
-        		//logger.info(writableInputFields.replaceAll("\n", "<br />"));
         		test.info(writableInputFields.replaceAll("\n", "<br />")); 
         		logger.info("DB Data Values:");
         		test.info("DB Data Values:");
-        		//logger.info(writableDBFields.replaceAll("\n", "<br />"));
         		test.info(writableDBFields.replaceAll("\n", "<br />"));
         		if(testResult)
         		{
@@ -867,7 +835,7 @@ public class GeoRltspTypePost extends Reporting{
         			test.pass("Comparison between input data & DB data matching and passed");
         			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, writableDBFields,
         					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-    				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+    				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
         		}else{
         			logger.error("Comparison between input data & DB data not matching and failed");
         			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
@@ -903,7 +871,7 @@ public class GeoRltspTypePost extends Reporting{
 	        	test.fail("Response validation failed as meta is not present: ");
 	        	
 	        
-	        } else if(timestamp == null){
+	        } else if(meta.contains("timestamp")){
 	        	logger.error("Response validation failed as timestamp is not present:");
     			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
     			logger.error("------------------------------------------------------------------");
@@ -928,7 +896,7 @@ public class GeoRltspTypePost extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_07()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -938,8 +906,6 @@ public class GeoRltspTypePost extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is not created when the Geopolitical Relationship Type Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
 		//***get test case ID with method name
 		try {
 		//***get the test data from sheet
@@ -948,9 +914,7 @@ public class GeoRltspTypePost extends Reporting{
 		//***send the data to create request and get request
 		String payload = PostMethod.geoRsTypePostRequest(userId, geoRsTypeCode, geoRsTypeDesc);
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
-		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -961,7 +925,6 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
         String Wsstatus= res.getStatusLine();
@@ -986,7 +949,7 @@ public class GeoRltspTypePost extends Reporting{
         		test.pass("Expected error message is getting received in response ");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 				logger.error("Expected error message is not getting received in response");
 				logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
@@ -1018,7 +981,7 @@ public class GeoRltspTypePost extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_08()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1028,8 +991,6 @@ public class GeoRltspTypePost extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is not created when the Geopolitical Relationship Type Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
 		//***get test case ID with method name
 		try {
 		//***get the test data from sheet
@@ -1038,9 +999,7 @@ public class GeoRltspTypePost extends Reporting{
 		//***send the data to create request and get request
 		String payload = PostMethod.geoRsTypePostRequestWithoutMeta(userId, geoRsTypeCode, geoRsTypeDesc);
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
-		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -1050,14 +1009,12 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
         String Wsstatus= res.getStatusLine();
         int Wscode= res.statusCode();
         String expectMessage = resMsgs.requiredField;
-        String meta = js.getString("meta");
-       	String timestamp = js.getString("meta.timestamp");
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
        	int errorMsgLength =js.get("errors.size");
        	List <String> errorMgs1= new ArrayList<String>();
        	List <String> errorMgs2= new ArrayList<String>();
@@ -1068,12 +1025,12 @@ public class GeoRltspTypePost extends Reporting{
        	        	
        	  }
 
-       	if(Wscode == 400 && meta!=null && timestamp!=null)
+       	if(Wscode == 400 && meta!=null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
         	if(errorMgs2.get(0).equals(expectMessage)&&errorMgs1.get(0).equals("meta"))
 			{
@@ -1086,7 +1043,7 @@ public class GeoRltspTypePost extends Reporting{
         		test.pass("Expected error message is getting received in response ");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 				logger.error("Expected error message is not getting received in response");
 				logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
@@ -1112,14 +1069,20 @@ public class GeoRltspTypePost extends Reporting{
         	test.fail("Response validation failed as meta is not present");
         	
         	
-        }else if(timestamp == null){
+        }else if(meta.contains("timestamp")){
         	logger.error("Response validation failed as timestamp is not present");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
         	test.fail("Response validation failed as timestamp is not present");
         	
         	
-        }
+        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+            logger.error("Response validation failed as API version number is not matching with expected");
+            logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+            logger.error("------------------------------------------------------------------");
+                     test.fail("Response validation failed as API version number is not matching with expected");       
+   }
+
         ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 				responsestr1, "Fail", "meta"+expectMessage );
     	Assert.fail("Test Failed");
@@ -1139,7 +1102,7 @@ public class GeoRltspTypePost extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_09()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1149,8 +1112,6 @@ public class GeoRltspTypePost extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is not created when the Geopolitical Relationship Type Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
 		//***get test case ID with method name
 		try {
 		//***get the test data from sheet
@@ -1159,9 +1120,7 @@ public class GeoRltspTypePost extends Reporting{
 		//***send the data to create request and get request
 		String payload = PostMethod.geoRsTypePostRequestWithNullUser(userId, geoRsTypeCode, geoRsTypeDesc);
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
-		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -1171,14 +1130,12 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
         String Wsstatus= res.getStatusLine();
         int Wscode= res.statusCode();
         String expectMessage = resMsgs.requiredField;
-        String meta = js.getString("meta");
-       	String timestamp = js.getString("meta.timestamp");
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
        	int errorMsgLength =js.get("errors.size");
        	List <String> errorMgs1= new ArrayList<String>();
        	List <String> errorMgs2= new ArrayList<String>();
@@ -1189,12 +1146,12 @@ public class GeoRltspTypePost extends Reporting{
        	        	
        	  }
 
-       	if(Wscode == 400 && meta!=null && timestamp!=null)
+       	if(Wscode == 400 && meta!=null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
         	if(errorMgs2.get(0).equals(expectMessage)&&errorMgs1.get(0).equals("userName"))
 			{
@@ -1207,7 +1164,7 @@ public class GeoRltspTypePost extends Reporting{
         		test.pass("Expected error message is getting received in response ");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 				logger.error("Expected error message is not getting received in response");
 				logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
@@ -1233,14 +1190,20 @@ public class GeoRltspTypePost extends Reporting{
         	test.fail("Response validation failed as meta is not present");
         	
         	
-        }else if(timestamp == null){
+        }else if(meta.contains("timestamp")){
         	logger.error("Response validation failed as timestamp is not present");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
         	test.fail("Response validation failed as timestamp is not present");
         	
         	
-        }
+        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+            logger.error("Response validation failed as API version number is not matching with expected");
+            logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+            logger.error("------------------------------------------------------------------");
+                     test.fail("Response validation failed as API version number is not matching with expected");       
+   }
+
         ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 				responsestr1, "Fail", "userName"+expectMessage );
     	Assert.fail("Test Failed");
@@ -1260,7 +1223,7 @@ public class GeoRltspTypePost extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_10()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1271,10 +1234,7 @@ public class GeoRltspTypePost extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is not created when the Geopolitical Relationship Type Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
 		//***get test case ID with method name
-		
 		try {
 		//***get the test data from sheet
 		testDataFields(scenarioName, testCaseID);
@@ -1284,7 +1244,6 @@ public class GeoRltspTypePost extends Reporting{
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
 		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -1294,15 +1253,12 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
         String Wsstatus= res.getStatusLine();
-        String internalMsg = js.getString("errorMessages.e");
         int Wscode= res.statusCode();
-        String expectMessage = resMsgs.lengthExceeds20Char1;
-        String meta = js.getString("meta");
-       	String timestamp = js.getString("meta.timestamp");
+        String expectMessage = resMsgs.lengthExceeds20Char2;
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
        	int errorMsgLength =js.get("errors.size");
        	List <String> errorMgs1= new ArrayList<String>();
  	List <String> errorMgs2= new ArrayList<String>();
@@ -1313,12 +1269,12 @@ public class GeoRltspTypePost extends Reporting{
        	        	
        	  }
 
-	if(Wscode == 400 && meta!=null && timestamp!=null)
+	if(Wscode == 400 && meta!=null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
         	if(errorMgs2.get(0).equals(expectMessage)&&errorMgs1.get(0).equals("geopoliticalRelationshipTypeCd"))
 			{
@@ -1331,7 +1287,7 @@ public class GeoRltspTypePost extends Reporting{
         		test.pass("Expected error message is getting received in response");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 				logger.error("Expected error message is not getting received in response");
 	        	test.fail("Expected error message is not getting received in response");
@@ -1355,14 +1311,20 @@ public class GeoRltspTypePost extends Reporting{
         	test.fail("Response validation failed as meta is not present");
         	
         	
-        }else if(timestamp == null){
+        }else if(meta.contains("timestamp")){
         	logger.error("Response validation failed as timestamp is not present");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
         	test.fail("Response validation failed as timestamp is not present");
         	
         	
-        }
+        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+            logger.error("Response validation failed as API version number is not matching with expected");
+            logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+            logger.error("------------------------------------------------------------------");
+                     test.fail("Response validation failed as API version number is not matching with expected");       
+   }
+
         ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 				responsestr1, "Fail", "geopoliticalRelationshipTypeCd"+expectMessage );
     	Assert.fail("Test Failed");
@@ -1382,7 +1344,7 @@ public class GeoRltspTypePost extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_11()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1393,8 +1355,6 @@ public class GeoRltspTypePost extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is not created when the Geopolitical Relationship Type Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
 		//***get test case ID with method name
 		
 		try {
@@ -1404,9 +1364,7 @@ public class GeoRltspTypePost extends Reporting{
 		//***send the data to create request and get request
 		String payload = PostMethod.geoRsTypePostRequest(userId, geoRsTypeCode, geoRsTypeDesc);
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
-		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -1416,14 +1374,12 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
         String Wsstatus= res.getStatusLine();
         int Wscode= res.statusCode();
         String expectMessage = resMsgs.lengthExceeds100Char1;
-        String meta = js.getString("meta");
-       	String timestamp = js.getString("meta.timestamp");
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
        	int errorMsgLength =js.get("errors.size");
        	List <String> errorMgs1= new ArrayList<String>();
        	List <String> errorMgs2= new ArrayList<String>();
@@ -1434,12 +1390,12 @@ public class GeoRltspTypePost extends Reporting{
        	        	
        	  }
 
-       	if(Wscode == 400 && meta!=null && timestamp!=null)
+       	if(Wscode == 400 && meta!=null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
         	if(errorMgs2.get(0).equals(expectMessage)&&errorMgs1.get(0).equals("areaRelationshipTypeDescription"))
 			{
@@ -1450,7 +1406,7 @@ public class GeoRltspTypePost extends Reporting{
         		test.pass("Expected error message is getting received in response ");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 				logger.error("Expected error message is not getting received in response");
 	        	test.fail("Expected error message is not getting received in response");
@@ -1474,14 +1430,20 @@ public class GeoRltspTypePost extends Reporting{
         	test.fail("Response validation failed as meta is not present");
         	
         	
-        }else if(timestamp == null){
+        }else if(meta.contains("timestamp")){
         	logger.error("Response validation failed as timestamp is not present");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
         	test.fail("Response validation failed as timestamp is not present");
         	
         	
-        }
+        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+            logger.error("Response validation failed as API version number is not matching with expected");
+            logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+            logger.error("------------------------------------------------------------------");
+                     test.fail("Response validation failed as API version number is not matching with expected");       
+   }
+
         ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 				responsestr1, "Fail", "areaRelationshipTypeDescription"+expectMessage );
     	Assert.fail("Test Failed");
@@ -1501,7 +1463,7 @@ public class GeoRltspTypePost extends Reporting{
 	}
 	
 	
-	@Test
+	@Test(priority=2)
 	public void TC_12()
 	{	
 		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
@@ -1512,10 +1474,6 @@ public class GeoRltspTypePost extends Reporting{
 			logger.info("------------------------------------------------------------------");
 			throw new SkipException("Execution skipped as per test flag set");
 		}
-		//test.log(Status.INFO, MarkupHelper.createLabel("Validate that the Geopolitical Relationship Type service is not created when the Geopolitical Relationship Type Code is empty in JSON Request.", ExtentColor.PURPLE));
-		boolean testResult=false;
-		//***get test case ID with method name
-		
 		try {
 		//***get the test data from sheet
 		testDataFields(scenarioName, testCaseID);
@@ -1523,9 +1481,7 @@ public class GeoRltspTypePost extends Reporting{
 		//***send the data to create request and get request
 		String payload = PostMethod.geoRsTypePostRequest(userId, geoRsTypeCode, geoRsTypeDesc);
 		String reqFormatted = Miscellaneous.jsonFormat(payload);
-		//logger.info("Input Request created:");
 		test.info("Input Request created:");
-		//logger.info(reqFormatted.replaceAll("\n", "<br />"));
 		test.info(reqFormatted.replaceAll("\n", "<br />"));
 		//***get end point url
 		String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level+".geoRsType.post");
@@ -1535,14 +1491,12 @@ public class GeoRltspTypePost extends Reporting{
 		String responsestr1 = Miscellaneous.jsonFormat(responsestr);
 		logger.info("Response Recieved:");
 		test.info("Response Recieved:");
-		//logger.info(responsestr1.replaceAll("\n", "<br />"));
 		test.info(responsestr1.replaceAll("\n", "<br />"));
 		JsonPath js = new JsonPath(responsestr);
         String Wsstatus= res.getStatusLine();
         int Wscode= res.statusCode();
         String expectMessage = resMsgs.lengthExceeds25Char;
-        String meta = js.getString("meta");
-       	String timestamp = js.getString("meta.timestamp");
+        String meta = js.getString("meta");String actualRespVersionNum = js.getString("meta.version");
        	int errorMsgLength =js.get("errors.size");
        	List <String> errorMgs1= new ArrayList<String>();
        	List <String> errorMgs2= new ArrayList<String>();
@@ -1553,12 +1507,12 @@ public class GeoRltspTypePost extends Reporting{
        	        	
        	  }
 
-       	if(Wscode == 400 && meta!=null && timestamp!=null)
+       	if(Wscode == 400 && meta!=null && (!meta.contains("timestamp"))&& actualRespVersionNum.equalsIgnoreCase("1.0.0"))
 	    {
         	logger.info("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response status code 400 validation passed: "+Wscode);
         	test.pass("Response meta validation passed");
-        	test.pass("Response timestamp validation passed"); 
+        	test.pass("Response timestamp validation passed");test.pass("Response API version number validation passed"); 
         	//***error message validation
         	if(errorMgs2.get(0).equals(expectMessage)&&errorMgs1.get(0).equals("userName"))
 			{
@@ -1571,7 +1525,7 @@ public class GeoRltspTypePost extends Reporting{
         		test.pass("Expected error message is getting received in response ");
         		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,	writableInputFields, "NA",
     					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
-				test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+				test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
 			}else {
 				logger.error("Expected error message is not getting received in response");
 				logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
@@ -1597,19 +1551,23 @@ public class GeoRltspTypePost extends Reporting{
         	test.fail("Response validation failed as meta is not present");
         	
         	
-        }else if(timestamp == null){
+        }else if(meta.contains("timestamp")){
         	logger.error("Response validation failed as timestamp is not present");
 			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
 			logger.error("------------------------------------------------------------------");
         	test.fail("Response validation failed as timestamp is not present");
         	
         	
-        }
+        }else if(!actualRespVersionNum.equalsIgnoreCase("1.0.0")){
+            logger.error("Response validation failed as API version number is not matching with expected");
+            logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+            logger.error("------------------------------------------------------------------");
+                     test.fail("Response validation failed as API version number is not matching with expected");       
+   }
+
         ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus, ""+Wscode,
 				responsestr1, "Fail", "userName"+expectMessage );
     	Assert.fail("Test Failed");
-        
-        
 	    }
 	}catch (Exception e) {
 			e.printStackTrace();
@@ -1623,7 +1581,100 @@ public class GeoRltspTypePost extends Reporting{
 		}
 	}
 	
-	
+	//this  TC for JMS validation 
+	@Test(priority=1)
+	public void TC_13()
+	{	
+		String testCaseID = new Object(){}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: "+testCaseID);
+		if(!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. "+testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+		boolean testResult=false;
+		//***get test case ID with method name
+		try {
+			//***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+		    JSONObject getJMSResult =jmsReader.messageGetsPublished("GEOPL_RELATIONSHIP_TYPE");
+		    if(getJMSResult!=null){
+		    	String reqFormatted = Miscellaneous.jsonFormat(getJMSResult.toString());
+				test.info("JMS Response Recieved:");
+				test.info(reqFormatted.replaceAll("\n", "<br />"));	  
+			
+				String geopoliticalRelationshipTypeCd=getJMSResult.getJSONObject("data").getString("geopoliticalRelationshipTypeCd");
+				String areaRelationshipTypeDescription=getJMSResult.getJSONObject("data").getString("areaRelationshipTypeDescription");
+				if(geopoliticalRelationshipTypeCd!=null){
+					//***get the DB query
+					String affilPostPostQuery = query.geoRsTypePostQuery(geopoliticalRelationshipTypeCd);
+					//***get the fields needs to be validate in DB
+					List<String> fields = ValidationFields.geoRsTypeGetMethodDbFields();
+		    		//***get the result from DB
+		    		List<String> getResultDB = DbConnect.getResultSetFor(affilPostPostQuery, fields, fileName, testCaseID);
+		    		String[] JMSValue = {geopoliticalRelationshipTypeCd,areaRelationshipTypeDescription};
+		    		testResult = TestResultValidation.testValidationForJMS(JMSValue,getResultDB) ;
+		    		if(testResult){
+		    			//***write result to excel  
+	        			String[] responseDbFieldValues = {geopoliticalRelationshipTypeCd,getResultDB.get(0),areaRelationshipTypeDescription,getResultDB.get(1)};
+	        			String[] responseDbFieldNames = {"Response_geopoliticalRelationshipTypeCd: ", "DB_geopoliticalRelationshipTypeCd: ","Response_areaRelationshipTypeDescription: ", "DB_areaRelationshipTypeDescription: "};
+	        			writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues, responseDbFieldNames);
+
+		    			logger.info("Comparison between JMS response & DB data matching and passed");
+		    			logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+		    			logger.info("------------------------------------------------------------------");
+		    			test.pass("Comparison between JMS response & DB data matching and passed");
+		    			test.pass(writableResult.replaceAll("\n", "<br />"));  
+	        			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "",
+	        					"", "", writableResult, "Pass", "" );
+						test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+		    		}else{
+		    			String[] responseDbFieldValues = {geopoliticalRelationshipTypeCd,getResultDB.get(0),areaRelationshipTypeDescription,getResultDB.get(1)};
+	        			String[] responseDbFieldNames = {"Response_geopoliticalRelationshipTypeCd: ", "DB_geopoliticalRelationshipTypeCd: ","Response_areaRelationshipTypeDescription: ", "DB_areaRelationshipTypeDescription: "};
+	        			writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues, responseDbFieldNames);
+	        			
+		    			logger.error("Comparison between JMS & DB data not matching and failed");
+		    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+		    			logger.error("------------------------------------------------------------------");
+		    			test.fail("Comparison between input data & DB data not matching and failed");
+		    			test.fail("Comparison between input data & DB data not matching and failed");
+		    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "",
+	        					"", "", writableResult, "Fail", "Comparison between JMS & DB data not matching and failed" );
+		    			Assert.fail("Test Failed");
+		    		}
+				}else {
+	    			logger.error("geopoliticalRelationshipTypeCd is not available in response");
+	    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("geopoliticalRelationshipTypeCd is not available in response");
+	    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "",
+	    					"", "", "", "", "", "Fail", "" );
+	    			Assert.fail("Test Failed");
+				}
+		    	
+		    }
+		    else {
+    			logger.error("Posted request is not reached to JMS queue");
+    			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+    			logger.error("------------------------------------------------------------------");
+				test.fail("Posted request is not reached to JMS queue");
+    			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "",
+    					"", "", "", "", "", "Fail", "" );
+    			Assert.fail("Test Failed");
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: "+e);
+			logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: "+e);
+        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "",
+					"", "Fail", ""+e );
+        	Assert.fail("Test Failed");
+		}
+	}
 
 	//***get the values from test data sheet
 		public void testDataFields(String scenarioName, String testCaseId)

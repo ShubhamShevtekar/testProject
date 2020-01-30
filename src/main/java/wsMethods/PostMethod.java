@@ -1,12 +1,6 @@
 package wsMethods;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Properties;
-
-import utils.ExcelUtil;
 
 public class PostMethod{
 	
@@ -35,11 +29,69 @@ public class PostMethod{
 		return payload;
 	}
 	
+	        //geoType Graph QL
+			public static String geoTypeGraphQLRequestWithoutParameter()
+			{
+				String payload = "{\"query\":\"{  geopoliticalTypes {    geopoliticalTypeId    geopoliticalTypeName  }}\"}";
+				return payload;
+			}
+		
+			public static String geoTypeWithParameterGraphQL(String geoTypeName)
+			{
+				String payload =  "{\"query\":\"{  geopoliticalTypes (geopoliticalTypeName : \\\""+geoTypeName+"\\\") {    geopoliticalTypeId    geopoliticalTypeName    }}\"}";
+				return payload;
+			}
+			
+			public static String geoTypeWithParameterWith1AttributeGraphQL(String geoTypeName)
+			{
+				String payload =  "{\"query\":\"{  geopoliticalTypes (geopoliticalTypeName : \\\""+geoTypeName+"\\\") {    geopoliticalTypeId    }}\"}";
+				return payload;
+			}
+			
+			public static String geoTypeInvalidAttribute1GraphQL(String geoTypeName)
+			{
+				String payload =  "{\"query\":\"{  geopoliticalTypes (geopoliticalTypeName : \\\""+geoTypeName+"\\\") {    geopoliticalTypeId1    geopoliticalTypeName    }}\"}";
+				return payload;
+			}
+			
+			public static String geoTypeInvalid2AttributesGraphQL(String geoTypeName)
+			{
+				String payload =  "{\"query\":\"{  geopoliticalTypes (geopoliticalTypeName : \\\""+geoTypeName+"\\\") {    geopoliticalTypeId1    geopoliticalTypeName2    }}\"}";
+				return payload;
+			}
+	
+	
+	
 	//GeoRsType
 	public static String geoRsTypePostRequest(String userId, String geoRsTypeCode, String geoRsTypeDesc)
 	{
 		String payload = "{\"meta\":{\"userName\":\""+userId+"\"},\"geopoliticalRelationshipType\":{"
 				+ "\"geopoliticalRelationshipTypeCd\":\""+geoRsTypeCode+"\",\"areaRelationshipTypeDescription\":\""+geoRsTypeDesc+"\"}}";
+		return payload;
+	}
+	
+	//GRAPHQL
+	public static String geoRsTypeGraphQlRequest(String geoRsTypeCode){
+		String payload = "{\"query\":\"{  relationshipTypes (relationshipTypeCode :\\\""+geoRsTypeCode+"\\\") {    geopoliticalRelationshipTypeCode    areaRelationshipTypeDescription  }}\"}";
+		
+		return payload;
+	}
+	
+	public static String geoRsTypeGraphQlRequestWithTwoParameters(String geoRsTypeCode, String geoRsTypeDesc){
+		String payload = "{\"query\":\"{  relationshipTypes (relationshipTypeCode :\\\""+geoRsTypeCode+"\\\", relationshipTypeDescription :\\\""+geoRsTypeDesc+"\\\") {    geopoliticalRelationshipTypeCode    areaRelationshipTypeDescription  }}\"}";
+		
+		return payload;
+	}
+	
+	public static String geoRsTypeGraphQlRequestWithInvalidAttributeName(String geoRsTypeCode){
+		String payload = "{\"query\":\"{  relationshipTypes (relationshipTypeCode :\\\""+geoRsTypeCode+"\\\") {    geopoliticalRelationshipTypeCode1    areaRelationshipTypeDescription1  }}\"}";
+		
+		return payload;
+	}
+	
+	public static String geoRsTypeGraphQlRequestWithoutParameters(){
+		String payload = "{\"query\":\"{  relationshipTypes  {    geopoliticalRelationshipTypeCode    areaRelationshipTypeDescription  }}\"}";
+		
 		return payload;
 	}
 	
@@ -86,6 +138,47 @@ public class PostMethod{
 		return payload;
 	}
 	
+	public static String depnCntryRltspGraphQLWithTwoWrongAttribute(String dependentCountryCd )
+	{
+	
+		String payload ="{\"query\": \"{    countries (dependentCountryCd : \\\""+dependentCountryCd+"\\\") {      geopoliticalIds      dependentCountryRelationships {        " +
+	"dependentRelationshipDescription      }      }  }  \"}";
+	return payload;
+	}
+	
+	public static String depnCntryRltspTypeGraphQLWithWrongAttributes()
+	{
+		
+		String payload = "{\"query\":\"{  dependentCountryRelationshipTypes {    dependentRelationshipIds    dependentRelationshipDescriptions  }}\"}";
+		return payload;
+	}
+	
+	
+	
+	public static String depnCntryRltspTypeGraphQL()
+	{
+		
+		String payload = "{\"query\":\"{  dependentCountryRelationshipTypes {    dependentRelationshipId    dependentRelationshipDescription  }}\"}";
+		return payload;
+	}
+	public static String depnCntryRltspGraphQL()
+	{
+		
+		String payload = "{\"query\": \"{    countries {      geopoliticalId      dependentCountryRelationship {        dependentRelationshipDescription      }      }  }  \"}";
+		return payload;
+	}
+	
+	
+	
+	public static String depnCntryRltspGraphQLWithParam(String dependentCountryCd )
+	{
+	
+		String payload ="{\"query\": \"{    countries (dependentCountryCd : \\\""+dependentCountryCd+"\\\") {      geopoliticalId      dependentCountryRelationship {        " +
+	"dependentRelationshipDescription      }      }  }  \"}";
+	return payload;
+	}
+	
+	
 	
 	
 	//OrgStd
@@ -125,12 +218,51 @@ public class PostMethod{
 		return payload;
 	}
 	
+	public static String geoOrgStdGraphQLWithoutparam()
+	{
+		String payload = "{\"query\":\"{  geopoliticalOrganizationStandards" +
+	 "{    organizationStandardCode    organizationStandardName  " +
+	 "}}\"}";
+		return payload;
+	}
+	
+	public static String geoOrgStdGraphQLWithParam(String orgStdCd)
+	{
+		String payload = "{\"query\":\"{  geopoliticalOrganizationStandards (orgStdCd : \\\""+orgStdCd+"\\\") {    organizationStandardCode    organizationStandardName  }}\"}";
+		return payload;
+		
+	}
+	
+	public static String geoOrgStdGraphQlRequestWithInvalidAttributeName(String  orgStdCd)
+	{
+		String payload = "{\"query\":\"{  geopoliticalOrganizationStandards (orgStdCd : \\\""+orgStdCd+"\\\") {    organizationStandardCodes1    organizationStandardNames1  }}\"}";
+		return payload;
+	}
+	
+	public static String geoOrgStdGraphQlRequestWithInvalidParameterName(String  orgStdCd)
+	{
+		String payload = "{\"query\":\"{  geopoliticalOrganizationStandards (orgStdCd : \\\""+orgStdCd+"\\\") {    organizationStandardCode    organizationStandardName  }}\"}";
+		return payload;
+	}
+	
 	
 	//DepnCtryRltsp	
 	public static String depnCntryRltspPostRequest(String userId, String depnCntryRltsp )
 	{
 		String payload = "{\"meta\":{\"userName\":\""+userId+"\"},\"dependentCountryRelationship\":{"
 				+ "\"dependentRelationshipDescription\":\""+depnCntryRltsp+"\"}}";
+		return payload;
+	}
+	
+	public static String depnCntryRltspGqlWithParameters(String userId, String depnCntryRltsp, String depnCntryRltspDesc )
+	{
+		String payload = "{\"query\": \"{    countries {      geopoliticalId :\""+userId+"\"    dependentCountryRelationship :\""+depnCntryRltsp+"\", dependentRelationshipDescription :\""+depnCntryRltspDesc+"\")  {      geopoliticalId      dependentCountryRelationship       dependentRelationshipDescription         }  }  \"}";
+		return payload;
+	}
+	
+	public static String depnCntryRltspGqlWithoutParameters( )
+	{
+		String payload = "{\"query\": \"{{      geopoliticalId      dependentCountryRelationship       dependentRelationshipDescription        }  }  \"}";
 		return payload;
 	}
 	
@@ -173,12 +305,71 @@ public class PostMethod{
 		String payload = "{\"meta\":{\"userName\":\""+userId+"\"},\"holiday\":{\"holidayName\":\""+holidayName+"\"}}";
 		return payload;
 	}
+	public static String holidayGraphQl()
+	{
+		String payload = "{\"query\":\"{  holidays  {    holidayId    holidayName    holidayDateParameterText  }}\"}";
+		return payload;
+	}
+	public static String holidayParameterGraphQl(String holidayName)
+	{
+		String payload =  "{\"query\":\"{  holidays (holidayName : \\\""+holidayName+"\\\") {    holidayId    holidayName    holidayDateParameterText  }}\"}";
+		return payload;
+	}
+	
+	public static String holidayParameterOneWrongAttrbuteGraphQl(String holidayName)
+	{
+		String payload =  "{\"query\":\"{  holidays (holidayName : \\\""+holidayName+"\\\") {    holidayId    holidayName    holidayDateParameterTexts  }}\"}";
+		return payload;
+	}
+	
+	public static String holidayParameterTwoeWrongAttrbuteGraphQl(String holidayName)
+	{
+		String payload =  "{\"query\":\"{  holidays (holidayName : \\\""+holidayName+"\\\") {    holidayId    holidayNames    holidayDateParameterTexts  }}\"}";
+		return payload;
+	}
+	
+	public static String holidayParameterWithAttributeGraphQl(String holidayName)
+	{
+		String payload =  "{\"query\":\"{  holidays (holidayName : \\\""+holidayName+"\\\") {    holidayId   holidayDateParameterText  }}\"}";
+		return payload;
+	}
 	
 	//UOM
 	public static String uomTypePostRequest(String userId, String uomTypeCode, String uomTypeName, String uomTypeDesc)
 	{
 		String payload = "{\"meta\":{\"userName\":\""+userId+"\"},\"uomType\":{"
 				+ "\"uomTypeCd\":\""+uomTypeCode+"\",\"uomTypeNm\":\""+uomTypeName+"\",\"uomTypeDesc\":\""+uomTypeDesc+"\"}}";
+		return payload;
+	}
+	
+	//GRAPHQL
+	public static String uomTypeGraphQLRequestWithParam(String uomTypeCode)
+	{
+		String payload = "{\"query\": \"{    uomTypes (uomTypeCd :\\\""+uomTypeCode+"\\\") {      uomTypeCode      uomTypeName      uomTypeDesc    }  }  \"}";
+		return payload;
+	}
+	
+	public static String uomTypeGraphQLRequestWithoutUomTypeCd(String uomTypeCode)
+	{
+		String payload = "{\"query\": \"{    uomTypes (uomTypeCd :\\\""+uomTypeCode+"\\\") {      uomTypeName      uomTypeDesc    }  }  \"}";
+		return payload;
+	}
+	
+	public static String uomTypeGraphQLRequestWithoutParam()
+	{
+		String payload = "{\"query\": \"{    uomTypes {      uomTypeCode      uomTypeName      uomTypeDesc    }  }  \"}";
+		return payload;
+	}
+	
+	public static String uomTypeGraphQLRequestWithInvalidParam(String uomTypeCode)
+	{
+		String payload = "{\"query\": \"{    uomTypes (uomTypeCd :\\\""+uomTypeCode+"\\\") {      uomTypeCode      uomTypeName1      uomTypeDesc    }  }  \"}";
+		return payload;
+	}
+	
+	public static String uomTypeGraphQLRequestWithAllInvalidParam(String uomTypeCode)
+	{
+		String payload = "{\"query\": \"{    uomTypes (uomTypeCd :\\\""+uomTypeCode+"\\\") {      uomTypeCode1      uomTypeName1      uomTypeDesc1    }  }  \"}";
 		return payload;
 	}
 	
@@ -247,6 +438,36 @@ public class PostMethod{
 		return payload;
 	}
 	
+	     //Script Graph QL
+		public static String scriptGraphQLRequestWithoutParameter()
+		{
+			String payload = "{\"query\": \"{    scripts {      scriptCode      scriptName      scriptDescription    }  }  \"}";
+			return payload;
+		}
+		
+			public static String scriptGraphQLRequestWithParameter(String scriptCode)
+			{
+				String payload =  "{\"query\":\"{  scripts (scrptCd : \\\""+scriptCode+"\\\") {    scriptCode    scriptName    scriptDescription  }}\"}";
+				return payload;
+			}
+			
+			public static String scriptGraphQLWithParameterWithAttributes(String scriptCode)
+			{
+				String payload =  "{\"query\":\"{  scripts (scrptCd : \\\""+scriptCode+"\\\") {    scriptName    scriptDescription  }}\"}";
+				return payload;
+			}
+			
+			public static String scriptGraphQLWith1AtrributeInvalid(String scriptCode)
+			{
+				String payload =  "{\"query\":\"{  scripts (scrptCd : \\\""+scriptCode+"\\\") {    scriptCode    scriptName    scriptDescription1  }}\"}";
+				return payload;
+			}
+			
+			public static String scriptGraphQLWith2AtrributeInvalid(String scriptCode)
+			{
+				String payload =  "{\"query\":\"{  scripts (scrptCd : \\\""+scriptCode+"\\\") {    scriptCode    scriptName2    scriptDescription2  }}\"}";
+				return payload;
+			}
 	
 	//dayOfWeek
 	public static String dayOfWeekPostRequest(String userId, String dayOfWeekNbr, String dayOfWeekShortName, String dayOfWeekFullName)
@@ -274,6 +495,13 @@ public class PostMethod{
 	{
 		String payload = "{\"meta\":{\"userName\":\""+userId+"\"},\"dayOfWeek\":{"
 				+ "\"dayOfweekNumber\":\""+dayOfWeekNbr+"\",\"dayOfweekFullName\":\""+dayOfWeekFullName+"\"}}";
+		return payload;
+	}
+	
+	public static String dayOfWeekPostRequestWithNulldayOfWeekNbr(String userId, String dayOfWeekNbr, String dayOfWeekShortName, String dayOfWeekFullName)
+	{
+		String payload = "{\"meta\":{\"userName\":\""+userId+"\"},\"dayOfWeek\":{"
+				+ "\"dayOfweekNumber\":\""+dayOfWeekNbr+"\",\"dayOfweekFullName\":\""+dayOfWeekFullName+"\",\"dayOfweekShortName\":\""+dayOfWeekShortName+"\"}}";
 		return payload;
 	}
 	
@@ -407,7 +635,7 @@ public class PostMethod{
 	}
 	
 	
-	//GEOPLRLTSP
+	//GEOPL RLTSP
 		public static String geoRltspPostRequest(String userId, String fromGeopoliticalId, String toGeopoliticalId, String relationshipTypeCode,
 				 String effectiveDate, String expirationDate)
 		{
@@ -450,6 +678,63 @@ public class PostMethod{
 		public static String geoRltspPostRequestWithoutExpirationDate(String userId, String fromGeopoliticalId, String toGeopoliticalId,String relationshipTypeCode,String effectiveDate)
 		{
 			String payload = "{\"meta\": {\"userName\": \""+userId+"\"},\"geopoliticalRelationship\":{    \"fromGeopoliticalId\": \""+fromGeopoliticalId+"\",\"toGeopoliticalId\": \""+toGeopoliticalId+"\",  \"relationshipTypeCode\": \""+relationshipTypeCode+"\", \"effectiveDate\": \""+effectiveDate+"\"}}";
+			return payload;
+		}
+		
+		// GEOPL RLTSP Graph QL
+		// This method used for TC_01
+		public static String geoRltspGraphQLRequestWithoutParameter()
+		{
+		String payload = "{\"query\":\"{  relationships {    geopoliticalComponentId    relatedGeopoliticalComponentId    geopoliticalRelationshipTypeCode    effectiveDate    expirationDate  }}\"}";
+		return payload;
+		}
+		// This method used for TC_02
+		public static String geopRltspWithAllParameters(String relationshipTypeCode, String fromGeopoliticalId, String toGeopoliticalId,
+				 String targetDate, String endDate)
+		{
+			String payload =  "{\"query\":\"{  relationships(relationshipTypeCode : \\\""+relationshipTypeCode+"\\\", fromGeopoliticalId : \\\""+fromGeopoliticalId+"\\\", toGeopoliticalId : \\\""+toGeopoliticalId+"\\\", targetDate : \\\""+targetDate+"\\\", endDate : \\\""+endDate+"\\\") {    geopoliticalComponentId    relatedGeopoliticalComponentId    geopoliticalRelationshipTypeCode    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		// This method used for TC_03
+		public static String geopRltspWithrelationshipTypeCodeParameterWith3Attributes(String relationshipTypeCode)
+		{
+			String payload =  "{\"query\":\"{  relationships(relationshipTypeCode : \\\""+relationshipTypeCode+"\\\") {    geopoliticalComponentId    relatedGeopoliticalComponentId    geopoliticalRelationshipTypeCode    }}\"}";
+			return payload;
+		}	
+		// This method used for TC_04
+		public static String geopRltspWith2ParametersWithAllAttributes(String relationshipTypeCode ,String fromGeopoliticalId, String toGeopoliticalId)
+		{
+			String payload =  "{\"query\":\"{  relationships(relationshipTypeCode :\\\""+relationshipTypeCode+"\\\", fromGeopoliticalId : \\\""+fromGeopoliticalId+"\\\", toGeopoliticalId : \\\""+toGeopoliticalId+"\\\") {    geopoliticalComponentId    relatedGeopoliticalComponentId    geopoliticalRelationshipTypeCode    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		// This method used for TC_05
+		public static String geopRltspWithTrgDateEnDateParametersWithAllAttributes(String relationshipTypeCode, String targetDate, String endDate)
+		{
+			String payload =  "{\"query\":\"{  relationships(relationshipTypeCode : \\\""+relationshipTypeCode+"\\\", targetDate : \\\""+targetDate+"\\\", endDate : \\\""+endDate+"\\\") {    geopoliticalComponentId    relatedGeopoliticalComponentId    geopoliticalRelationshipTypeCode    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		// This method used for TC_06
+		public static String geopRltspWith1InvalidParametersWithAllAttributes(String relationshipTypeCode)
+		{
+			String payload =  "{\"query\":\"{  relationships(relationshipTypeCode : \\\""+relationshipTypeCode+"\\\") {    geopoliticalComponentId    relatedGeopoliticalComponentId    geopoliticalRelationshipTypeCode    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		// This method used for TC_07
+		public static String geopRltspWith2InvalidParametersWithAllAttributes(String relationshipTypeCode, String targetDate, String endDate)
+		{
+			String payload =  "{\"query\":\"{  relationships(relationshipTypeCode : \\\""+relationshipTypeCode+"\\\", targetDate : \\\""+targetDate+"\\\", endDate : \\\""+endDate+"\\\") {    geopoliticalComponentId    relatedGeopoliticalComponentId    geopoliticalRelationshipTypeCode    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		// This method used for TC_08
+		public static String geoRltspGraphQLRequestWith1InvalidAttribute(String relationshipTypeCode)
+		{
+			String payload =  "{\"query\":\"{  relationships(relationshipTypeCode : \\\""+relationshipTypeCode+"\\\") {    geopoliticalComponentId1    relatedGeopoliticalComponentId    geopoliticalRelationshipTypeCode    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		// This method used for TC_09
+		public static String geoRltspGraphQLRequestWith2InvalidAttribute(String relationshipTypeCode)
+		{
+			String payload =  "{\"query\":\"{  relationships(relationshipTypeCode : \\\""+relationshipTypeCode+"\\\") {    geopoliticalComponentId1    relatedGeopoliticalComponentId2    geopoliticalRelationshipTypeCode    effectiveDate    expirationDate  }}\"}";
 			return payload;
 		}
 	
@@ -520,11 +805,64 @@ public class PostMethod{
 		return payload;
 	}
 	
+	//GRAPHQL
+		public static String stProvStdGraphQLRequstWithParam(String geopoliticalId, String orgStdCd, String stProvCd, String countryCode,
+				String effectiveDate, String expirationDate) {
+			String payload = "{\"query\":\"{  stProvStds (geopoliticalId :\\\"" + geopoliticalId + "\\\", countryCode :\\\"" + countryCode + "\\\", stProvCd :\\\"" + stProvCd + "\\\", orgStdCd :\\\"" + orgStdCd + "\\\", targetDate :\\\"" + effectiveDate + "\\\", endDate :\\\"" + expirationDate + "\\\") {    geopoliticalId    organizationStandardCode    stateProvinceCode    stateProvinceName    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		
+		public static String stProvStdGraphQLRequstWithoutParam() {
+			String payload = "{\"query\":\"{  stProvStds  {    geopoliticalId    organizationStandardCode    stateProvinceCode    stateProvinceName    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		
+		public static String stProvStdGraphQLRequstWithoutDates(String geopoliticalId, String orgStdCd, String stProvCd, String countryCode) {
+			String payload = "{\"query\":\"{  stProvStds (geopoliticalId :\\\"" + geopoliticalId + "\\\", countryCode :\\\"" + countryCode + "\\\", stProvCd :\\\"" + stProvCd + "\\\", orgStdCd :\\\"" + orgStdCd + "\\\") {    stateProvinceCode    stateProvinceName    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		
+		public static String stProvStdGraphQLRequstWithInvalidDate(String geopoliticalId, 
+				String effectiveDate, String expirationDate) {
+			String payload = "{\"query\":\"{  stProvStds (geopoliticalId :\\\"" + geopoliticalId + "\\\", targetDate :\\\"" + effectiveDate + "\\\", endDate :\\\"" + expirationDate + "\\\") {    geopoliticalId    organizationStandardCode    stateProvinceCode    stateProvinceName    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		
+		public static String stProvStdGraphQLRequstWithDates(String geopoliticalId, String effectiveDate, String expirationDate) {
+			String payload = "{\"query\":\"{  stProvStds (geopoliticalId :\\\"" + geopoliticalId + "\\\", targetDate :\\\"" + effectiveDate + "\\\", endDate :\\\"" + expirationDate + "\\\") {    geopoliticalId    organizationStandardCode    stateProvinceCode    stateProvinceName    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		
+		public static String stProvStdGraphQLRequstWithOneInvalidParam(String geopoliticalId, String orgStdCd, String stProvCd, String countryCode,
+				String effectiveDate, String expirationDate) {
+			String payload = "{\"query\":\"{  stProvStds (geopoliticalId :\\\"" + geopoliticalId + "\\\", countryCode :\\\"" + countryCode + "\\\", stProvCd :\\\"" + stProvCd + "\\\", orgStdCd :\\\"" + orgStdCd + "\\\", targetDate :\\\"" + effectiveDate + "\\\", endDate :\\\"" + expirationDate + "\\\") {    geopoliticalId    organizationStandardCode1    stateProvinceCode    stateProvinceName    effectiveDate    expirationDate  }}\"}";
+			return payload;
+		}
+		
+		public static String stProvStdGraphQLRequstWithAllInvalidParam(String geopoliticalId, String orgStdCd, String stProvCd, String countryCode,
+				String effectiveDate, String expirationDate) {
+			String payload = "{\"query\":\"{  stProvStds (geopoliticalId :\\\"" + geopoliticalId + "\\\", countryCode :\\\"" + countryCode + "\\\", stProvCd :\\\"" + stProvCd + "\\\", orgStdCd :\\\"" + orgStdCd + "\\\", targetDate :\\\"" + effectiveDate + "\\\", endDate :\\\"" + expirationDate + "\\\") {    geopoliticalId1    organizationStandardCode1    stateProvinceCode1    stateProvinceName1    effectiveDate1    expirationDate1  }}\"}";
+			return payload;
+		}
+
+	
 	//***AffilType
 	public static String affilTypePostRequest(String userId, String affilTypeCode, String affilTypeName)
 	{
 		String payload = "{\"meta\":{\"userName\":\""+userId+"\"},\"geopoliticalAffiliationType\":{"
 				+ "\"affilTypeCode\":\""+affilTypeCode+"\",\"affilTypeName\":\""+affilTypeName+"\"}}";
+		return payload;
+	}
+	
+	public static String affilTypeGraphQLRequestWithParam(String userId, String affilTypeCode, String affilTypeName)
+	{
+		String payload = "{\"query\":\"{  affiliationTypes (affilTypeCode : String) {    affilTypeId    affilTypeCode    affilTypeName  }}\"}";
+		return payload;
+	}
+	
+	public static String affilTypeGraphQLRequestWithoutParam()
+	{
+		String payload = "{\"query\":\"{  affiliationTypes {    affilTypeId    affilTypeCode    affilTypeName  }}\"}";
 		return payload;
 	}
 	
@@ -549,6 +887,23 @@ public class PostMethod{
 		return payload;
 	}
 
+	public static String affilTypeGraphQLWithParamRequest(String affilTypeCode)
+	{
+		String payload = "{\"query\":\"{  affiliationTypes (affilTypeCode : \\\""+affilTypeCode+"\\\") {    affilTypeId    affilTypeCode    affilTypeName  }}\"}";
+		return payload;
+	}
+	
+	public static String affilTypeGraphQLWithParamRequest1(String affilTypeCode)
+	{
+		String payload = "{\"query\":\"{  affiliationTypes (affilTypeCode : \\\""+affilTypeCode+"\\\")  {    affilTypeId    affilTypeCode   }}\"}";
+		return payload;
+	}
+	
+	public static String affilTypeGraphQLWithParamRequest2(/*String affilTypeCode*/)
+	{
+		String payload = "{\"query\":\"{  affiliationTypes (affilTypeCode : \\\"UN\\\")  {    affilTypeId1    affilTypeCode1   }}\"}";
+		return payload;
+	}
 	
 	// Language
 	public static String langPostRequest(String userName, String langCd, String englLanguageNm,
@@ -1081,6 +1436,18 @@ public class PostMethod{
 
 		}
 		
+		/*public static String cntryGraphQLRequest(String geopoliticalId,String  countryCd,String  countryShortName,String  orgStandardCode,String  dependentCountryCd,
+				String  targetDate,String  endDate) {
+				
+				String payload = "{"query":"{  countries(geopoliticalId : \"3424394677886817422\", countryCode : \"AM\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independantFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLengthNumber    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    countryDialings {      geopoliticalId      internationalDialingPrefixCode      internationalDialingCode      mobilePhoneMinimumLengthNumber      mobilePhoneMaximumLengthNumber      landPhoneMinimumLengthNumber      landPhoneMaximumLengthNumber      effectiveDate      expirationDate    }    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    geopoliticalUnitOfMeasures {      uomTypeCode      geopoliticalId      effectiveDate      expirationDate      refUOMType {        uomTypeCode        uomTypeName        uomTypeDesc      }    }    geopoliticalHolidays {      geopoliticalId      holidayId      effectiveDate      expirationDate      holiday {        holidayId        holidayName        holidayDateParameterText      }    }    geopoliticalAffiliations {      affilTypeId      geopoliticalId      effectiveDate      expirationDate      geoPoliticalAffiliatedType {        affilTypeId        affilTypeCode        affilTypeName      }    }    locales {      localeCode      geopoliticalId      languageCode      scriptCode      dateFullFormatDescription      dateLongFormatDescription      dateMediumFormatDescription      dateShortFormatDescription      cldrVersionNumber      cldrVersionDate      effectiveDate      expirationDate      languages {        languageCode        threeCharacterLanguageCode        languageName        nativeScriptLanguageName        scriptCode        languageDescription      }    }    translatedGeopoliticals {      geopoliticalId      languageCode      scriptCode      translatedName      versionNumber      versionDate      effectiveDate      expirationDate    }    countryOrgStd {      geopoliticalId      countryShortName      countryFullName      organisationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {        organisationStandardCode        organisationStandardName      }    }    geopoliticalAreas {      geopoliticalId      geopoliticalTypeId      effectiveDate      expirationDate      geoPoliticalType {        geopoliticalTypeId        geopoliticalTypeName      }    }    dependentCountryRelationship {      dependentRelationshipId      dependentRelationshipDescription    }    stateProvStndList {      geopoliticalId      organisationStandardCode      stateProvinceCode      stateProvinceName      effectiveDate      expirationDate    }  }}"}";
+
+
+				return payload;
+
+			}*/
+		
+		
+
 		
 		public static String cntryPostRequest(String userId,String countryNumberCd,String countryCd,String threeCharCountryCd,String independentFlag,String postalFormatDescription,
 				String postalFlag,String postalLengthNumber,String firstWorkWeekDayName,String lastWorkWeekDayName,String weekendFirstDayName,String internetDomainName,
@@ -7419,5 +7786,55 @@ public class PostMethod{
 			}
 	
 		
+		// *** Address Label request 
+		public static String addressLabelPostRequest(String userId, String countryCode, String addressLineNumber, String brandAddressLineDescription, String fullAddressLineDescription, String languageCode, String applicable, String scriptCode)
+		{
+			String payload = 
+					"{\"meta\":{\"userName\":\""+userId+"\"},\"addressLabels \":{"
+						+ "\"countryCode\":\""+countryCode+"\",\"addressLineNumber\":\""+addressLineNumber+"\""
+								+ ",\"brandAddressLineDescription\":\""+brandAddressLineDescription+"\",\"fullAddressLineDescription\":\""+fullAddressLineDescription+"\""
+										+ ",\"languageCode\":\""+languageCode+"\",\"applicable\":\""+applicable+"\""
+												+ ",\"scriptCode\":\""+scriptCode+"\"}}";
+			return payload;
+		}
+		
+		public static String addressLabelPostRequestWithoutMeta(String userId, String countryCode, String addressLineNumber, String brandAddressLineDescription, String fullAddressLineDescription, String languageCode, String applicable, String scriptCode)
+		{
+			String payload = 
+					"{\"meta\":{\"addressLabels \":{"
+						+ "\"countryCode\":\""+countryCode+"\",\"addressLineNumber\":\""+addressLineNumber+"\""
+								+ ",\"brandAddressLineDescription\":\""+brandAddressLineDescription+"\",\"fullAddressLineDescription\":\""+fullAddressLineDescription+"\""
+										+ ",\"languageCode\":\""+languageCode+"\",\"applicable\":\""+applicable+"\""
+												+ ",\"scriptCode\":\""+scriptCode+"\"}}";
+			return payload;
+		}
+		
+		//Address Label PUT
+		public static String addressLabelPutRequest(String userId, String countryCd, String addressLineNumber,
+				String brandAddressLineDescription, String fullAddressLineDescription, String languageCode, String flag,
+				String scriptCode) {
+
+			String payload = "{ " + "  \"meta\": { " + "    \"userName\": \"" + userId + "\" " + "   }, "
+					+ "    \"addressLabels \": { " + " \"countryCode\": \"" + countryCd + "\","
+					+ " \"addressLineNumber\": \"" + addressLineNumber + "\"," + " \"brandAddressLineDescription\":\""
+					+ brandAddressLineDescription + "\",  \"fullAddressLineDescription\": \"" + fullAddressLineDescription
+					+ "\"," + " \"languageCode\": \" " + languageCode + " \"," + " \"applicable\": \"" + flag + "\", "
+					+ " \"scriptCode\": \" " + scriptCode + "" + "    } " + "} ";
+			return payload;
+		}
+
+		public static String addressLabelPutRequestWithoutMeta(String userId, String countryCd, String addressLineNumber,
+				String brandAddressLineDescription, String fullAddressLineDescription, String languageCode, String flag,
+				String scriptCode) {
+
+			String payload = "{ " + "  \"addressLabels \": { " + " \"countryCode\": \"" + countryCd + "\","
+					+ " \"addressLineNumber\": \"" + addressLineNumber + "\"," + " \"brandAddressLineDescription\":\""
+					+ brandAddressLineDescription + "\",  \"fullAddressLineDescription\": \"" + fullAddressLineDescription
+					+ "\"," + " \"languageCode\": \" " + languageCode + " \"," + " \"applicable\": \"" + flag + "\", "
+					+ " \"scriptCode\": \" " + scriptCode + "" + "    } " + "} ";
+			return payload;
+		}
 		
 }
+		
+

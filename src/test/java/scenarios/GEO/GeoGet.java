@@ -1,36 +1,6 @@
 package scenarios.GEO;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.testng.Assert;
-import org.testng.TestNG;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.MarkupHelper;
-
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import utils.DbConnect;
-import utils.ExcelUtil;
-import utils.Queries;
 import utils.Reporting;
-import utils.Miscellaneous;
-import utils.RetrieveEndPoints;
-import utils.ValidationFields;
-import wsMethods.GetResponse;
 
 public class GeoGet extends Reporting {
 //	String token, runFlag;

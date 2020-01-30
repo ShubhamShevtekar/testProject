@@ -1,35 +1,6 @@
 package scenarios.GEO;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import org.testng.Assert;
-import org.testng.SkipException;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.MarkupHelper;
-
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import utils.DbConnect;
-import utils.ExcelUtil;
-import utils.Queries;
 import utils.Reporting;
-import utils.Miscellaneous;
-import utils.RetrieveEndPoints;
-import utils.TestResultValidation;
-import utils.ValidationFields;
-import wsMethods.GetResponse;
-import wsMethods.PostMethod;
 
 public class GeoPost extends Reporting {
 //	String scenarioName = getClass().getSimpleName();
