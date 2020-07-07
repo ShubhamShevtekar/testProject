@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Version1]">
+  <test name="Test(failed)">
+    <classes>
+      <class name="scenarios.GEO.v1.GeoTypeGet">
+        <methods>
+          <include name="startReport"/>
+          <include name="TC_03"/>
+          <include name="beforeSuite"/>
+          <include name="before"/>
+          <include name="getCurrentDate"/>
+          <include name="getToken"/>
+          <include name="startRepo"/>
+          <include name="endReport"/>
+        </methods>
+      </class> <!-- scenarios.GEO.v1.GeoTypeGet -->
+      <class name="scenarios.GEO.v1.ScriptGet">
+        <methods>
+          <include name="startReport"/>
+          <include name="before"/>
+          <include name="beforeSuite"/>
+          <include name="zipFolder"/>
+          <include name="cleanFolder"/>
+          <include name="startRepo"/>
+          <include name="getCurrentDate"/>
+          <include name="getToken"/>
+          <include name="endReport"/>
+        </methods>
+      </class> <!-- scenarios.GEO.v1.ScriptGet -->
+      <class name="scenarios.GEO.v1.UomTypeGet">
+        <methods>
+          <include name="startReport"/>
+          <include name="beforeSuite"/>
+          <include name="TC_05"/>
+          <include name="getCurrentDate"/>
+          <include name="startRepo"/>
+          <include name="getToken"/>
+          <include name="endReport"/>
+          <include name="TC_03"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- scenarios.GEO.v1.UomTypeGet -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Version1] -->

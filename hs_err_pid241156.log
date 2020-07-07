@@ -1,0 +1,431 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 42184 bytes for Chunk::new
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:390), pid=241156, tid=0x0003bbd0
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_101-b13) (build 1.8.0_101-b13)
+# Java VM: Java HotSpot(TM) Client VM (25.101-b13 mixed mode windows-x86 )
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00b68000):  JavaThread "main" [_thread_in_native, id=244688, stack(0x003e0000,0x00430000)]
+
+Stack: [0x003e0000,0x00430000],  sp=0x0042e370,  free space=312k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x1a985b]
+V  [jvm.dll+0x1a2068]
+V  [jvm.dll+0x8c631]
+V  [jvm.dll+0x8cae7]
+V  [jvm.dll+0xa44b4]
+V  [jvm.dll+0x3b1fd]
+V  [jvm.dll+0x3b27d]
+V  [jvm.dll+0x3c87f]
+V  [jvm.dll+0x3b511]
+V  [jvm.dll+0x502ff]
+V  [jvm.dll+0x509da]
+V  [jvm.dll+0x51c20]
+V  [jvm.dll+0x51c46]
+V  [jvm.dll+0x106e4e]
+C  [java.dll+0x1e9d]
+J 1252  java.lang.ClassLoader.findBootstrapClass(Ljava/lang/String;)Ljava/lang/Class; (0 bytes) @ 0x020042aa [0x02004210+0x9a]
+J 404 C1 java.lang.ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class; (122 bytes) @ 0x01e9e522 [0x01e9e330+0x1f2]
+J 404 C1 java.lang.ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class; (122 bytes) @ 0x01e9e4f4 [0x01e9e330+0x1c4]
+J 520 C1 sun.misc.Launcher$AppClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class; (85 bytes) @ 0x01ebc687 [0x01ebc440+0x247]
+J 666 C1 java.lang.ClassLoader.loadClass(Ljava/lang/String;)Ljava/lang/Class; (7 bytes) @ 0x01e47efc [0x01e47ed0+0x2c]
+j  java.util.ResourceBundle$RBClassLoader.loadClass(Ljava/lang/String;)Ljava/lang/Class;+10
+j  java.util.ResourceBundle$Control.newBundle(Ljava/lang/String;Ljava/util/Locale;Ljava/lang/String;Ljava/lang/ClassLoader;Z)Ljava/util/ResourceBundle;+24
+j  java.util.ResourceBundle.loadBundle(Ljava/util/ResourceBundle$CacheKey;Ljava/util/List;Ljava/util/ResourceBundle$Control;Z)Ljava/util/ResourceBundle;+54
+j  java.util.ResourceBundle.findBundle(Ljava/util/ResourceBundle$CacheKey;Ljava/util/List;Ljava/util/List;ILjava/util/ResourceBundle$Control;Ljava/util/ResourceBundle;)Ljava/util/ResourceBundle;+213
+j  java.util.ResourceBundle.findBundle(Ljava/util/ResourceBundle$CacheKey;Ljava/util/List;Ljava/util/List;ILjava/util/ResourceBundle$Control;Ljava/util/ResourceBundle;)Ljava/util/ResourceBundle;+37
+j  java.util.ResourceBundle.getBundleImpl(Ljava/lang/String;Ljava/util/Locale;Ljava/lang/ClassLoader;Ljava/util/ResourceBundle$Control;)Ljava/util/ResourceBundle;+187
+j  java.util.ResourceBundle.getBundle(Ljava/lang/String;Ljava/util/Locale;Ljava/util/ResourceBundle$Control;)Ljava/util/ResourceBundle;+9
+j  sun.util.resources.LocaleData$1.run()Ljava/util/ResourceBundle;+11
+j  sun.util.resources.LocaleData$1.run()Ljava/lang/Object;+1
+v  ~StubRoutines::call_stub
+V  [jvm.dll+0x15a2e5]
+V  [jvm.dll+0x21ff6e]
+V  [jvm.dll+0x15a37e]
+V  [jvm.dll+0x10a81f]
+C  [java.dll+0x1015]
+j  sun.util.resources.LocaleData.getBundle(Ljava/lang/String;Ljava/util/Locale;)Ljava/util/ResourceBundle;+9
+j  sun.util.resources.LocaleData.getTimeZoneNames(Ljava/util/Locale;)Lsun/util/resources/TimeZoneNamesBundle;+26
+j  sun.util.locale.provider.LocaleResources.getTimeZoneNames(Ljava/lang/String;)[Ljava/lang/String;+76
+j  sun.util.locale.provider.TimeZoneNameProviderImpl.getDisplayNameArray(Ljava/lang/String;Ljava/util/Locale;)[Ljava/lang/String;+22
+j  sun.util.locale.provider.TimeZoneNameProviderImpl.getDisplayName(Ljava/lang/String;ZILjava/util/Locale;)Ljava/lang/String;+4
+j  sun.util.locale.provider.TimeZoneNameUtility$TimeZoneNameGetter.getName(Ljava/util/spi/TimeZoneNameProvider;Ljava/util/Locale;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;+126
+j  sun.util.locale.provider.TimeZoneNameUtility$TimeZoneNameGetter.getObject(Ljava/util/spi/TimeZoneNameProvider;Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;+49
+j  sun.util.locale.provider.TimeZoneNameUtility$TimeZoneNameGetter.getObject(Ljava/util/spi/LocaleServiceProvider;Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;+9
+j  sun.util.locale.provider.LocaleServiceProviderPool.getLocalizedObjectImpl(Lsun/util/locale/provider/LocaleServiceProviderPool$LocalizedObjectGetter;Ljava/util/Locale;ZLjava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;+40
+j  sun.util.locale.provider.LocaleServiceProviderPool.getLocalizedObject(Lsun/util/locale/provider/LocaleServiceProviderPool$LocalizedObjectGetter;Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;+7
+j  sun.util.locale.provider.TimeZoneNameUtility.retrieveDisplayNamesImpl(Ljava/lang/String;Ljava/util/Locale;)[Ljava/lang/String;+140
+j  sun.util.locale.provider.TimeZoneNameUtility.retrieveDisplayName(Ljava/lang/String;ZILjava/util/Locale;)Ljava/lang/String;+2
+j  java.util.TimeZone.getDisplayName(ZILjava/util/Locale;)Ljava/lang/String;+47
+j  java.util.Date.toString()Ljava/lang/String;+150
+j  org.testng.reporters.TestHTMLReporter.generateLog(Lorg/testng/ITestContext;Ljava/lang/String;Ljava/lang/String;Ljava/util/Collection;Ljava/util/Collection;Ljava/util/Collection;Ljava/util/Collection;Ljava/util/Collection;Ljava/util/Collection;)V+262
+j  org.testng.reporters.TestHTMLReporter.onFinish(Lorg/testng/ITestContext;)V+38
+j  org.testng.TestRunner.fireEvent(Z)V+45
+j  org.testng.TestRunner.afterRun()V+69
+j  org.testng.TestRunner.run()V+30
+j  org.testng.SuiteRunner.runTest(Lorg/testng/TestRunner;)V+1
+j  org.testng.SuiteRunner.runSequentially()V+31
+j  org.testng.SuiteRunner.privateRun()V+282
+j  org.testng.SuiteRunner.run()V+6
+j  org.testng.SuiteRunnerWorker.runSuite(Lorg/testng/internal/SuiteRunnerMap;Lorg/testng/xml/XmlSuite;)V+89
+j  org.testng.SuiteRunnerWorker.run()V+12
+j  org.testng.TestNG.runSuitesSequentially(Lorg/testng/xml/XmlSuite;Lorg/testng/internal/SuiteRunnerMap;ILjava/lang/String;)V+66
+j  org.testng.TestNG.runSuitesLocally()Ljava/util/List;+143
+j  org.testng.TestNG.runSuites()Ljava/util/List;+1
+j  org.testng.TestNG.run()V+47
+j  org.testng.remote.AbstractRemoteTestNG.run()V+163
+j  org.testng.remote.RemoteTestNG.initAndRun(Lorg/testng/remote/IRemoteTestNG;[Ljava/lang/String;Lorg/testng/CommandLineArgs;Lorg/testng/remote/RemoteArgs;)V+184
+j  org.testng.remote.RemoteTestNG.main([Ljava/lang/String;)V+178
+v  ~StubRoutines::call_stub
+V  [jvm.dll+0x15a2e5]
+V  [jvm.dll+0x21ff6e]
+V  [jvm.dll+0x15a37e]
+V  [jvm.dll+0xdbf47]
+V  [jvm.dll+0xe44df]
+C  [javaw.exe+0x22ab]
+C  [javaw.exe+0xaecf]
+C  [javaw.exe+0xaf59]
+C  [kernel32.dll+0x4ef3c]
+C  [ntdll.dll+0x63618]
+C  [ntdll.dll+0x635eb]
+C  0x00000000
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+J 1252  java.lang.ClassLoader.findBootstrapClass(Ljava/lang/String;)Ljava/lang/Class; (0 bytes) @ 0x02004266 [0x02004210+0x56]
+J 404 C1 java.lang.ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class; (122 bytes) @ 0x01e9e522 [0x01e9e330+0x1f2]
+J 404 C1 java.lang.ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class; (122 bytes) @ 0x01e9e4f4 [0x01e9e330+0x1c4]
+J 520 C1 sun.misc.Launcher$AppClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class; (85 bytes) @ 0x01ebc687 [0x01ebc440+0x247]
+J 666 C1 java.lang.ClassLoader.loadClass(Ljava/lang/String;)Ljava/lang/Class; (7 bytes) @ 0x01e47efc [0x01e47ed0+0x2c]
+j  java.util.ResourceBundle$RBClassLoader.loadClass(Ljava/lang/String;)Ljava/lang/Class;+10
+j  java.util.ResourceBundle$Control.newBundle(Ljava/lang/String;Ljava/util/Locale;Ljava/lang/String;Ljava/lang/ClassLoader;Z)Ljava/util/ResourceBundle;+24
+j  java.util.ResourceBundle.loadBundle(Ljava/util/ResourceBundle$CacheKey;Ljava/util/List;Ljava/util/ResourceBundle$Control;Z)Ljava/util/ResourceBundle;+54
+j  java.util.ResourceBundle.findBundle(Ljava/util/ResourceBundle$CacheKey;Ljava/util/List;Ljava/util/List;ILjava/util/ResourceBundle$Control;Ljava/util/ResourceBundle;)Ljava/util/ResourceBundle;+213
+j  java.util.ResourceBundle.findBundle(Ljava/util/ResourceBundle$CacheKey;Ljava/util/List;Ljava/util/List;ILjava/util/ResourceBundle$Control;Ljava/util/ResourceBundle;)Ljava/util/ResourceBundle;+37
+j  java.util.ResourceBundle.getBundleImpl(Ljava/lang/String;Ljava/util/Locale;Ljava/lang/ClassLoader;Ljava/util/ResourceBundle$Control;)Ljava/util/ResourceBundle;+187
+j  java.util.ResourceBundle.getBundle(Ljava/lang/String;Ljava/util/Locale;Ljava/util/ResourceBundle$Control;)Ljava/util/ResourceBundle;+9
+j  sun.util.resources.LocaleData$1.run()Ljava/util/ResourceBundle;+11
+j  sun.util.resources.LocaleData$1.run()Ljava/lang/Object;+1
+v  ~StubRoutines::call_stub
+J 768  java.security.AccessController.doPrivileged(Ljava/security/PrivilegedAction;)Ljava/lang/Object; (0 bytes) @ 0x01f19b20 [0x01f19ad0+0x50]
+j  sun.util.resources.LocaleData.getBundle(Ljava/lang/String;Ljava/util/Locale;)Ljava/util/ResourceBundle;+9
+j  sun.util.resources.LocaleData.getTimeZoneNames(Ljava/util/Locale;)Lsun/util/resources/TimeZoneNamesBundle;+26
+j  sun.util.locale.provider.LocaleResources.getTimeZoneNames(Ljava/lang/String;)[Ljava/lang/String;+76
+j  sun.util.locale.provider.TimeZoneNameProviderImpl.getDisplayNameArray(Ljava/lang/String;Ljava/util/Locale;)[Ljava/lang/String;+22
+j  sun.util.locale.provider.TimeZoneNameProviderImpl.getDisplayName(Ljava/lang/String;ZILjava/util/Locale;)Ljava/lang/String;+4
+j  sun.util.locale.provider.TimeZoneNameUtility$TimeZoneNameGetter.getName(Ljava/util/spi/TimeZoneNameProvider;Ljava/util/Locale;Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String;+126
+j  sun.util.locale.provider.TimeZoneNameUtility$TimeZoneNameGetter.getObject(Ljava/util/spi/TimeZoneNameProvider;Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;+49
+j  sun.util.locale.provider.TimeZoneNameUtility$TimeZoneNameGetter.getObject(Ljava/util/spi/LocaleServiceProvider;Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;+9
+j  sun.util.locale.provider.LocaleServiceProviderPool.getLocalizedObjectImpl(Lsun/util/locale/provider/LocaleServiceProviderPool$LocalizedObjectGetter;Ljava/util/Locale;ZLjava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;+40
+j  sun.util.locale.provider.LocaleServiceProviderPool.getLocalizedObject(Lsun/util/locale/provider/LocaleServiceProviderPool$LocalizedObjectGetter;Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/Object;+7
+j  sun.util.locale.provider.TimeZoneNameUtility.retrieveDisplayNamesImpl(Ljava/lang/String;Ljava/util/Locale;)[Ljava/lang/String;+140
+j  sun.util.locale.provider.TimeZoneNameUtility.retrieveDisplayName(Ljava/lang/String;ZILjava/util/Locale;)Ljava/lang/String;+2
+j  java.util.TimeZone.getDisplayName(ZILjava/util/Locale;)Ljava/lang/String;+47
+j  java.util.Date.toString()Ljava/lang/String;+150
+j  org.testng.reporters.TestHTMLReporter.generateLog(Lorg/testng/ITestContext;Ljava/lang/String;Ljava/lang/String;Ljava/util/Collection;Ljava/util/Collection;Ljava/util/Collection;Ljava/util/Collection;Ljava/util/Collection;Ljava/util/Collection;)V+262
+j  org.testng.reporters.TestHTMLReporter.onFinish(Lorg/testng/ITestContext;)V+38
+j  org.testng.TestRunner.fireEvent(Z)V+45
+j  org.testng.TestRunner.afterRun()V+69
+j  org.testng.TestRunner.run()V+30
+j  org.testng.SuiteRunner.runTest(Lorg/testng/TestRunner;)V+1
+j  org.testng.SuiteRunner.runSequentially()V+31
+j  org.testng.SuiteRunner.privateRun()V+282
+j  org.testng.SuiteRunner.run()V+6
+j  org.testng.SuiteRunnerWorker.runSuite(Lorg/testng/internal/SuiteRunnerMap;Lorg/testng/xml/XmlSuite;)V+89
+j  org.testng.SuiteRunnerWorker.run()V+12
+j  org.testng.TestNG.runSuitesSequentially(Lorg/testng/xml/XmlSuite;Lorg/testng/internal/SuiteRunnerMap;ILjava/lang/String;)V+66
+j  org.testng.TestNG.runSuitesLocally()Ljava/util/List;+143
+j  org.testng.TestNG.runSuites()Ljava/util/List;+1
+j  org.testng.TestNG.run()V+47
+j  org.testng.remote.AbstractRemoteTestNG.run()V+163
+j  org.testng.remote.RemoteTestNG.initAndRun(Lorg/testng/remote/IRemoteTestNG;[Ljava/lang/String;Lorg/testng/CommandLineArgs;Lorg/testng/remote/RemoteArgs;)V+184
+j  org.testng.remote.RemoteTestNG.main([Ljava/lang/String;)V+178
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x151c0c00 JavaThread "Java2D Disposer" daemon [_thread_blocked, id=231944, stack(0x16170000,0x161c0000)]
+  0x14cbb000 JavaThread "Keep-Alive-Timer" daemon [_thread_blocked, id=247372, stack(0x14f80000,0x14fd0000)]
+  0x14cd4000 JavaThread "ReaderThread" [_thread_in_native, id=234536, stack(0x14ff0000,0x15040000)]
+  0x142a7800 JavaThread "Service Thread" daemon [_thread_blocked, id=246192, stack(0x14650000,0x146a0000)]
+  0x142a1400 JavaThread "C1 CompilerThread0" daemon [_thread_blocked, id=247624, stack(0x14760000,0x147b0000)]
+  0x142a0800 JavaThread "Attach Listener" daemon [_thread_blocked, id=243516, stack(0x00d30000,0x00d80000)]
+  0x142a8400 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=242444, stack(0x14700000,0x14750000)]
+  0x14293400 JavaThread "Finalizer" daemon [_thread_blocked, id=247764, stack(0x145c0000,0x14610000)]
+  0x1426c400 JavaThread "Reference Handler" daemon [_thread_blocked, id=231872, stack(0x14540000,0x14590000)]
+=>0x00b68000 JavaThread "main" [_thread_in_native, id=244688, stack(0x003e0000,0x00430000)]
+
+Other Threads:
+  0x14266800 VMThread [stack: 0x00db0000,0x00e00000] [id=247248]
+  0x142cf000 WatcherThread [stack: 0x146a0000,0x146f0000] [id=246784]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ def new generation   total 13568K, used 3251K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,  26% used [0x03e00000, 0x0412cfc0, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 11708K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  38% used [0x09350000, 0x09ebf0d0, 0x09ebf200, 0x0b0a6000)
+ Metaspace       used 17944K, capacity 18391K, committed 18560K, reserved 19840K
+
+Card table byte_map: [0x00c60000,0x00cf0000] byte_map_base: 0x00c41000
+
+Polling page: 0x003c0000
+
+CodeCache: size=32768Kb used=4575Kb max_used=4575Kb free=28192Kb
+ bounds [0x01d70000, 0x021f0000, 0x03d70000]
+ total_blobs=2291 nmethods=1829 adapters=392
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 7.434 Thread 0x142a1400 1849             sun.reflect.generics.visitor.Reifier::getResult (26 bytes)
+Event: 7.434 Thread 0x142a1400 nmethod 1849 0x01e28188 code [0x01e28280, 0x01e28300]
+Event: 7.435 Thread 0x142a1400 1850   !         java.io.BufferedWriter::write (117 bytes)
+Event: 7.435 Thread 0x142a1400 nmethod 1850 0x021e72c8 code [0x021e7400, 0x021e7720]
+Event: 7.435 Thread 0x142a1400 1851             org.testng.shaded.com.google.gson.stream.JsonWriter::string (169 bytes)
+Event: 7.436 Thread 0x142a1400 nmethod 1851 0x021e7a08 code [0x021e7b70, 0x021e7e2c]
+Event: 7.446 Thread 0x142a1400 1852             java.lang.invoke.MethodType::parameterType (7 bytes)
+Event: 7.446 Thread 0x142a1400 nmethod 1852 0x01ef10c8 code [0x01ef11c0, 0x01ef1260]
+Event: 7.484 Thread 0x142a1400 1853             org.testng.shaded.com.google.gson.stream.JsonWriter::string (169 bytes)
+Event: 7.485 Thread 0x142a1400 nmethod 1853 0x021e8188 code [0x021e82f0, 0x021e85ac]
+
+GC Heap History (10 events):
+Event: 7.194 GC heap before
+{Heap before GC invocations=41 (full 6):
+ def new generation   total 13568K, used 0K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   0% used [0x03e00000, 0x03e00000, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 16187K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  53% used [0x09350000, 0x0a31edf0, 0x0a31ee00, 0x0b0a6000)
+ Metaspace       used 17840K, capacity 18272K, committed 18304K, reserved 21888K
+Event: 7.241 GC heap after
+Heap after GC invocations=42 (full 7):
+ def new generation   total 13568K, used 0K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   0% used [0x03e00000, 0x03e00000, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 13213K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  43% used [0x09350000, 0x0a037480, 0x0a037600, 0x0b0a6000)
+ Metaspace       used 17789K, capacity 18199K, committed 18304K, reserved 19840K
+}
+Event: 7.242 GC heap before
+{Heap before GC invocations=42 (full 7):
+ def new generation   total 13568K, used 238K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   1% used [0x03e00000, 0x03e3bbc8, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 13213K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  43% used [0x09350000, 0x0a037480, 0x0a037600, 0x0b0a6000)
+ Metaspace       used 17789K, capacity 18199K, committed 18304K, reserved 22912K
+Event: 7.287 GC heap after
+Heap after GC invocations=43 (full 8):
+ def new generation   total 13568K, used 0K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   0% used [0x03e00000, 0x03e00000, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 11706K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  38% used [0x09350000, 0x09ebeb30, 0x09ebec00, 0x0b0a6000)
+ Metaspace       used 17789K, capacity 18199K, committed 18304K, reserved 19840K
+}
+Event: 7.287 GC heap before
+{Heap before GC invocations=43 (full 8):
+ def new generation   total 13568K, used 0K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   0% used [0x03e00000, 0x03e00000, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 11706K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  38% used [0x09350000, 0x09ebeb30, 0x09ebec00, 0x0b0a6000)
+ Metaspace       used 17789K, capacity 18199K, committed 18304K, reserved 21888K
+Event: 7.326 GC heap after
+Heap after GC invocations=44 (full 9):
+ def new generation   total 13568K, used 0K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   0% used [0x03e00000, 0x03e00000, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 11706K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  38% used [0x09350000, 0x09ebeb30, 0x09ebec00, 0x0b0a6000)
+ Metaspace       used 17782K, capacity 18189K, committed 18304K, reserved 19840K
+}
+Event: 7.327 GC heap before
+{Heap before GC invocations=44 (full 9):
+ def new generation   total 13568K, used 238K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   1% used [0x03e00000, 0x03e3bbc8, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 11706K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  38% used [0x09350000, 0x09ebeb30, 0x09ebec00, 0x0b0a6000)
+ Metaspace       used 17782K, capacity 18189K, committed 18304K, reserved 22912K
+Event: 7.365 GC heap after
+Heap after GC invocations=45 (full 10):
+ def new generation   total 13568K, used 0K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   0% used [0x03e00000, 0x03e00000, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 11708K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  38% used [0x09350000, 0x09ebf0d0, 0x09ebf200, 0x0b0a6000)
+ Metaspace       used 17782K, capacity 18189K, committed 18304K, reserved 19840K
+}
+Event: 7.365 GC heap before
+{Heap before GC invocations=45 (full 10):
+ def new generation   total 13568K, used 0K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   0% used [0x03e00000, 0x03e00000, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 11708K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  38% used [0x09350000, 0x09ebf0d0, 0x09ebf200, 0x0b0a6000)
+ Metaspace       used 17782K, capacity 18189K, committed 18304K, reserved 21888K
+Event: 7.404 GC heap after
+Heap after GC invocations=46 (full 11):
+ def new generation   total 13568K, used 0K [0x03e00000, 0x04cb0000, 0x09350000)
+  eden space 12096K,   0% used [0x03e00000, 0x03e00000, 0x049d0000)
+  from space 1472K,   0% used [0x049d0000, 0x049d0000, 0x04b40000)
+  to   space 1472K,   0% used [0x04b40000, 0x04b40000, 0x04cb0000)
+ tenured generation   total 30040K, used 11708K [0x09350000, 0x0b0a6000, 0x13e00000)
+   the space 30040K,  38% used [0x09350000, 0x09ebf0d0, 0x09ebf200, 0x0b0a6000)
+ Metaspace       used 17782K, capacity 18189K, committed 18304K, reserved 19840K
+}
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 6.799 Thread 0x00b68000 Exception <a 'java/lang/ArrayIndexOutOfBoundsException'> (0x049a9c00) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\runtime\sharedRuntime.cpp, line 605]
+Event: 7.242 Thread 0x00b68000 Exception <a 'java/lang/OutOfMemoryError'> (0x093962b8) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\memory\metaspace.cpp, line 3569]
+Event: 7.327 Thread 0x00b68000 Exception <a 'java/lang/OutOfMemoryError'> (0x0938a460) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\memory\metaspace.cpp, line 3569]
+Event: 7.327 Thread 0x00b68000 Exception <a 'java/lang/reflect/InvocationTargetException'> (0x09ebeb10) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\runtime\reflection.cpp, line 1092]
+Event: 7.405 Thread 0x00b68000 Exception <a 'java/lang/reflect/InvocationTargetException'> (0x03e005f8) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\runtime\reflection.cpp, line 1092]
+Event: 7.405 Thread 0x00b68000 Exception <a 'java/lang/reflect/InvocationTargetException'> (0x03e00dc0) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\runtime\reflection.cpp, line 1092]
+Event: 7.405 Thread 0x00b68000 Exception <a 'java/lang/reflect/InvocationTargetException'> (0x03e01588) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\runtime\reflection.cpp, line 1092]
+Event: 7.483 Thread 0x00b68000 Exception <a 'java/lang/OutOfMemoryError'> (0x040cd748) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\prims\jni.cpp, line 735]
+Event: 7.483 Thread 0x00b68000 Exception <a 'java/lang/OutOfMemoryError'> (0x040cd748) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\prims\jvm.cpp, line 1390]
+Event: 7.483 Thread 0x00b68000 Exception <a 'java/lang/reflect/InvocationTargetException'> (0x040cdb28) thrown at [C:\re\workspace\8-2-build-windows-i586-cygwin\jdk8u101\7261\hotspot\src\share\vm\runtime\reflection.cpp, line 1092]
+
+Events (10 events):
+Event: 7.495 loading class org/testng/internal/DynamicGraph$1 done
+Event: 7.496 loading class org/testng/reporters/HtmlHelper
+Event: 7.496 loading class org/testng/reporters/HtmlHelper done
+Event: 7.496 loading class sun/util/locale/provider/TimeZoneNameUtility
+Event: 7.496 loading class sun/util/locale/provider/TimeZoneNameUtility done
+Event: 7.497 loading class sun/util/locale/provider/TimeZoneNameProviderImpl
+Event: 7.497 loading class sun/util/locale/provider/TimeZoneNameProviderImpl done
+Event: 7.497 loading class sun/util/locale/provider/TimeZoneNameUtility$TimeZoneNameGetter
+Event: 7.497 loading class sun/util/locale/provider/TimeZoneNameUtility$TimeZoneNameGetter done
+Event: 7.497 loading class sun/util/resources/TimeZoneNames
+
+
+Dynamic libraries:
+0x00e60000 - 0x00e93000 	C:\Program Files\Java\jre1.8.0_101\bin\javaw.exe
+0x77cc0000 - 0x77e02000 	C:\Windows\SYSTEM32\ntdll.dll
+0x77850000 - 0x77925000 	C:\Windows\system32\kernel32.dll
+0x760a0000 - 0x760eb000 	C:\Windows\system32\KERNELBASE.dll
+0x76590000 - 0x76631000 	C:\Windows\system32\ADVAPI32.dll
+0x77590000 - 0x7763c000 	C:\Windows\system32\msvcrt.dll
+0x77790000 - 0x777a9000 	C:\Windows\SYSTEM32\sechost.dll
+0x764e0000 - 0x76582000 	C:\Windows\system32\RPCRT4.dll
+0x77bf0000 - 0x77cb9000 	C:\Windows\system32\USER32.dll
+0x77420000 - 0x7746e000 	C:\Windows\system32\GDI32.dll
+0x76310000 - 0x7631a000 	C:\Windows\system32\LPK.dll
+0x777b0000 - 0x7784d000 	C:\Windows\system32\USP10.dll
+0x74ab0000 - 0x74c4e000 	C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.24440_none_2b1c5296457b2f0c\COMCTL32.dll
+0x76140000 - 0x76197000 	C:\Windows\system32\SHLWAPI.dll
+0x77400000 - 0x7741f000 	C:\Windows\system32\IMM32.DLL
+0x77670000 - 0x7773d000 	C:\Windows\system32\MSCTF.dll
+0x69100000 - 0x6916a000 	C:\Program Files\McAfee\Endpoint Security\Threat Prevention\Ips\EpMPApi.dll
+0x760f0000 - 0x7611f000 	C:\Windows\system32\WINTRUST.dll
+0x75f70000 - 0x76092000 	C:\Windows\system32\CRYPT32.dll
+0x75ea0000 - 0x75eac000 	C:\Windows\system32\MSASN1.dll
+0x6d900000 - 0x6d909000 	C:\Program Files\McAfee\Endpoint Security\Threat Prevention\Ips\EpMPThe.dll
+0x609d0000 - 0x60a8f000 	C:\Program Files\Java\jre1.8.0_101\bin\msvcr100.dll
+0x54ab0000 - 0x54e7c000 	C:\Program Files\Java\jre1.8.0_101\bin\client\jvm.dll
+0x725b0000 - 0x725b7000 	C:\Windows\system32\WSOCK32.dll
+0x76770000 - 0x767a5000 	C:\Windows\system32\WS2_32.dll
+0x77e10000 - 0x77e16000 	C:\Windows\system32\NSI.dll
+0x74120000 - 0x74152000 	C:\Windows\system32\WINMM.dll
+0x75020000 - 0x75029000 	C:\Windows\system32\VERSION.dll
+0x761a0000 - 0x761a5000 	C:\Windows\system32\PSAPI.DLL
+0x6d510000 - 0x6d51c000 	C:\Program Files\Java\jre1.8.0_101\bin\verify.dll
+0x69b10000 - 0x69b31000 	C:\Program Files\Java\jre1.8.0_101\bin\java.dll
+0x680c0000 - 0x680d3000 	C:\Program Files\Java\jre1.8.0_101\bin\zip.dll
+0x767b0000 - 0x773fc000 	C:\Windows\system32\SHELL32.dll
+0x761b0000 - 0x7630f000 	C:\Windows\system32\ole32.dll
+0x75e30000 - 0x75e3b000 	C:\Windows\system32\profapi.dll
+0x6a0b0000 - 0x6a0c6000 	C:\Program Files\Java\jre1.8.0_101\bin\net.dll
+0x75810000 - 0x7584c000 	C:\Windows\system32\mswsock.dll
+0x75800000 - 0x75806000 	C:\Windows\System32\wship6.dll
+0x750b0000 - 0x750b5000 	C:\Windows\System32\wshtcpip.dll
+0x756d0000 - 0x75714000 	C:\Windows\system32\DNSAPI.dll
+0x73dc0000 - 0x73ddc000 	C:\Windows\system32\IPHLPAPI.DLL
+0x73db0000 - 0x73db7000 	C:\Windows\system32\WINNSI.DLL
+0x71ef0000 - 0x71ef6000 	C:\Windows\system32\rasadhlp.dll
+0x72940000 - 0x72978000 	C:\Windows\System32\fwpuclnt.dll
+0x75850000 - 0x75867000 	C:\Windows\system32\CRYPTSP.dll
+0x755e0000 - 0x7561b000 	C:\Windows\system32\rsaenh.dll
+0x75460000 - 0x75477000 	C:\Windows\system32\USERENV.dll
+0x75d30000 - 0x75d3c000 	C:\Windows\system32\CRYPTBASE.dll
+0x72920000 - 0x7292d000 	C:\Windows\system32\dhcpcsvc6.DLL
+0x72900000 - 0x72912000 	C:\Windows\system32\dhcpcsvc.DLL
+0x6d5e0000 - 0x6d5ef000 	C:\Program Files\Java\jre1.8.0_101\bin\nio.dll
+0x73ef0000 - 0x73f00000 	C:\Windows\system32\NLAapi.dll
+0x71f30000 - 0x71f40000 	C:\Windows\system32\napinsp.dll
+0x71f10000 - 0x71f22000 	C:\Windows\system32\pnrpnsp.dll
+0x71f00000 - 0x71f08000 	C:\Windows\System32\winrnr.dll
+0x5a530000 - 0x5a675000 	C:\Program Files\Java\jre1.8.0_101\bin\awt.dll
+0x76640000 - 0x766d2000 	C:\Windows\system32\OLEAUT32.dll
+0x626a0000 - 0x626d9000 	C:\Program Files\Java\jre1.8.0_101\bin\fontmanager.dll
+0x621c0000 - 0x621f2000 	C:\Program Files\Java\jre1.8.0_101\bin\t2k.dll
+0x68050000 - 0x68070000 	C:\Program Files\Java\jre1.8.0_101\bin\sunec.dll
+0x6c790000 - 0x6c799000 	C:\Program Files\Java\jre1.8.0_101\bin\sunmscapi.dll
+0x6dfe0000 - 0x6e0cb000 	C:\Windows\system32\dbghelp.dll
+
+VM Arguments:
+jvm_args: -ea -Dfile.encoding=Cp1252 
+java_command: org.testng.remote.RemoteTestNG -serport 60738 -protocol json -d F:\Geopolitical Framework\06-06-2020\Attributes_Changes_Regression\geopolitical-func-test\test-output C:\Users\FEDEXU~1\AppData\Local\Temp\testng-eclipse-877679414\testng-customsuite.xml
+java_class_path (initial): F:\Eclipse mars\eclipse-jee-mars-2-win32\eclipse\configuration\org.eclipse.osgi\924\0\.cp\lib\testng-remote.jar;F:\Geopolitical Framework\06-06-2020\Attributes_Changes_Regression\geopolitical-func-test\target\test-classes;F:\Geopolitical Framework\06-06-2020\Attributes_Changes_Regression\geopolitical-func-test\target\classes;F:\Eclipse mars\eclipse-jee-mars-2-win32\eclipse\configuration\org.eclipse.osgi\924\0\.cp\lib\testng.jar;F:\Eclipse mars\eclipse-jee-mars-2-win32\eclipse\configuration\org.eclipse.osgi\924\0\.cp\lib\jcommander.jar;F:\Eclipse mars\eclipse-jee-mars-2-win32\eclipse\configuration\org.eclipse.osgi\924\0\.cp\lib\bsh-2.0b4.jar;F:\Eclipse mars\eclipse-jee-mars-2-win32\eclipse\configuration\org.eclipse.osgi\924\0\.cp\lib\snakeyaml.jar;C:\Users\FedExUser\.m2\repository\commons-io\commons-io\2.6\commons-io-2.6.jar;F:\Geopolitical Framework\06-06-2020\Attributes_Changes_Regression\geopolitical-func-test\ojdbc_jar\ojdbc7.jar;C:\Users\FedExUser\.m2\repository\org\testng\testng\6.14.3\testng-6.14.3.jar;C:\Users\FedExUser\.m2\repository\com\beust\jcommander\1.72\jcommander-1.72.jar;C:\Users\FedExUser\.m2\repository\org\apache-extras\beanshell\bsh\2.0b6\bsh-2.0b6.jar;C:\Users\FedExUser\.m2\repository\org\apache\poi\poi\3.9\poi-3.9.jar;C:\Users\FedExUser\.m2\repository\commons-codec\commons-codec\1.5\commons-codec-1.5.jar;C:\Users\FedExUser\.m2\repository\org\apache\poi\poi-ooxml\3.9\poi-ooxml-3.9.jar;C:\Users\FedExUser\.m2\repository\org\apache\poi\poi-ooxml-schemas\3.9\poi-ooxml-schemas-3.9.jar;C:\Users\FedExUser\.m2\repository\org\apache\xmlbeans\xmlbeans\2.3.0\xmlbeans-2.3.0.jar;C:\Users\FedExUser\.m2\repository\stax\stax-api\1.0.1\stax-api-1.0.1.jar;C:\Users\FedExUser\.m2\repository\javax\mail\mail\1.4.7\mail-1.4.7.jar;C:\Users\FedExUser\.m2\repository\javax\activation\activation\1.1\activation-1.1.jar;C:\Users\FedExUser\.m2\repository\io\rest-assured\rest-assured\3.0.0\rest-assured-3.0.0.jar;C:\Users\FedExUser\.m2\repository\org
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files (x86)\Java\jdk1.7.0_71
+PATH=C:/Program Files/Java/jre1.8.0_45/bin/client;C:/Program Files/Java/jre1.8.0_45/bin;C:/Program Files/Java/jre1.8.0_45/lib/i386;C:\Program Files\Java\jre1.8.0_45\bin;C:\Program Files\CA\SC\CAWIN\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\ant\bin;C:\Program Files\Java\jre1.8.0_101;C:\PROGRA~1\CA\SC\CAM\bin;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files\Java\jre1.8.0_45\lib;;C:\Program Files\Adaptiva\AdaptivaClient\bin\x32;C:\Program Files\Adaptiva\AdaptivaClient\bin\x64;F:\apache-maven-3.6.1\bin;F:\apache-maven-3.6.1/bin ;F:\Eclipse mars\eclipse-jee-mars-2-win32\eclipse;
+USERNAME=FedExUser
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 6 Model 58 Stepping 0, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7601 (6.1.7601.24441)
+
+CPU:total 1 (1 cores per cpu, 1 threads per core) family 6 model 58 stepping 0, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, tsc, tscinvbit, tscinv
+
+Memory: 4k page, physical 3145272k(90672k free), swap 12579416k(4620k free)
+
+vm_info: Java HotSpot(TM) Client VM (25.101-b13) for windows-x86 JRE (1.8.0_101-b13), built on Jun 22 2016 00:45:44 by "java_re" with MS VC++ 10.0 (VS2010)
+
+time: Fri Mar 27 16:56:01 2020
+elapsed time: 7 seconds (0d 0h 0m 7s)
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Version2]">
+  <test name="Test(failed)">
+    <classes>
+      <class name="scenarios.GEO.v2.UomTypeGet">
+        <methods>
+          <include name="TC_05"/>
+          <include name="startReport"/>
+          <include name="getCurrentDate"/>
+          <include name="TC_02"/>
+          <include name="TC_01"/>
+          <include name="getToken"/>
+          <include name="startRepo"/>
+          <include name="cleanFolder"/>
+          <include name="zipFolder"/>
+          <include name="before"/>
+          <include name="beforeSuite"/>
+          <include name="endReport"/>
+        </methods>
+      </class> <!-- scenarios.GEO.v2.UomTypeGet -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Version2] -->

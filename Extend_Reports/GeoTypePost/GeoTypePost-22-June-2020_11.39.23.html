@@ -1,0 +1,2122 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8' /> 
+	<meta name='description' content='' />
+	<meta name='robots' content='noodp, noydir' />
+	<meta name='viewport' content='width=device-width, initial-scale=1' />
+	<meta id="timeStampFormat" name="timeStampFormat" content='MMM d, yyyy hh:mm:ss a'/>
+	
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css' />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<link href='https://cdn.rawgit.com/extent-framework/extent-github-cdn/b65cd69/v3html/css/extent.css' type='text/css' rel='stylesheet' />
+	
+	<title>GeoTypePost</title>
+
+	<style type='text/css'>
+		/* json-tree */
+		.jstBracket,.jstComma,.jstValue{white-space:pre-wrap}.jstValue{font-size:10px;font-weight:400;font-family:"Lucida Console",Monaco,monospace}.jstProperty{color:#666;word-wrap:break-word}.jstBool{color:#2525CC}.jstNum{color:#D036D0}.jstNull{color:gray}.jstStr{color:#2DB669}.jstFold:after{content:' -';cursor:pointer}.jstExpand{white-space:normal}.jstExpand:after{content:' +';cursor:pointer}.jstFolded{white-space:normal!important}.jstHiddenBlock{display:none}
+	</style>
+	
+	<script type="text/javascript">
+		/*! json-tree - v0.2.2 - 2017-09-25, MIT LICENSE */
+		var JSONTree=function(){var n={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"},t=0,r=0;this.create=function(n,t){return r+=1,N(u(n,0,!1),{class:"jstValue"})};var e=function(t){return t.replace(/[&<>'"]/g,function(t){return n[t]})},s=function(){return r+"_"+t++},u=function(n,t,r){if(null===n)return f(r?t:0);switch(typeof n){case"boolean":return l(n,r?t:0);case"number":return i(n,r?t:0);case"string":return o(n,r?t:0);default:return n instanceof Array?a(n,t,r):c(n,t,r)}},c=function(n,t,r){var e=s(),u=Object.keys(n).map(function(r){return j(r,n[r],t+1,!0)}).join(m()),c=[g("{",r?t:0,e),N(u,{id:e}),p("}",t)].join("\n");return N(c,{})},a=function(n,t,r){var e=s(),c=n.map(function(n){return u(n,t+1,!0)}).join(m());return[g("[",r?t:0,e),N(c,{id:e}),p("]",t)].join("\n")},o=function(n,t){var r=e(JSON.stringify(n));return N(v(r,t),{class:"jstStr"})},i=function(n,t){return N(v(n,t),{class:"jstNum"})},l=function(n,t){return N(v(n,t),{class:"jstBool"})},f=function(n){return N(v("null",n),{class:"jstNull"})},j=function(n,t,r){var s=v(e(JSON.stringify(n))+": ",r),c=N(u(t,r,!1),{});return N(s+c,{class:"jstProperty"})},m=function(){return N(",\n",{class:"jstComma"})},N=function(n,t){return d("span",t,n)},d=function(n,t,r){return"<"+n+Object.keys(t).map(function(n){return" "+n+'="'+t[n]+'"'}).join("")+">"+r+"</"+n+">"},g=function(n,t,r){return N(v(n,t),{class:"jstBracket"})+N("",{class:"jstFold",onclick:"JSONTree.toggle('"+r+"')"})};this.toggle=function(n){var t=document.getElementById(n),r=t.parentNode,e=t.previousElementSibling;""===t.className?(t.className="jstHiddenBlock",r.className="jstFolded",e.className="jstExpand"):(t.className="",r.className="",e.className="jstFold")};var p=function(n,t){return N(v(n,t),{})},v=function(n,t){return Array(2*t+1).join(" ")+n};return this}();
+	</script>
+</head>
+	<body class='extent standard default hide-overflow '>
+		<div id='theme-selector' alt='Click to toggle theme. To enable by default, use theme configuration.' title='Click to toggle theme. To enable by default, use theme configuration.'>
+			<span><i class='material-icons'>desktop_windows</i></span>
+		</div>
+<nav>
+	<div class="nav-wrapper">
+		<a href="#!" class="brand-logo black"><img src="https://cdn.rawgit.com/extent-framework/extent-github-cdn/d74480e/commons/img/logo.png"></a>
+		<!-- slideout menu -->
+		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
+			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
+						<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></a></li>
+		</ul>
+		<!-- report name -->
+		<span class='report-name'>Report</span>
+		<!-- report headline -->
+		<span class='report-headline'></span>
+		<!-- nav-right -->
+		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
+			<a href='#!'>
+			<span class='label blue darken-3 suite-start-time'>Jun 22, 2020 11:39:23 AM</span>
+			</a>
+		</ul>
+	</div>
+</nav>		<!-- container -->
+		<div class='container'>
+<div id='test-view' class='view'>
+	<section id='controls'>
+		<div class='controls grey lighten-4'>
+			<!-- test toggle -->
+			<div class='chip transparent'>
+				<a class='dropdown-button tests-toggle' data-activates='tests-toggle' data-constrainwidth='true' data-beloworigin='true' data-hover='true' href='#'>
+				<i class='material-icons'>warning</i> Status
+				</a>
+				<ul id='tests-toggle' class='dropdown-content'>
+										<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+					<li class='divider'></li>
+					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
+				</ul>
+			</div>
+			<!-- test toggle -->
+			<!-- category toggle -->
+			<!-- category toggle -->
+			<!-- clear filters -->
+			<div class='chip transparent hide'>
+				<a class='' id='clear-filters' alt='Clear Filters' title='Clear Filters'>
+				<i class='material-icons'>close</i> Clear
+				</a>
+			</div>
+			<!-- clear filters -->
+			<!-- enable dashboard -->
+			<div id='toggle-test-view-charts' class='chip transparent'>
+				<a class='pink-text' id='enable-dashboard' alt='Enable Dashboard' title='Enable Dashboard'>
+				<i class='material-icons'>track_changes</i> Dashboard
+				</a>
+			</div>
+			<!-- enable dashboard -->
+			<!-- search -->
+			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
+				<a href="#" class='search-div'>
+				<i class='material-icons'>search</i> Search
+				</a>
+				<div class='input-field left hide'>
+					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
+				</div>
+			</div>
+			<!-- search -->
+		</div>
+	</section>
+<div id='test-view-charts' class='subview-full'>
+    <div id='charts-row' class='row nm-v nm-h'>
+        <div class='col s12 m12 l12 np-h'>
+            <div class='card-panel nm-v'>
+                <div class='left panel-name'>Tests</div>
+                <div class='chart-box' style="max-height:94px;">
+                    <canvas id='parent-analysis' width='90' height='70'></canvas>
+                </div>
+                <div class='block text-small'>
+                    <span class='tooltipped' data-position='top' data-tooltip='100%'><span class='strong'>14</span> test(s) passed</span>
+                </div>
+                <div class='block text-small'>
+                    <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="timeline-chart" class="row nm-v nm-h">
+        <div class="col s12 m12 l12 np-h">
+            <div class="card-panel">
+                <div class='left panel-name'>Timeline (seconds)</div>
+                <div class="chart-box" style="width:98%;max-height:145px;">
+                    <canvas id="timeline" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>	<div class='subview-left left'>
+		<div class='view-summary'>
+			<ul id='test-collection' class='test-collection'>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='1'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_01</span>
+						<span class='test-time'>Jun 22, 2020 11:39:25 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:25 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:30 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 4s+873ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:26 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Validate that the Geopolitical Type service is successfully created when valid values are passed for all attributes in JSON Request.</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:26 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:26 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"3791813"<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"twotest"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:28 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:28 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"userName":"3791813",<br />		"version":"1.0.0",<br />		"transactionId":"16665926-2467-42fc-aa2c-b2dde5f85188",<br />		"timeStamp":"2020-06-22 10:40:07",<br />		"statusCode":"200",<br />		"message":<br />		{<br />			"status":"SUCCESS",<br />			"internalMessage":"Geopolitical Type Details successfully saved with GeopoliticalTypeId :4658090200925304141",<br />			"data":null<br />		}<br />	},<br />	"data":<br />	{<br />		"geopoliticalTypeId":4658090200925304141<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:28 AM</td>
+				<td class='step-details'>
+						Response status validation passed: 200
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:28 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:28 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:28 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:28 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:28 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:30 AM</td>
+				<td class='step-details'>
+						Geopolitical ID is getting generated and received in response: 4658090200925304141
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:30 AM</td>
+				<td class='step-details'>
+						Success message with GeopiticalType ID is getting received as expected in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:30 AM</td>
+				<td class='step-details'>
+						Input Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:30 AM</td>
+				<td class='step-details'>
+						Input_UserName: 3791813<br /><br />Input_GeoTypeName: twotest<br /><br />Response_GeoTyepId: 4658090200925304141<br /><br />Input_LastUpdateUserName: 3791813<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:30 AM</td>
+				<td class='step-details'>
+						DB Data Values:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:30 AM</td>
+				<td class='step-details'>
+						DB_UserName: 3791813<br /><br />DB_GeoTypeName: twotest<br /><br />DB_GeoTyepId: 4658090200925304141<br /><br />DB_LastUpdateUserName: 3791813<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:30 AM</td>
+				<td class='step-details'>
+						Comparison between input data & DB data matching and passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:30 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='2'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_14</span>
+						<span class='test-time'>Jun 22, 2020 11:39:31 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:31 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:40 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 9s+317ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:31 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify the JMS-PASSED queue after the Geopolitical Type request sent</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:39 AM</td>
+				<td class='step-details'>
+						msgSource  validation passed: GEOPCORE
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:39 AM</td>
+				<td class='step-details'>
+						DataSegement  validation passed: GEOPL_TYPE
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:39 AM</td>
+				<td class='step-details'>
+						JMS Response Received:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:39 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"data":<br />	{<br />		"geopoliticalTypeId":4658090200925304141,<br />		"geopoliticalTypeName":"twotest"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:40 AM</td>
+				<td class='step-details'>
+						Comparison between JMS response & DB data matching and passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:40 AM</td>
+				<td class='step-details'>
+						Response_geopoliticalTypeId: 4658090200925304141<br /><br />DB_geopoliticalTypeId: 4658090200925304141<br /><br />Response_geopoliticalTypeName: twotest<br /><br />DB_geopoliticalTypeName: twotest<br /><br />
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:40 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='3'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_02</span>
+						<span class='test-time'>Jun 22, 2020 11:39:40 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:40 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:41 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+914ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Validate that the Geopolitical Type service is not created when the Geopolitical Type Name is empty in JSON Request.</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"3791813"<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":""<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"transactionId":"55bcee39-215d-4530-bd3d-7cb387744097",<br />		"timeStamp":"2020-06-22 10:40:20",<br />		"statusCode":"400",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"geopoliticalTypeName",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank GeopoliticalTypeName
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:41 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='4'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_03</span>
+						<span class='test-time'>Jun 22, 2020 11:39:42 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:42 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:43 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+954ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:42 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the meta data section is not passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:42 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:42 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"geopoliticalType": <br />	{<br />		"geopoliticalTypeName": "TESTaaa"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"transactionId":"35ae7895-a35c-4bb8-90d2-6175fd0e5036",<br />		"timeStamp":"2020-06-22 10:40:21",<br />		"statusCode":"400",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"meta",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when meta data section is not passed in JSON
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:43 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='5'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_04</span>
+						<span class='test-time'>Jun 22, 2020 11:39:43 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:43 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:44 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+874ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the attribute is not passed in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta": <br />	{<br />		"userName": "3791813"<br />	},<br />	"geopoliticalType": <br />	{<br />		<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"transactionId":"7fd2aace-38aa-4265-b8a5-23cc78e23193",<br />		"timeStamp":"2020-06-22 10:40:23",<br />		"statusCode":"400",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"geopoliticalTypeName",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when the attribute is not passed in JSON
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:44 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='6'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_05</span>
+						<span class='test-time'>Jun 22, 2020 11:39:45 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:45 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:46 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+968ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:45 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the user name is null or Empty in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:45 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:45 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName": null<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"TESTaqq"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:45 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:45 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"transactionId":"7666d188-5c53-42ee-9eb9-5187517c1d26",<br />		"timeStamp":"2020-06-22 10:40:24",<br />		"statusCode":"400",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"userName",<br />			"message":" is a required field"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:46 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:46 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:46 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:46 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:46 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:46 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:46 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:46 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when  the user name is null or Empty in JSON
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:46 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='7'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_06</span>
+						<span class='test-time'>Jun 22, 2020 11:39:46 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:46 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:47 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 1s+2ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the geopoliticalTypeName is more than 50 characters length in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"3791813"<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"testestetstestestetwestestestetstestestetwestestestetstestestetwestestestetstestestetwestestestetstestestetwestestestetstestestetwes"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"transactionId":"1373af00-abef-46ff-b72b-733e228c82b3",<br />		"timeStamp":"2020-06-22 10:40:26",<br />		"statusCode":"400",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"geopoliticalTypeName",<br />			"message":" cannot be greater than 50 characters!"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when the geopoliticalTypeName is more than 50 characters length in JSON
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:47 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='8'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_07</span>
+						<span class='test-time'>Jun 22, 2020 11:39:47 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:47 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:48 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+959ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when the User Name is more than 25 characters length in JSON</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"123456789123456789123456789123456789123456789123456789"<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"TESTqqwqq"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"transactionId":"19b0e326-7ae9-40cf-adaa-22f8dd939ab6",<br />		"timeStamp":"2020-06-22 10:40:27",<br />		"statusCode":"400",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Validation Failed",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"userName",<br />			"message":" cannot be greater than 25 characters"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when User Name is more than 25 characters length in JSON
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:48 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='9'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_08</span>
+						<span class='test-time'>Jun 22, 2020 11:39:49 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:49 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:50 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+843ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:49 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the Exception is received when the URI is not correct</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:49 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:49 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"3791813"<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"TESTttt"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						https://geopolitical-efs-gateway-rel.app.edcdev1.paas.fedex.com/geopolitical-efs-command/v1/geopolitica
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"transactionId":"672c521c-fb84-49ea-93f5-40ef0e9cc99f",<br />		"timeStamp":"2020-06-22 10:40:28",<br />		"statusCode":"404",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Exception",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"Error",<br />			"message":"Could not find the POST method for URL /v1/geopolitica"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						Response status code 404 validation passed: 404
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						Response Api Version Number validation passed.
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when URI is not correct
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='10'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_09</span>
+						<span class='test-time'>Jun 22, 2020 11:39:50 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:50 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:51 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+903ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify the error message when passing the expiry token</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:50 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"3791813"<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"Test"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:51 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:51 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timeStamp":"2020-06-22T10:40:30.100+0000",<br />		"statusCode":"401",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Security Error",<br />			"data":<br />			{<br />				"errorMessage":"Exception occurred in Security Filter"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"NA",<br />			"message":"Unable to find a certificate that can decode the token.  This can happen if the token was encrypted using a test certificate and running on production or if the public certificate was not loaded to LDAP.  Token: 'v1:APP3534861:CNs7wqTWQDe1xJivTxQcPl9+b94XKxfVKC9WQbULqn5hKunN9PKQwv+E7ZXK/Qwqpsf66XzflXZVcQOpMk+tufNG3awVeYy9FQeqY+tosnt7ONkSHd8I3sIUXHEEuVXEBKJe1pUoVOauy1BvIPMQeYDP2HmxtaiZ5zlXuu2nXI4=:APP3534861'. Ldap URL:'ldap://dirtest.corp.fedex.com:389/ou=people,<br />			o=fedex,<br />			c=us'. Number of valid certificates found:1"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:51 AM</td>
+				<td class='step-details'>
+						Response status code 401 validation passed: 401
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:51 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:51 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:51 AM</td>
+				<td class='step-details'>
+						No records are getting received in response when sending the expired token
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:51 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>Test Passed</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='11'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_10</span>
+						<span class='test-time'>Jun 22, 2020 11:39:51 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:51 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:52 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+811ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify the error message when passing the invalid token</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"3791813"<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"Test"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timeStamp":"2020-06-22T10:40:31.368+0000",<br />		"statusCode":"401",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Security Error",<br />			"data":<br />			{<br />				"errorMessage":"Exception occurred in Security Filter"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"NA",<br />			"message":"Input byte array has wrong 4-byte ending unit"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						Response status code 401 validation passed: 401
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						No records are getting received in response when sending the invalid token
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:52 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>Test Passed</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='12'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_11</span>
+						<span class='test-time'>Jun 22, 2020 11:39:53 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:53 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:54 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+991ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when if any comma/bracket is missing in request then we will get the JSON parse error: Unexpected character in response</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"3791814"<br />	}"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"Test"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"transactionId":"4761eddf-bca3-44eb-b96f-2e851384c5f9",<br />		"timeStamp":"2020-06-22 10:40:32",<br />		"statusCode":"400",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Json Parser Error",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"Error",<br />			"message":"JSON parse error: Unexpected character ('\"' (code 34)): was expecting comma to separate Object entries"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Response status code 400 validation passed: 400
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:53 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank GeopoliticalTypeName
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:54 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='13'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_12</span>
+						<span class='test-time'>Jun 22, 2020 11:39:54 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:54 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:55 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+942ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:54 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when we use POST url but selecting GET method</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:54 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:54 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"3791815"<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"Test"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"transactionId":"1a3a2cb3-1d4d-441a-831e-477838246619",<br />		"timeStamp":"2020-06-22 10:40:34",<br />		"statusCode":"405",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"No Such API Exists",<br />			"data":<br />			{<br />				"errorMessage":"Request Submitted With Error"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"Error",<br />			"message":"Request method 'GET' not supported"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						Response status code 405 validation passed: 405
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						Meta transactionId validation is Passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank GeopoliticalTypeName
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:55 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' bdd='false' test-id='14'>
+					<div class='test-heading'>
+						<span class='test-name'>TC_13</span>
+						<span class='test-time'>Jun 22, 2020 11:39:55 AM</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+					<div class='test-content hide'>
+<div class='test-time-info'>
+	<span class='label start-time'>Jun 22, 2020 11:39:55 AM</span>
+	<span class='label end-time'>Jun 22, 2020 11:39:56 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 0s+968ms</span>
+</div>
+<div class='test-steps'>
+	<table class='bordered table-results'>
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Timestamp</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text purple'>Verify that the ERROR message is received when missing HTTP Header X-CSR-SECURITY_TOKEN</span>
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						Input Request created:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						<br />{<br />	 "meta":<br />	{<br />		"userName":"3791816"<br />	},<br />	"geopoliticalType":<br />	{<br />		"geopoliticalTypeName":"Test"<br />	}<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						Response Recieved:
+					
+				</td>
+			</tr>
+			<tr class='log' status='info'>
+				<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						<br />{<br />	"meta":<br />	{<br />		"version":"1.0.0",<br />		"timeStamp":"2020-06-22T10:40:35.400+0000",<br />		"statusCode":"401",<br />		"message":<br />		{<br />			"status":"ERROR",<br />			"internalMessage":"Security Error",<br />			"data":<br />			{<br />				"errorMessage":"Exception occurred in Security Filter"<br />			}<br />		}<br />	},<br />	"errors":<br />	[<br />		<br />		{<br />			"fieldName":"NA",<br />			"message":"Missing HTTP header X-CSR-SECURITY_TOKEN"<br />		}<br />	]<br />}
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						Response status code 401 validation passed: 401
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						Response meta validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						Response API version number validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						Meta timestamp validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						Meta statusCode validation passed
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						Expected error messages is getting received in response
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						Expected error message is getting received in response when sending the blank GeopoliticalTypeName
+					
+				</td>
+			</tr>
+			<tr class='log' status='pass'>
+				<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+				<td class='timestamp'>11:39:56 AM</td>
+				<td class='step-details'>
+						<span class='badge white-text green'>test status</span>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- subview left -->
+	<div class='subview-right left'>
+		<div class='view-summary'>
+			<div id='step-filters' class="right sr-filters">
+				<a class="btn-floating waves-effect waves-light green" status="pass" alt="pass" title="pass"><i class="material-icons">check_circle</i></a>
+				<a class="btn-floating waves-effect waves-light red" status="fail" alt="fail" title="fail"><i class="material-icons">cancel</i></a>
+				<a class="btn-floating waves-effect waves-light red darken-4" status="fatal" alt="fatal" title="fatal"><i class="material-icons">cancel</i></a>
+				<a class="btn-floating waves-effect waves-light pink text-lighten-1" status="error" alt="error" title="error"><i class="material-icons">error</i></a>
+				<a class="btn-floating waves-effect waves-light orange" alt="warning" status="warning" title="warning"><i class="material-icons">warning</i></a>
+				<a class="btn-floating waves-effect waves-light teal" status="skip" alt="skip" title="skip"><i class="material-icons">redo</i></a>
+				<a class="btn-floating waves-effect waves-light grey" status="clear" alt="Clear filters" title="Clear filters"><i class="material-icons">clear</i></a>
+			</div>
+			<h5 class='test-name'></h5>
+		</div>
+	</div>
+	<!-- subview right -->
+</div>
+<!-- test view --><!-- category view --><!-- exception view --><div id='dashboard-view' class='view hide'>
+	<div class='card-panel transparent np-v'>
+		<h5>Dashboard</h5>
+
+		<div class='row'>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Tests
+					<div class='panel-lead'>14</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Steps
+					<div class='panel-lead'>0</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Start
+					<div class='panel-lead'>Jun 22, 2020 11:39:23 AM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+			 		End
+			 		<div class='panel-lead'>Jun 22, 2020 11:39:56 AM</div>
+				</div>
+			</div>
+			<div class='col s2'>
+				<div class='card-panel r'>
+					Time Taken
+					<div class='panel-lead'>0h 0m 32s+841ms</div>
+				</div>
+			</div>
+			<div class='col s4'>
+				<div class='card-panel dashboard-environment'>
+					<span class='right label cyan white-text'>Environment</span><p>&nbsp;</p>
+					
+					<table>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+						</tr>
+							<tr>
+								<td>Host Name</td>
+								<td>SYN-FLX-001</td>
+							</tr>
+							<tr>
+								<td>User Name</td>
+								<td>FedExUser</td>
+							</tr>
+							<tr>
+								<td>Environment</td>
+								<td>L3</td>
+							</tr>
+							<tr>
+								<td>Version</td>
+								<td>V1</td>
+							</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- dashboard view -->
+<!-- testrunner-logs view -->		</div>
+		<!-- container -->
+		<script>
+			var statusGroup = {
+                parentCount: 14,
+				passParent: 14,
+				failParent: 0,
+				fatalParent: 0,
+				errorParent: 0,
+				warningParent: 0,
+				skipParent: 0,
+				exceptionsParent: 0,
+				childCount: 0,
+				passChild: 0,
+				failChild: 0,
+				fatalChild: 0,
+				errorChild: 0,
+				warningChild: 0,
+				skipChild: 0,
+				infoChild: 0,
+				debugChild: 0,
+				exceptionsChild: 0,
+				grandChildCount: 0,
+				passGrandChild: 0,
+				failGrandChild: 0,
+				fatalGrandChild: 0,
+				errorGrandChild: 0,
+				warningGrandChild: 0,
+				skipGrandChild: 0,
+				infoGrandChild: 0,
+				debugGrandChild: 0,
+				exceptionsGrandChild: 0,
+			};
+		</script>
+		<script>
+			var timeline = {
+			        "TC_01":4.873,"TC_14":9.317,"TC_02":0.914,"TC_03":0.954,"TC_04":0.874,"TC_05":0.968,"TC_06":1.002,"TC_07":0.959,"TC_08":0.843,"TC_09":0.903,"TC_10":0.811,"TC_11":0.991,"TC_12":0.942,"TC_13":0.968
+			};
+		</script>
+		<script src='https://cdn.rawgit.com/extent-framework/extent-github-cdn/b65cd69/v3html/js/extent.js' type='text/javascript'></script>
+		<script type='text/javascript'>
+		</script>
+	</body>
+</html>
