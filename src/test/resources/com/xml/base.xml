@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Base">
+  <test thread-count="5" name="Test">
+    <classes>
+      <!-- <class name="scenarios.GEO.base.ScriptGet"/> -->
+      <class name="scenarios.GEO.base.UomTypeGet"/>
+      <!-- <class name="scenarios.GEO.base.GeoOrgStdGet"/>
+      <class name="scenarios.GEO.base.DayOfWeekGet"/>
+      <class name="scenarios.GEO.base.DepnCountryRltspGet"/>
+      <class name="scenarios.GEO.base.StProvStdGet"/>
+      <class name="scenarios.GEO.base.DepnCountryRltspTypeGet"/>
+      <class name="scenarios.GEO.base.CountryGet"/>
+      <class name="scenarios.GEO.base.LanguageGet"/>
+      <class name="scenarios.GEO.base.GeoRltspTypeGet"/>
+      <class name="scenarios.GEO.base.MonthOfYearGet"/>
+      <class name="scenarios.GEO.base.AffilTypeGet"/>
+      <class name="scenarios.GEO.base.HolidayGet"/>
+      <class name="scenarios.GEO.base.GeoTypeGet"/>
+      <class name="scenarios.GEO.base.GeoRltspGet"/>
+      
+      <class name="scenarios.GEO.base.StProvStdGraphQL"/>
+      <class name="scenarios.GEO.base.CountryGraphQL"/>
+      <class name="scenarios.GEO.base.MonthOfYearGraphQL"/>
+      <class name="scenarios.GEO.base.GeoRltspTypeGraphQL"/>
+      <class name="scenarios.GEO.base.DayOfWeekGraphQL"/>
+      <class name="scenarios.GEO.base.UomTypeGraphQL"/>
+      <class name="scenarios.GEO.base.GeoRltspGraphQL"/>
+      <class name="scenarios.GEO.base.GeoOrgStdGraphQL"/>
+      <class name="scenarios.GEO.base.DepnCountryRltspGraphQL"/>
+      <class name="scenarios.GEO.base.LanguageGraphQL"/>
+      <class name="scenarios.GEO.base.DepnCountryRltspTypeGraphQL"/>
+      <class name="scenarios.GEO.base.AffilTypeGraphQL"/>
+      <class name="scenarios.GEO.base.GeoTypeGraphQL"/>
+      <class name="scenarios.GEO.base.ScriptGraphQL"/>
+      <class name="scenarios.GEO.base.DepnCountryRltspGql"/>
+      <class name="scenarios.GEO.base.HolidayGraphQL"/>
+      
+      
+      <class name="scenarios.GEO.base.HolidayPost"/>
+      <class name="scenarios.GEO.base.LanguagePost"/>
+      <class name="scenarios.GEO.base.GeoTypePut"/>
+      <class name="scenarios.GEO.base.AffilTypePost"/>
+      <class name="scenarios.GEO.base.AffilTypePut"/>
+      <class name="scenarios.GEO.base.DepnCountryRltspPut"/>
+      <class name="scenarios.GEO.base.CntryOrgStdPost"/>
+      <class name="scenarios.GEO.base.GeoOrgStdPut"/>
+      <class name="scenarios.GEO.base.DayOfWeekPut"/>
+      <class name="scenarios.GEO.base.GeoRltspTypePost"/>
+      <class name="scenarios.GEO.base.DepnCountryRltspPost"/>
+      <class name="scenarios.GEO.base.GeoRltspTypePut"/>
+      <class name="scenarios.GEO.base.UomTypePost"/>
+      <class name="scenarios.GEO.base.ScriptPut"/>
+      <class name="scenarios.GEO.base.StProvStdPut"/>
+      <class name="scenarios.GEO.base.CntryOrgStdPut"/>
+      <class name="scenarios.GEO.base.CountryPut"/>
+      <class name="scenarios.GEO.base.GeoOrgStdPost"/>
+      <class name="scenarios.GEO.base.ScriptPost"/>
+      <class name="scenarios.GEO.base.DayOfWeekPost"/>
+      <class name="scenarios.GEO.base.LanguagePut"/>
+      <class name="scenarios.GEO.base.GeoRltspPost"/>
+      <class name="scenarios.GEO.base.UomTypePut"/>
+      <class name="scenarios.GEO.base.MonthOfYearPost"/>
+      <class name="scenarios.GEO.base.GeoTypePost"/>
+      <class name="scenarios.GEO.base.StProvStdPost"/>
+      <class name="scenarios.GEO.base.GeoRltspPut"/>
+      <class name="scenarios.GEO.base.MonthOfYearPut"/>
+      <class name="scenarios.GEO.base.HolidayPut"/>
+	  <class name="scenarios.GEO.base.CountryPost"/>      
+           -->
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

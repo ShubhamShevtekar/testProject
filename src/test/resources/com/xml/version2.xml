@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Version2">
+  <test thread-count="5" name="Test">
+    <classes>
+    <class name="scenarios.GEO.v2.UomTypeGet"/>
+      <!-- <class name="scenarios.GEO.v2.GeoOrgStdPost"/>
+      <class name="scenarios.GEO.v2.DayOfWeekPost"/>
+      <class name="scenarios.GEO.v2.AffilTypeGet"/>
+      <class name="scenarios.GEO.v2.HolidayGet"/>
+      <class name="scenarios.GEO.v2.StProvStdPut"/>
+      <class name="scenarios.GEO.v2.ScriptGraphQL"/>
+      <class name="scenarios.GEO.v2.AffilTypeGraphQL"/>
+      <class name="scenarios.GEO.v2.UomTypeGraphQL"/>
+      <class name="scenarios.GEO.v2.CountryGet"/>
+      
+      <class name="scenarios.GEO.v2.HolidayGraphQL"/>
+      <class name="scenarios.GEO.v2.LanguageGraphQL"/>
+      <class name="scenarios.GEO.v2.GeoOrgStdGet"/>
+      <class name="scenarios.GEO.v2.HolidayPost"/>
+      <class name="scenarios.GEO.v2.HolidayPut"/>
+      <class name="scenarios.GEO.v2.ScriptGet"/>
+      <class name="scenarios.GEO.v2.GeoRltspPut"/>
+      <class name="scenarios.GEO.v2.GeoOrgStdPut"/>
+      <class name="scenarios.GEO.v2.DepnCountryRltspGql"/>
+      <class name="scenarios.GEO.v2.LanguagePost"/>
+      <class name="scenarios.GEO.v2.CountryPut"/>
+      <class name="scenarios.GEO.v2.UomTypePost"/>
+      <class name="scenarios.GEO.v2.ScriptPost"/>
+      <class name="scenarios.GEO.v2.AddressLabelsPost"/>
+      <class name="scenarios.GEO.v2.GeoRltspGet"/>
+      <class name="scenarios.GEO.v2.ScriptPut"/>
+      <class name="scenarios.GEO.v2.DepnCountryRltspTypeGet"/>
+      <class name="scenarios.GEO.v2.AffilTypePost"/>
+      <class name="scenarios.GEO.v2.DepnCountryRltspTypeGraphQL"/>
+      <class name="scenarios.GEO.v2.MonthOfYearGraphQL"/>
+      <class name="scenarios.GEO.v2.DepnCountryRltspGraphQL"/>
+      <class name="scenarios.GEO.v2.TestingClass"/>
+      <class name="scenarios.GEO.v2.GeoTypePost"/>
+      <class name="scenarios.GEO.v2.CntryOrgStdPost"/>
+      <class name="scenarios.GEO.v2.UomTypePut"/>
+      <class name="scenarios.GEO.v2.AddressLabelsGet"/>
+      <class name="scenarios.GEO.v2.GeoTypeGraphQL"/>
+      <class name="scenarios.GEO.v2.DayOfWeekGraphQL"/>
+      <class name="scenarios.GEO.v2.GeoOrgStdGraphQL"/>
+      <class name="scenarios.GEO.v2.DepnCountryRltspGet"/>
+      <class name="scenarios.GEO.v2.AddressLabelsGraphQL"/>
+      <class name="scenarios.GEO.v2.GeoTypeGet"/>
+      <class name="scenarios.GEO.v2.AddressLabelsPut"/>
+      <class name="scenarios.GEO.v2.GeoRltspPost"/>
+      <class name="scenarios.GEO.v2.DayOfWeekPut"/>
+      <class name="scenarios.GEO.v2.CntryOrgStdPut"/>
+      <class name="scenarios.GEO.v2.GeoRltspTypeGraphQL"/>
+      <class name="scenarios.GEO.v2.CountryPost"/>
+      <class name="scenarios.GEO.v2.DepnCountryRltspPost"/>
+      <class name="scenarios.GEO.v2.DayOfWeekGet"/>
+      <class name="scenarios.GEO.v2.GeoRltspGraphQL"/>
+      <class name="scenarios.GEO.v2.MonthOfYearPut"/>
+      <class name="scenarios.GEO.v2.GeoRltspTypePut"/>
+      <class name="scenarios.GEO.v2.LanguagePut"/>
+      <class name="scenarios.GEO.v2.AffilTypePut"/>
+      <class name="scenarios.GEO.v2.CountryGraphQL"/>
+      <class name="scenarios.GEO.v2.StProvStdGraphQL"/>
+      <class name="scenarios.GEO.v2.GeoRltspTypePost"/>
+      <class name="scenarios.GEO.v2.StProvStdGet"/>
+      <class name="scenarios.GEO.v2.DepnCountryRltspPut"/>
+      <class name="scenarios.GEO.v2.MonthOfYearPost"/>
+      <class name="scenarios.GEO.v2.StProvStdPost"/>
+      <class name="scenarios.GEO.v2.MonthOfYearGet"/>
+      <class name="scenarios.GEO.v2.GeoRltspTypeGet"/>
+      <class name="scenarios.GEO.v2.GeoTypePut"/>
+      <class name="scenarios.GEO.v2.LanguageGet"/>
+             -->
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

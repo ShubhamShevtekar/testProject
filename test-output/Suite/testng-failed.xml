@@ -3,56 +3,158 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
   <test name="Test(failed)">
     <classes>
-      <class name="scenarios.GEO.HolidayGraphQL">
-        <methods>
-          <include name="getToken"/>
-          <include name="getCurrentDate"/>
-          <include name="zipFolder"/>
-          <include name="TC_06"/>
-          <include name="cleanFolder"/>
-          <include name="TC_05"/>
-          <include name="TC_04"/>
-          <include name="startReport"/>
-          <include name="TC_03"/>
-          <include name="startRepo"/>
-          <include name="endReport"/>
-          <include name="beforeSuite"/>
-          <include name="before"/>
-        </methods>
-      </class> <!-- scenarios.GEO.HolidayGraphQL -->
-      <class name="scenarios.GEO.UomTypeGraphQL">
+      <class name="scenarios.GEO.CountryGraphQL">
         <methods>
           <include name="getToken"/>
           <include name="startRepo"/>
-          <include name="TC_03"/>
-          <include name="before"/>
           <include name="getCurrentDate"/>
+          <include name="after"/>
+          <include name="TC_10"/>
+          <include name="TC_03"/>
+          <include name="TC_01"/>
+          <include name="TC_12"/>
+          <include name="TC_02"/>
+          <include name="TC_13"/>
           <include name="startReport"/>
-          <include name="TC_05"/>
+          <include name="TC_11"/>
           <include name="TC_06"/>
           <include name="endReport"/>
+          <include name="before"/>
           <include name="beforeSuite"/>
-          <include name="TC_04"/>
         </methods>
-      </class> <!-- scenarios.GEO.UomTypeGraphQL -->
+      </class> <!-- scenarios.GEO.CountryGraphQL -->
       <class name="scenarios.GEO.GeoRltspGraphQL">
         <methods>
-          <include name="getToken"/>
-          <include name="TC_04"/>
-          <include name="getCurrentDate"/>
-          <include name="startRepo"/>
           <include name="TC_09"/>
+          <include name="getToken"/>
+          <include name="getCurrentDate"/>
           <include name="before"/>
           <include name="startReport"/>
           <include name="TC_08"/>
+          <include name="startRepo"/>
           <include name="endReport"/>
-          <include name="TC_03"/>
           <include name="beforeSuite"/>
-          <include name="TC_05"/>
-          <include name="TC_06"/>
-          <include name="TC_07"/>
         </methods>
       </class> <!-- scenarios.GEO.GeoRltspGraphQL -->
+      <class name="scenarios.GEO.GeoTypeGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="TC_05"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
+          <include name="TC_04"/>
+          <include name="TC_06"/>
+          <include name="endReport"/>
+          <include name="before"/>
+          <include name="beforeSuite"/>
+          <include name="zipFolder"/>
+          <include name="startRepo"/>
+          <include name="cleanFolder"/>
+        </methods>
+      </class> <!-- scenarios.GEO.GeoTypeGraphQL -->
+      <class name="scenarios.GEO.DepnCountryRltspTypeGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
+          <include name="TC_02"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="before"/>
+          <include name="startRepo"/>
+        </methods>
+      </class> <!-- scenarios.GEO.DepnCountryRltspTypeGraphQL -->
+      <class name="scenarios.GEO.DayOfWeekGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="TC_02"/>
+          <include name="TC_03"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="before"/>
+          <include name="startRepo"/>
+        </methods>
+      </class> <!-- scenarios.GEO.DayOfWeekGraphQL -->
+      <class name="scenarios.GEO.LanguageGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="TC_05"/>
+          <include name="TC_04"/>
+          <include name="after"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
+          <include name="endReport"/>
+          <include name="startRepo"/>
+          <include name="beforeSuite"/>
+          <include name="TC_09"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- scenarios.GEO.LanguageGraphQL -->
+      <class name="scenarios.GEO.DepnCountryRltspGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
+          <include name="TC_03"/>
+          <include name="startRepo"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- scenarios.GEO.DepnCountryRltspGraphQL -->
+      <class name="scenarios.GEO.HolidayGraphQL">
+        <methods>
+          <include name="TC_05"/>
+          <include name="getToken"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
+          <include name="startRepo"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="TC_06"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- scenarios.GEO.HolidayGraphQL -->
+      <class name="scenarios.GEO.GeoOrgStdGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="startRepo"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
+          <include name="before"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="TC_03"/>
+        </methods>
+      </class> <!-- scenarios.GEO.GeoOrgStdGraphQL -->
+      <class name="scenarios.GEO.MonthOfYearGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="getCurrentDate"/>
+          <include name="TC_03"/>
+          <include name="startReport"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="startRepo"/>
+          <include name="TC_02"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- scenarios.GEO.MonthOfYearGraphQL -->
+      <class name="scenarios.GEO.StProvStdGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="getCurrentDate"/>
+          <include name="before"/>
+          <include name="startReport"/>
+          <include name="startRepo"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="TC_07"/>
+          <include name="TC_08"/>
+        </methods>
+      </class> <!-- scenarios.GEO.StProvStdGraphQL -->
       <class name="scenarios.GEO.AffilTypeGraphQL">
         <methods>
           <include name="getToken"/>
@@ -60,13 +162,49 @@
           <include name="before"/>
           <include name="getCurrentDate"/>
           <include name="startReport"/>
+          <include name="endReport"/>
+          <include name="startRepo"/>
+          <include name="beforeSuite"/>
+        </methods>
+      </class> <!-- scenarios.GEO.AffilTypeGraphQL -->
+      <class name="scenarios.GEO.GeoRltspTypeGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="getCurrentDate"/>
+          <include name="startReport"/>
+          <include name="TC_03"/>
           <include name="startRepo"/>
           <include name="endReport"/>
           <include name="beforeSuite"/>
-          <include name="TC_03"/>
-          <include name="TC_05"/>
+          <include name="before"/>
         </methods>
-      </class> <!-- scenarios.GEO.AffilTypeGraphQL -->
+      </class> <!-- scenarios.GEO.GeoRltspTypeGraphQL -->
+      <class name="scenarios.GEO.UomTypeGraphQL">
+        <methods>
+          <include name="startRepo"/>
+          <include name="getToken"/>
+          <include name="getCurrentDate"/>
+          <include name="before"/>
+          <include name="startReport"/>
+          <include name="TC_05"/>
+          <include name="TC_06"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+        </methods>
+      </class> <!-- scenarios.GEO.UomTypeGraphQL -->
+      <class name="scenarios.GEO.ScriptGraphQL">
+        <methods>
+          <include name="getToken"/>
+          <include name="TC_05"/>
+          <include name="getCurrentDate"/>
+          <include name="TC_06"/>
+          <include name="startReport"/>
+          <include name="endReport"/>
+          <include name="beforeSuite"/>
+          <include name="before"/>
+          <include name="startRepo"/>
+        </methods>
+      </class> <!-- scenarios.GEO.ScriptGraphQL -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->
