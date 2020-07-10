@@ -150,6 +150,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String langGetQuery = query.langGraphQL_AllDataQuery();
 				// ***get the fields needs to be validate in DB
@@ -344,6 +345,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String langGetQuery = query.langGraphQLQuery(langCd);
 				// ***get the fields needs to be validate in DB
@@ -529,6 +531,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String langGetQuery = query.langGraphQLQuery(langCd);
 				// ***get the fields needs to be validate in DB
@@ -643,6 +646,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				if (errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessage)) {
 
@@ -759,6 +763,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				if (errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessage)) {
 
@@ -869,6 +874,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String langGetQuery = query.langGraphQLQuery(langCd);
 				// ***get the fields needs to be validate in DB
@@ -1055,6 +1061,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String langGetQuery = query.langGraphQLQuery(langCd);
 				// ***get the fields needs to be validate in DB
@@ -1241,6 +1248,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String langGetQuery = query.langGraphQLQuery(langCd);
 				// ***get the fields needs to be validate in DB
@@ -1437,6 +1445,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				if ((errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessage))
 						&& (errorMsg1.get(1).equals("ValidationError") && errorMsg2.get(1).equals(expectMessage1))
@@ -1549,6 +1558,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String langGetQuery = query.langGraphQLQuery(langCd);
 				// ***get the fields needs to be validate in DB
@@ -1737,6 +1747,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				if (errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessage)) {
 
@@ -1867,6 +1878,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				if ((errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessage))
 						&& (errorMsg1.get(1).equals("ValidationError") && errorMsg2.get(1).equals(expectMessage1))
@@ -1990,6 +2002,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String langGetQuery = query.lang_LocaleCdGraphQLQuery(locale_code);
 				// ***get the fields needs to be validate in DB
@@ -2176,6 +2189,7 @@ public class LanguageGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String langGetQuery = query.lang_countryCdGraphQLQuery(country_code);
 				// ***get the fields needs to be validate in DB

@@ -1,4 +1,5 @@
 package scenarios.GEO.v1;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -44,19 +45,21 @@ public class GeoOrgStdGraphQL extends Reporting {
 	String writableInputFields, writableResult = null;
 	ResponseMessages resMsgs = new ResponseMessages();
 	static Logger logger = Logger.getLogger(GeoOrgStdGraphQL.class);
-	String actuatorGraphQLversion="1.0.0";
+	String actuatorGraphQLversion = "1.0.0";
 	TestResultValidation resultValidation = new TestResultValidation();
 
 	@BeforeClass
 	public void before() {
 		DOMConfigurator.configure("log4j.xml");
-		//***create test result excel file
+		// ***create test result excel file
 		ex.createResultExcel(fileName);
 		// *** getting actautor version
 		String tokenKey = tokenValues[0];
 		String tokenVal = token;
-		String actuatorGraphQLVersionURL=RetrieveEndPoints.getEndPointUrl("graphQLActuator", fileName, level+".graphQL.version");
-		//actuatorGraphQLversion =resultValidation.versionValidation(fileName, tokenKey, tokenVal,actuatorGraphQLVersionURL);
+		String actuatorGraphQLVersionURL = RetrieveEndPoints.getEndPointUrl("graphQLActuator", fileName,
+				level + ".graphQL.version");
+		// actuatorGraphQLversion =resultValidation.versionValidation(fileName,
+		// tokenKey, tokenVal,actuatorGraphQLVersionURL);
 	}
 
 	@BeforeMethod
@@ -116,6 +119,7 @@ public class GeoOrgStdGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String geoOrgStdGetQuery = query.geoOrgStdGetQuery();
 				// ***get the fields needs to be validate in DB
@@ -279,6 +283,7 @@ public class GeoOrgStdGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String geoOrgStdPostQuery = query.geoOrgStdPostQuery(orgStdCd);
 				// ***get the fields needs to be validate in DB
@@ -444,13 +449,14 @@ public class GeoOrgStdGraphQL extends Reporting {
 				errorMsg1.add(js.getString("meta.errors[" + i + "].error"));
 				errorMsg2.add(js.getString("meta.errors[" + i + "].message"));
 			}
-			if (Wscode == 200 && meta != null  &&(!meta.contains("timestamp"))
+			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				if ((errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessag1))
 						&& (errorMsg1.get(1).equals("ValidationError") && errorMsg2.get(1).equals(expectMessage2))) {
 					String[] inputFieldValues = { orgStdCd };
@@ -569,6 +575,7 @@ public class GeoOrgStdGraphQL extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String geoOrgStdPostQuery = query.geoOrgStdPostQuery(orgStdCd);
 				// ***get the fields needs to be validate in DB

@@ -722,6 +722,7 @@ public class CountryGet extends Reporting {
 				test.pass("Response status code 405 validation passed: " + Wscode);
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				String expectMessage = resMsgs.usedPOSTinGetErrorMsg;
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
@@ -815,6 +816,7 @@ public class CountryGet extends Reporting {
 				test.pass("Response status code 401 validation passed: " + Wscode);
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				String expectMessage = resMsgs.missingHTTPHeaderInRequestMsg;
 				if (errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage)) {
@@ -885,6 +887,7 @@ public class CountryGet extends Reporting {
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				if (targetDate.equalsIgnoreCase("NoTargetDate")) {
 					targetDate = currentDate;
@@ -1383,6 +1386,7 @@ public class CountryGet extends Reporting {
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				if (targetDate.equalsIgnoreCase("NoTargetDate")) {
 					targetDate = currentDate;
@@ -1820,6 +1824,7 @@ public class CountryGet extends Reporting {
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				if (targetDate.equalsIgnoreCase("NoTargetDate")) {
 					targetDate = currentDate;
@@ -3902,7 +3907,7 @@ public class CountryGet extends Reporting {
 			for (int m = 0; m < strArray.length; m++) {
 
 				List<String> responseRows = js.get("data[" + k + "].addressLabels." + strArray[m]);
-				for(int s=0; s<responseRows.size(); s++){
+				for (int s = 0; s < responseRows.size(); s++) {
 					System.out.println(responseRows);
 				}
 				// ***get query
