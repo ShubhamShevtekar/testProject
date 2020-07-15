@@ -90,16 +90,9 @@ public class CountryGraphQL extends Reporting {
 	protected void startRepo(Method m) throws IOException {
 
 		runFlag = getExecutionFlag(m.getName(), fileName);
-		String testCaseName = null;
 		if (runFlag.equalsIgnoreCase("Yes")) {
-			testCaseName = m.getName();
+			String testCaseName = m.getName();
 			test = extent.createTest(testCaseName);
-		}
-		con = DbConnect.getSqlStatement(fileName, testCaseName);
-		if (con != null) {
-			test.info("DB Connection Success");
-		} else {
-			test.fail("DB not connected");
 		}
 	}
 
@@ -133,7 +126,7 @@ public class CountryGraphQL extends Reporting {
 		// \\\""+orgStandardCode+"\\\",targetDate :
 		// \\\""+targetDate+"\\\",endDate : \\\""+endDate+"\\\") {
 		// geopoliticalId countryNumericCode countryCode
-		// threeCharacterCountryCode independantFlag dependentRelationshipId
+		// threeCharacterCountryCode independentFlag dependentRelationshipId
 		// dependantCountryCode postalFormatDescription postalFlag postalLength
 		// firstWorkWeekDayName lastWorkWeekDayName weekendFirstDayName
 		// internetDomainName effectiveDate expirationDate countryDialings {
@@ -189,7 +182,7 @@ public class CountryGraphQL extends Reporting {
 		}
 		// String payload = "{\"query\":\"{ countries { geopoliticalId
 		// countryNumericCode countryCode threeCharacterCountryCode
-		// independantFlag dependentRelationshipId dependantCountryCode
+		// independentFlag dependentRelationshipId dependantCountryCode
 		// postalFormatDescription postalFlag postalLength firstWorkWeekDayName
 		// lastWorkWeekDayName weekendFirstDayName internetDomainName
 		// effectiveDate expirationDate countryDialings { geopoliticalId
@@ -223,7 +216,8 @@ public class CountryGraphQL extends Reporting {
 		// dependentRelationshipDescription } stateProvStndList { geopoliticalId
 		// organizationStandardCode stateProvinceCode stateProvinceName
 		// effectiveDate expirationDate } }}\"}";
-		String payload = "{\"query\":\"{  countries {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependentCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    phoneNumberFormatPattern    internationalDialingCode    landPhoneMinimumLength    landPhoneMaximumLength    mobilePhoneMinimumLength    mobilePhoneMaximumLength    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    countryOrganizationStandards {      geopoliticalId      countryShortName      countryFullName      organizationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {      organizationStandardCode        organizationStandardName      }    }    addressLabels {      geopoliticalId      localeCode      addressLineNumber      brandAddressLineDescription      applicable    }  }}\",\"variables\":null,\"operationName\":null}";
+		//String payload = "{\"query\":\"{  countries {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependentCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    phoneNumberFormatPattern    internationalDialingCode    landPhoneMinimumLength    landPhoneMaximumLength    mobilePhoneMinimumLength    mobilePhoneMaximumLength    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    countryOrganizationStandards {      geopoliticalId      countryShortName      countryFullName      organizationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {      organizationStandardCode        organizationStandardName      }    }    addressLabels {      geopoliticalId      localeCode      addressLineNumber      brandAddressLineDescription      applicable    }  }}\",\"variables\":null,\"operationName\":null}";
+		String payload = "{\"query\":\"{  countries {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependentCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    phoneNumberFormatPattern    internationalDialingCode    landPhoneMinimumLength    landPhoneMaximumLength    mobilePhoneMinimumLength    mobilePhoneMaximumLength    currencies {      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    countryOrganizationStandards {      countryShortName      countryFullName      organizationStandardCode       organizationStandardName      effectiveDate      expirationDate    }    addressLabels {      localeCode      addressLineNumber      brandAddressLineDescription      applicable    }  }}\"}";
 		countryNoParameters(testCaseID, payload);
 	}
 
@@ -244,7 +238,7 @@ public class CountryGraphQL extends Reporting {
 		// \\\""+geopoliticalId+"\\\",targetDate :
 		// \\\""+targetDate+"\\\",endDate : \\\""+endDate+"\\\") {
 		// geopoliticalId countryNumericCode countryCode
-		// threeCharacterCountryCode independantFlag dependentRelationshipId
+		// threeCharacterCountryCode independentFlag dependentRelationshipId
 		// dependantCountryCode postalFormatDescription postalFlag postalLength
 		// firstWorkWeekDayName lastWorkWeekDayName weekendFirstDayName
 		// internetDomainName effectiveDate expirationDate countryDialings {
@@ -300,7 +294,7 @@ public class CountryGraphQL extends Reporting {
 		testDataFields(scenarioName, testCaseID);
 		// String payload = "{\"query\":\"{ countries(geopoliticalId :
 		// \\\""+geopoliticalId+"\\\") { geopoliticalId countryNumericCode
-		// countryCode threeCharacterCountryCode independantFlag
+		// countryCode threeCharacterCountryCode independentFlag
 		// dependentRelationshipId dependantCountryCode postalFormatDescription
 		// postalFlag postalLength firstWorkWeekDayName lastWorkWeekDayName
 		// weekendFirstDayName internetDomainName effectiveDate expirationDate
@@ -329,7 +323,7 @@ public class CountryGraphQL extends Reporting {
 		// ***get the test data from sheet
 		testDataFields(scenarioName, testCaseID);
 		String payload = "{\"query\":\"{  countries(geopoliticalId : \\\"" + geopoliticalId
-				+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independantFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    countryDialings {      geopoliticalId      internationalDialingPrefixCode      internationalDialingCode      mobilePhoneMinimumLengthNumber      mobilePhoneMaximumLengthNumber      landPhoneMinimumLengthNumber      landPhoneMaximumLengthNumber      effectiveDate      expirationDate    }     geopoliticalUnitOfMeasures {      uomTypeCode      geopoliticalId      effectiveDate      expirationDate      refUOMType {        uomTypeCode        uomTypeName        uomTypeDesc      }    }      }}\"}";
+				+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    countryDialings {      geopoliticalId      internationalDialingPrefixCode      internationalDialingCode      mobilePhoneMinimumLengthNumber      mobilePhoneMaximumLengthNumber      landPhoneMinimumLengthNumber      landPhoneMaximumLengthNumber      effectiveDate      expirationDate    }     geopoliticalUnitOfMeasures {      uomTypeCode      geopoliticalId      effectiveDate      expirationDate      refUOMType {        uomTypeCode        uomTypeName        uomTypeDesc      }    }      }}\"}";
 
 		countryWithGeoplIdCntryDialingsGeoplUom(testCaseID, payload);
 	}
@@ -348,7 +342,7 @@ public class CountryGraphQL extends Reporting {
 		// ***get the test data from sheet
 		testDataFields(scenarioName, testCaseID);
 		String payload = "{\"query\":\"{  countries(geopoliticalId : \\\"" + geopoliticalId
-				+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independantFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate       geopoliticalHolidays {      geopoliticalId      holidayId      effectiveDate      expirationDate      holiday {        holidayId        holidayName        holidayDateParameterText      }    }     locales {      localeCode      geopoliticalId      languageCode      scriptCode      dateFullFormatDescription      dateLongFormatDescription      dateMediumFormatDescription      dateShortFormatDescription      cldrVersionNumber      cldrVersionDate      effectiveDate      expirationDate      languages {        languageCode        threeCharacterLanguageCode        languageName        nativeScriptLanguageName        scriptCode        languageDescription      }    }      }}\"}";
+				+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate       geopoliticalHolidays {      geopoliticalId      holidayId      effectiveDate      expirationDate      holiday {        holidayId        holidayName        holidayDateParameterText      }    }     locales {      localeCode      geopoliticalId      languageCode      scriptCode      dateFullFormatDescription      dateLongFormatDescription      dateMediumFormatDescription      dateShortFormatDescription      cldrVersionNumber      cldrVersionDate      effectiveDate      expirationDate      languages {        languageCode        threeCharacterLanguageCode        languageName        nativeScriptLanguageName        scriptCode        languageDescription      }    }      }}\"}";
 		countryWithGeopldHolidaysLocales(testCaseID, payload);
 	}
 
@@ -365,7 +359,7 @@ public class CountryGraphQL extends Reporting {
 		}
 		testDataFields(scenarioName, testCaseID);
 		String payload = "{\"query\":\"{  countries(geopoliticalId : \\\"" + geopoliticalId
-				+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independantFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate     geopoliticalAffiliations {      affilTypeId      geopoliticalId      effectiveDate      expirationDate      geoPoliticalAffiliatedType {        affilTypeId        affilTypeCode        affilTypeName      }    }      translatedGeopoliticals {      geopoliticalId      languageCode      scriptCode      translatedName      versionNumber      versionDate      effectiveDate      expirationDate    }       geopoliticalAreas {      geopoliticalId      geopoliticalTypeId      effectiveDate      expirationDate      geoPoliticalType {        geopoliticalTypeId        geopoliticalTypeName      }    }   }}\"}";
+				+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate     geopoliticalAffiliations {      affilTypeId      geopoliticalId      effectiveDate      expirationDate      geoPoliticalAffiliatedType {        affilTypeId        affilTypeCode        affilTypeName      }    }      translatedGeopoliticals {      geopoliticalId      languageCode      scriptCode      translatedName      versionNumber      versionDate      effectiveDate      expirationDate    }       geopoliticalAreas {      geopoliticalId      geopoliticalTypeId      effectiveDate      expirationDate      geoPoliticalType {        geopoliticalTypeId        geopoliticalTypeName      }    }   }}\"}";
 		countryWithGeopldGeoplAffilTrnslGeoplType(testCaseID, payload);
 	}
 
@@ -384,7 +378,7 @@ public class CountryGraphQL extends Reporting {
 		// String payload = "{\"query\":\"{ countries(geopoliticalId :
 		// \\\""+geopoliticalId+"\\\", countryCode : \\\""+countryCode+"\\\") {
 		// geopoliticalId countryNumericCode countryCode
-		// threeCharacterCountryCode independantFlag dependentRelationshipId
+		// threeCharacterCountryCode independentFlag dependentRelationshipId
 		// dependantCountryCode postalFormatDescription postalFlag postalLength
 		// firstWorkWeekDayName lastWorkWeekDayName weekendFirstDayName
 		// internetDomainName effectiveDate expirationDate currencies {
@@ -415,7 +409,7 @@ public class CountryGraphQL extends Reporting {
 		// String payload = "{\"query\":\"{ countries(geopoliticalId :
 		// \\\""+geopoliticalId+"\\\", countryCode : \\\""+countryCode+"\\\") {
 		// geopoliticalId countryNumericCode countryCode
-		// threeCharacterCountryCode independantFlag dependentRelationshipId
+		// threeCharacterCountryCode independentFlag dependentRelationshipId
 		// dependantCountryCode postalFormatDescription postalFlag postalLength
 		// firstWorkWeekDayName lastWorkWeekDayName weekendFirstDayName
 		// internetDomainName effectiveDate expirationDate }}\"}";
@@ -445,7 +439,7 @@ public class CountryGraphQL extends Reporting {
 			// ***send the data to create request and get request
 			// String payload = "{\"query\":\"{ countries(geopoliticalId :
 			// \\\""+geopoliticalId+"\\\") { geopoliticalId countryNumericCode
-			// countryCode threeCharacterCountryCode independantFlag
+			// countryCode threeCharacterCountryCode independentFlag
 			// dependentRelationshipId dependantCountryCode
 			// postalFormatDescription postalFlag postalLength
 			// firstWorkWeekDayName lastWorkWeekDayName weekendFirstDayName
@@ -508,8 +502,9 @@ public class CountryGraphQL extends Reporting {
 				logger.info("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 
@@ -590,7 +585,7 @@ public class CountryGraphQL extends Reporting {
 			// \\\""+geopoliticalId+"\\\",targetDate :
 			// \\\""+targetDate+"\\\",endDate : \\\""+endDate+"\\\") {
 			// geopoliticalId countryNumericCode countryCode
-			// threeCharacterCountryCode independantFlag dependentRelationshipId
+			// threeCharacterCountryCode independentFlag dependentRelationshipId
 			// dependantCountryCode postalFormatDescription postalFlag
 			// postalLength firstWorkWeekDayName lastWorkWeekDayName
 			// weekendFirstDayName internetDomainName effectiveDate
@@ -654,8 +649,9 @@ public class CountryGraphQL extends Reporting {
 				logger.info("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 
@@ -736,7 +732,7 @@ public class CountryGraphQL extends Reporting {
 			// ***send the data to create request and get request
 			// String payload = "{\"query\":\"{ countries(geopoliticalId :
 			// \\\""+geopoliticalId+"\\\") { geopliticalId countryNumericCode
-			// countryCode threeCharacterCountryCode independantFlag
+			// countryCode threeCharacterCountryCode independentFlag
 			// dependentRelationshipId dependantCountryCode
 			// postalFormatDescription postalFlag postalLength
 			// firstWorkWeekDayName lastWorkWeekDayName weekendFirstDayName
@@ -789,20 +785,21 @@ public class CountryGraphQL extends Reporting {
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String Wsstatus = res.getStatusLine();
-			String errorMsg1 = js.getString("meta.errors[0].error");
-			String errorMsg2 = js.getString("meta.errors[0].message");
+			String errorMsg1 = js.getString("errors[0].error");
+			String errorMsg2 = js.getString("errors[0].message");
 
 			int Wscode = res.statusCode();
 			String expectMessage = resMsgs.countryInvalidAttributeGraphQLMsg1;
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 400 && meta != null 
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 
@@ -883,7 +880,7 @@ public class CountryGraphQL extends Reporting {
 			// ***send the data to create request and get request
 			// String payload = "{\"query\":\"{ countries(geopoliticalId :
 			// \\\""+geopoliticalId+"\\\") { geopliticalId countryNumercCode
-			// countryCode threeCharacterCountryCode independantFlag
+			// countryCode threeCharacterCountryCode independentFlag
 			// dependentRelationshipId dependantCountryCode
 			// postalFormatDescription postalFlag postalLength
 			// firstWorkWeekDayName lastWorkWeekDayName weekendFirstDayName
@@ -936,25 +933,26 @@ public class CountryGraphQL extends Reporting {
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String Wsstatus = res.getStatusLine();
-			int errrorMsgLength = js.get("meta.errors.size");
+			int errrorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<String>();
 			List<String> errorMsg2 = new ArrayList<String>();
 			for (int i = 0; i < errrorMsgLength; i++) {
-				errorMsg1.add(js.getString("meta.errors[" + i + "].error"));
-				errorMsg2.add(js.getString("meta.errors[" + i + "].message"));
+				errorMsg1.add(js.getString("errors[" + i + "].error"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
 			int Wscode = res.statusCode();
 			String expectMessage1 = resMsgs.countryInvalidAttributeGraphQLMsg1;
 			String expectMessage2 = resMsgs.countryInvalidAttributeGraphQLMsg3;
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 400 && meta != null 
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				if ((errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessage1))
@@ -1034,7 +1032,7 @@ public class CountryGraphQL extends Reporting {
 			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
 			// ***send the data to create request and get request
 			String payload = "{\"query\":\"{  countries(geopoliticalId : \\\"" + geopoliticalId
-					+ "\\\") {    geopliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independantFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    countryDialings {      geopoliticalId      internationalDialingPrefixCode      internationalDialingCode      mobilePhoneMinimumLengthNumber      mobilePhoneMaximumLengthNumber      landPhoneMinimumLengthNumber      landPhoneMaximumLengthNumber      effectiveDate      expirationDate    }    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    geopoliticalUnitOfMeasures {      uomTypeCode      geopoliticalId      effectiveDate      expirationDate      refUOMType {        uomTypeCode        uomTypeName        uomTypeDesc      }    }    geopoliticalHolidays {      geopoliticalId      holidayId      effectiveDate      expirationDate      holiday {        holidayId        holidayName        holidayDateParameterText      }    }    geopoliticalAffiliations {      affilTypeId      geopoliticalId      effectiveDate      expirationDate      geoPoliticalAffiliatedType {        affilTypeId        affilTypeCode        affilTypeName      }    }    locales {      localeCode      geopoliticalId      languageCode      scriptCode      dateFullFormatDescription      dateLongFormatDescription      dateMediumFormatDescription      dateShortFormatDescription      cldrVersionNumber      cldrVersionDate      effectiveDate      expirationDate      languages {        languageCode        threeCharacterLanguageCode        languageName        nativeScriptLanguageName        scriptCode        languageDescription      }    }    translatedGeopoliticals {      geopoliticalId      languageCode      scriptCode      translatedName      versionNumber      versionDate      effectiveDate      expirationDate    }    countryOrgStd {      geopoliticalId      countryShortName      countryFullName      organisationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {        organisationStandardCode        organisationStandardName      }    }    geopoliticalAreas {      geopoliticalId      geopoliticalTypeId      effectiveDate      expirationDate      geoPoliticalType {        geopoliticalTypeId        geopoliticalTypeName      }    }    dependentCountryRelationship {      dependentRelationshipId      dependentRelationshipDescription    }    stateProvStndList {      geopoliticalId      organisationStandardCode      stateProvinceCode      stateProvinceName      effectiveDate      expirationDate    }  }}\"}";
+					+ "\\\") {    geopliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    countryDialings {      geopoliticalId      internationalDialingPrefixCode      internationalDialingCode      mobilePhoneMinimumLengthNumber      mobilePhoneMaximumLengthNumber      landPhoneMinimumLengthNumber      landPhoneMaximumLengthNumber      effectiveDate      expirationDate    }    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    geopoliticalUnitOfMeasures {      uomTypeCode      geopoliticalId      effectiveDate      expirationDate      refUOMType {        uomTypeCode        uomTypeName        uomTypeDesc      }    }    geopoliticalHolidays {      geopoliticalId      holidayId      effectiveDate      expirationDate      holiday {        holidayId        holidayName        holidayDateParameterText      }    }    geopoliticalAffiliations {      affilTypeId      geopoliticalId      effectiveDate      expirationDate      geoPoliticalAffiliatedType {        affilTypeId        affilTypeCode        affilTypeName      }    }    locales {      localeCode      geopoliticalId      languageCode      scriptCode      dateFullFormatDescription      dateLongFormatDescription      dateMediumFormatDescription      dateShortFormatDescription      cldrVersionNumber      cldrVersionDate      effectiveDate      expirationDate      languages {        languageCode        threeCharacterLanguageCode        languageName        nativeScriptLanguageName        scriptCode        languageDescription      }    }    translatedGeopoliticals {      geopoliticalId      languageCode      scriptCode      translatedName      versionNumber      versionDate      effectiveDate      expirationDate    }    countryOrgStd {      geopoliticalId      countryShortName      countryFullName      organisationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {        organisationStandardCode        organisationStandardName      }    }    geopoliticalAreas {      geopoliticalId      geopoliticalTypeId      effectiveDate      expirationDate      geoPoliticalType {        geopoliticalTypeId        geopoliticalTypeName      }    }    dependentCountryRelationship {      dependentRelationshipId      dependentRelationshipDescription    }    stateProvStndList {      geopoliticalId      organisationStandardCode      stateProvinceCode      stateProvinceName      effectiveDate      expirationDate    }  }}\"}";
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1049,38 +1047,40 @@ public class CountryGraphQL extends Reporting {
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String Wsstatus = res.getStatusLine();
-			String errorMsg1 = js.getString("error");
-			String errorMsg2 = js.getString("message");
+			String Wsstatus= res.getStatusLine();
+			String errorMsg1 = js.getString("meta.message.internalMessage");
+			String	errorMsg2 = js.getString("errors.message");
 
-			int Wscode = res.statusCode();
-			String expectMessage = resMsgs.countryExpiredTokenGraphQLMsg;
-			String meta = js.getString("meta");
-			String timestamp = js.getString("meta.timestamp");
-			if (Wscode == 401) {
-				logger.info("Response status code 401 validation passed: " + Wscode);
-				test.pass("Response status code 401 validation passed: " + Wscode);
+	        int Wscode= res.statusCode();
+	        String expectMessage = resMsgs.countryExpiredTokenGraphQLMsg;
+	        String meta = js.getString("meta");
+	        String timestamp = js.getString("meta.timestamp");
+	        if(Wscode == 401)
+		    {
+	        	logger.info("Response status code 401 validation passed: "+Wscode);
+	        	test.pass("Response status code 401 validation passed: "+Wscode);
+	        	ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+	        	//***error message validation
 
-				// ***error message validation
+	        	if(errorMsg1.equals("Security Error") && errorMsg2.contains(expectMessage))
+				{
 
-				if (errorMsg1.equals("Unauthorized") && errorMsg2.contains(expectMessage)) {
-
-					logger.info("No records are getting received in response when sending the expired token");
-					logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
-					logger.info("------------------------------------------------------------------");
-					test.pass("No records are getting received in response when sending the expired token");
-					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
-							writableInputFields, "NA", Wsstatus, "" + Wscode, responsestr1, "Pass", "");
-					test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
-				} else {
+	        		logger.info("No records are getting received in response when sending the expired token");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the expired token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
 					logger.error("Expected error message is not getting received in response");
-					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
-					logger.error("------------------------------------------------------------------");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
 					test.fail("Expected error message is not getting received in response");
-					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "",
-							Wsstatus, "" + Wscode, responsestr, "Fail", "countryCd" + expectMessage);
-					Assert.fail("Test Failed");
-				}
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
 			} else {
 
 				logger.error("Response status validation failed: " + Wscode);
@@ -1122,7 +1122,97 @@ public class CountryGraphQL extends Reporting {
 			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
 			// ***send the data to create request and get request
 			String payload = "{\"query\":\"{  countries(geopoliticalId : \\\"" + geopoliticalId
-					+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independantFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    countryDialings {      geopoliticalId      internationalDialingPrefixCode      internationalDialingCode      mobilePhoneMinimumLengthNumber      mobilePhoneMaximumLengthNumber      landPhoneMinimumLengthNumber      landPhoneMaximumLengthNumber      effectiveDate      expirationDate    }    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    geopoliticalUnitOfMeasures {      uomTypeCode      geopoliticalId      effectiveDate      expirationDate      refUOMType {        uomTypeCode        uomTypeName        uomTypeDesc      }    }    geopoliticalHolidays {      geopoliticalId      holidayId      effectiveDate      expirationDate      holiday {        holidayId        holidayName        holidayDateParameterText      }    }    geopoliticalAffiliations {      affilTypeId      geopoliticalId      effectiveDate      expirationDate      geoPoliticalAffiliatedType {        affilTypeId        affilTypeCode        affilTypeName      }    }    locales {      localeCode      geopoliticalId      languageCode      scriptCode      dateFullFormatDescription      dateLongFormatDescription      dateMediumFormatDescription      dateShortFormatDescription      cldrVersionNumber      cldrVersionDate      effectiveDate      expirationDate      languages {        languageCode        threeCharacterLanguageCode        languageName        nativeScriptLanguageName        scriptCode        languageDescription      }    }    translatedGeopoliticals {      geopoliticalId      languageCode      scriptCode      translatedName      versionNumber      versionDate      effectiveDate      expirationDate    }    countryOrgStd {      geopoliticalId      countryShortName      countryFullName      organisationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {        organisationStandardCode        organisationStandardName      }    }    geopoliticalAreas {      geopoliticalId      geopoliticalTypeId      effectiveDate      expirationDate      geoPoliticalType {        geopoliticalTypeId        geopoliticalTypeName      }    }    dependentCountryRelationship {      dependentRelationshipId      dependentRelationshipDescription    }    stateProvStndList {      geopoliticalId      organisationStandardCode      stateProvinceCode      stateProvinceName      effectiveDate      expirationDate    }  }}\"}";
+					+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    countryDialings {      geopoliticalId      internationalDialingPrefixCode      internationalDialingCode      mobilePhoneMinimumLengthNumber      mobilePhoneMaximumLengthNumber      landPhoneMinimumLengthNumber      landPhoneMaximumLengthNumber      effectiveDate      expirationDate    }    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    geopoliticalUnitOfMeasures {      uomTypeCode      geopoliticalId      effectiveDate      expirationDate      refUOMType {        uomTypeCode        uomTypeName        uomTypeDesc      }    }    geopoliticalHolidays {      geopoliticalId      holidayId      effectiveDate      expirationDate      holiday {        holidayId        holidayName        holidayDateParameterText      }    }    geopoliticalAffiliations {      affilTypeId      geopoliticalId      effectiveDate      expirationDate      geoPoliticalAffiliatedType {        affilTypeId        affilTypeCode        affilTypeName      }    }    locales {      localeCode      geopoliticalId      languageCode      scriptCode      dateFullFormatDescription      dateLongFormatDescription      dateMediumFormatDescription      dateShortFormatDescription      cldrVersionNumber      cldrVersionDate      effectiveDate      expirationDate      languages {        languageCode        threeCharacterLanguageCode        languageName        nativeScriptLanguageName        scriptCode        languageDescription      }    }    translatedGeopoliticals {      geopoliticalId      languageCode      scriptCode      translatedName      versionNumber      versionDate      effectiveDate      expirationDate    }    countryOrgStd {      geopoliticalId      countryShortName      countryFullName      organisationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {        organisationStandardCode        organisationStandardName      }    }    geopoliticalAreas {      geopoliticalId      geopoliticalTypeId      effectiveDate      expirationDate      geoPoliticalType {        geopoliticalTypeId        geopoliticalTypeName      }    }    dependentCountryRelationship {      dependentRelationshipId      dependentRelationshipDescription    }    stateProvStndList {      geopoliticalId      organisationStandardCode      stateProvinceCode      stateProvinceName      effectiveDate      expirationDate    }  }}\"}";
+			String reqFormatted = Miscellaneous.jsonFormat(payload);
+			test.info("Input Request created:");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+			// ***get end point url
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("graphQLGet", fileName, level + ".GraphQL");
+			// ***send request and get response
+			String invalidToken = "v1%3AAPP3534861%3AX9Z6LxTsQaqGSBgYt75nuRYV6RxUd2HQqrTcnlebLHKAK8Ohv8yB0jn0uryBIkdLkuFjZfNA5jjL%2FHd%2B3PHx9u36ozad4QEKz2Ag7P71uBX6xvSqmpEM1pRdBpcKXGGcwQ4JPSdDXX15Av%2FH3pUJoVZbgfKuBizus%2F4jhk9BGA%3D%3AAPP3534862";
+			Response res = GetResponse.sendRequestPost(payload, tokenValues[0], invalidToken, getEndPoinUrl, fileName,
+					testCaseID);
+			String responsestr = res.asString();
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus= res.getStatusLine();
+			String errorMsg1 = js.getString("meta.message.internalMessage");
+			String	errorMsg2 = js.getString("errors.message");
+
+	        int Wscode= res.statusCode();
+	        String expectMessage = resMsgs.countryInvalidTokenGraphQLMsg;
+	        String meta = js.getString("meta");
+	        String timestamp = js.getString("meta.timestamp");
+	        if(Wscode == 401)
+		    {
+	        	logger.info("Response status code 401 validation passed: "+Wscode);
+	        	test.pass("Response status code 401 validation passed: "+Wscode);
+	        	ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+	        	//***error message validation
+
+	        	if(errorMsg1.equals("Security Error") && errorMsg2.contains(expectMessage))
+				{
+
+	        		logger.info("No records are getting received in response when sending the invalid token");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the invalid token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	writableInputFields, "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
+					logger.error("Expected error message is not getting received in response");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Expected error message is not getting received in response");
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
+			} else {
+
+				logger.error("Response status validation failed: " + Wscode);
+				logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+				logger.error("------------------------------------------------------------------");
+				test.fail("Response status validation failed: " + Wscode);
+
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
+						"" + Wscode, responsestr, "Fail", "countryCd" + expectMessage);
+				Assert.fail("Test Failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: " + e);
+			logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: " + e);
+			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "", "Fail",
+					"" + e);
+			Assert.fail("Test Failed");
+		}
+	}
+	
+	@Test
+	public void TC_16() {
+		// ***get test case ID with method name
+		String testCaseID = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: " + testCaseID);
+		if (!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. " + testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+
+		try {
+			// ***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			// ***send the data to create request and get request
+			String payload = "{\"query\":\"{  countries(geopoliticalId : \\\"" + geopoliticalId
+					+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    countryDialings {      geopoliticalId      internationalDialingPrefixCode      internationalDialingCode      mobilePhoneMinimumLengthNumber      mobilePhoneMaximumLengthNumber      landPhoneMinimumLengthNumber      landPhoneMaximumLengthNumber      effectiveDate      expirationDate    }    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    geopoliticalUnitOfMeasures {      uomTypeCode      geopoliticalId      effectiveDate      expirationDate      refUOMType {        uomTypeCode        uomTypeName        uomTypeDesc      }    }    geopoliticalHolidays {      geopoliticalId      holidayId      effectiveDate      expirationDate      holiday {        holidayId        holidayName        holidayDateParameterText      }    }    geopoliticalAffiliations {      affilTypeId      geopoliticalId      effectiveDate      expirationDate      geoPoliticalAffiliatedType {        affilTypeId        affilTypeCode        affilTypeName      }    }    locales {      localeCode      geopoliticalId      languageCode      scriptCode      dateFullFormatDescription      dateLongFormatDescription      dateMediumFormatDescription      dateShortFormatDescription      cldrVersionNumber      cldrVersionDate      effectiveDate      expirationDate      languages {        languageCode        threeCharacterLanguageCode        languageName        nativeScriptLanguageName        scriptCode        languageDescription      }    }    translatedGeopoliticals {      geopoliticalId      languageCode      scriptCode      translatedName      versionNumber      versionDate      effectiveDate      expirationDate    }    countryOrgStd {      geopoliticalId      countryShortName      countryFullName      organisationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {        organisationStandardCode        organisationStandardName      }    }    geopoliticalAreas {      geopoliticalId      geopoliticalTypeId      effectiveDate      expirationDate      geoPoliticalType {        geopoliticalTypeId        geopoliticalTypeName      }    }    dependentCountryRelationship {      dependentRelationshipId      dependentRelationshipDescription    }    stateProvStndList {      geopoliticalId      organisationStandardCode      stateProvinceCode      stateProvinceName      effectiveDate      expirationDate    }  }}\"}";
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1138,35 +1228,141 @@ public class CountryGraphQL extends Reporting {
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String Wsstatus = res.getStatusLine();
-			String errorMsg1 = js.getString("error");
-			String errorMsg2 = js.getString("message");
-
+			int errrorMsgLength = js.get("errors.size");
+			List<String> errorMsg1 = new ArrayList<String>();
+			List<String> errorMsg2 = new ArrayList<String>();
+			for (int i = 0; i < errrorMsgLength; i++) {
+				errorMsg1.add(js.getString("errors[" + i + "].fieldName"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
+			}
 			int Wscode = res.statusCode();
-			String expectMessage = resMsgs.countryInvalidTokenGraphQLMsg;
-			if (Wscode == 401) {
+			String expectMessage = resMsgs.missingHTTPHeaderInRequestMsg;
+			String meta = js.getString("meta");
+			String actualRespVersionNum = js.getString("meta.version");
+			if (Wscode == 401 && meta != null) {
 				logger.info("Response status code 401 validation passed: " + Wscode);
 				test.pass("Response status code 401 validation passed: " + Wscode);
+				test.pass("Response meta validation passed");
 
-				// ***error message validation
+				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
+	        	//***error message validation
 
-				if (errorMsg1.equals("Unauthorized") && errorMsg2.contains(expectMessage)) {
+				if (errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage)) {
 
-					logger.info("No records are getting received in response when sending the invalid token");
-					logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
-					logger.info("------------------------------------------------------------------");
-					test.pass("No records are getting received in response when sending the invalid token");
-					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
-							writableInputFields, "NA", Wsstatus, "" + Wscode, responsestr1, "Pass", "");
-					test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
-				} else {
+	        		logger.info("No records are getting received in response when sending blank http header");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the invalid token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	writableInputFields, "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
 					logger.error("Expected error message is not getting received in response");
-					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
-					logger.error("------------------------------------------------------------------");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
 					test.fail("Expected error message is not getting received in response");
-					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "",
-							Wsstatus, "" + Wscode, responsestr, "Fail", "countryCd" + expectMessage);
-					Assert.fail("Test Failed");
-				}
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
+			} else {
+
+				logger.error("Response status validation failed: " + Wscode);
+				logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+				logger.error("------------------------------------------------------------------");
+				test.fail("Response status validation failed: " + Wscode);
+
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
+						"" + Wscode, responsestr, "Fail", "countryCd" + expectMessage);
+				Assert.fail("Test Failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: " + e);
+			logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: " + e);
+			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "", "Fail",
+					"" + e);
+			Assert.fail("Test Failed");
+		}
+	}
+	
+	
+	@Test
+	public void TC_17() {
+		// ***get test case ID with method name
+		String testCaseID = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: " + testCaseID);
+		if (!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. " + testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+
+		try {
+			// ***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			// ***send the data to create request and get request
+			String payload = "{\"query\":\"{  countries(geopoliticalId : \\\"" + geopoliticalId
+					+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependantCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    countryDialings {      geopoliticalId      internationalDialingPrefixCode      internationalDialingCode      mobilePhoneMinimumLengthNumber      mobilePhoneMaximumLengthNumber      landPhoneMinimumLengthNumber      landPhoneMaximumLengthNumber      effectiveDate      expirationDate    }    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    geopoliticalUnitOfMeasures {      uomTypeCode      geopoliticalId      effectiveDate      expirationDate      refUOMType {        uomTypeCode        uomTypeName        uomTypeDesc      }    }    geopoliticalHolidays {      geopoliticalId      holidayId      effectiveDate      expirationDate      holiday {        holidayId        holidayName        holidayDateParameterText      }    }    geopoliticalAffiliations {      affilTypeId      geopoliticalId      effectiveDate      expirationDate      geoPoliticalAffiliatedType {        affilTypeId        affilTypeCode        affilTypeName      }    }    locales {      localeCode      geopoliticalId      languageCode      scriptCode      dateFullFormatDescription      dateLongFormatDescription      dateMediumFormatDescription      dateShortFormatDescription      cldrVersionNumber      cldrVersionDate      effectiveDate      expirationDate      languages {        languageCode        threeCharacterLanguageCode        languageName        nativeScriptLanguageName        scriptCode        languageDescription      }    }    translatedGeopoliticals {      geopoliticalId      languageCode      scriptCode      translatedName      versionNumber      versionDate      effectiveDate      expirationDate    }    countryOrgStd {      geopoliticalId      countryShortName      countryFullName      organisationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {        organisationStandardCode        organisationStandardName      }    }    geopoliticalAreas {      geopoliticalId      geopoliticalTypeId      effectiveDate      expirationDate      geoPoliticalType {        geopoliticalTypeId        geopoliticalTypeName      }    }    dependentCountryRelationship {      dependentRelationshipId      dependentRelationshipDescription    }    stateProvStndList {      geopoliticalId      organisationStandardCode      stateProvinceCode      stateProvinceName      effectiveDate      expirationDate    }  }}\"}";
+			String reqFormatted = Miscellaneous.jsonFormat(payload);
+			test.info("Input Request created:");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+			// ***get end point url
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("graphQLGet", fileName, level + ".GraphQL");
+			// ***send request and get response
+			Response res = GetResponse.sendRequestPost(payload, tokenValues[0], "", getEndPoinUrl, fileName,
+					testCaseID);
+			String responsestr = res.asString();
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus = res.getStatusLine();
+			int errrorMsgLength = js.get("errors.size");
+			List<String> errorMsg1 = new ArrayList<String>();
+			List<String> errorMsg2 = new ArrayList<String>();
+			for (int i = 0; i < errrorMsgLength; i++) {
+				errorMsg1.add(js.getString("errors[" + i + "].fieldName"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
+			}
+			int Wscode = res.statusCode();
+			String expectMessage = resMsgs.missingHTTPHeaderInRequestMsg;
+			String meta = js.getString("meta");
+			String actualRespVersionNum = js.getString("meta.version");
+			if (Wscode == 401 && meta != null) {
+				logger.info("Response status code 401 validation passed: " + Wscode);
+				test.pass("Response status code 401 validation passed: " + Wscode);
+				test.pass("Response meta validation passed");
+
+				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
+	        	//***error message validation
+
+				if (errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage)) {
+
+	        		logger.info("No records are getting received in response when sending blank http header");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the invalid token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	writableInputFields, "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
+					logger.error("Expected error message is not getting received in response");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Expected error message is not getting received in response");
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
 			} else {
 
 				logger.error("Response status validation failed: " + Wscode);
@@ -1219,13 +1415,14 @@ public class CountryGraphQL extends Reporting {
 			String actualRespVersionNum = js.getString("meta.version");
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 200 && meta != null 
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				if (targetDate.equalsIgnoreCase("NoTargetDate")) {
@@ -1295,10 +1492,10 @@ public class CountryGraphQL extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data.countries[" + i + "].threeCharacterCountryCode"));
 						}
-						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independantFlag"))) {
+						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independentFlag"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data.countries[" + i + "].independantFlag"));
+							getResponseRows.add(js.getString("data.countries[" + i + "].independentFlag"));
 						}
 						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].dependentRelationshipId"))) {
 							getResponseRows.add("");
@@ -1762,13 +1959,14 @@ public class CountryGraphQL extends Reporting {
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 200 && meta != null 
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				if (targetDate.equalsIgnoreCase("NoTargetDate")) {
@@ -1812,10 +2010,10 @@ public class CountryGraphQL extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data.countries[" + i + "].threeCharacterCountryCode"));
 						}
-						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independantFlag"))) {
+						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independentFlag"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data.countries[" + i + "].independantFlag"));
+							getResponseRows.add(js.getString("data.countries[" + i + "].independentFlag"));
 						}
 						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].dependentRelationshipId"))) {
 							getResponseRows.add("");
@@ -2245,13 +2443,14 @@ public class CountryGraphQL extends Reporting {
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 200 && meta != null 
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				if (targetDate.equalsIgnoreCase("NoTargetDate")) {
@@ -2295,10 +2494,10 @@ public class CountryGraphQL extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data.countries[" + i + "].threeCharacterCountryCode"));
 						}
-						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independantFlag"))) {
+						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independentFlag"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data.countries[" + i + "].independantFlag"));
+							getResponseRows.add(js.getString("data.countries[" + i + "].independentFlag"));
 						}
 						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].dependentRelationshipId"))) {
 							getResponseRows.add("");
@@ -2577,13 +2776,14 @@ public class CountryGraphQL extends Reporting {
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 200 && meta != null 
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				if (targetDate.equalsIgnoreCase("NoTargetDate")) {
@@ -2627,10 +2827,10 @@ public class CountryGraphQL extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data.countries[" + i + "].threeCharacterCountryCode"));
 						}
-						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independantFlag"))) {
+						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independentFlag"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data.countries[" + i + "].independantFlag"));
+							getResponseRows.add(js.getString("data.countries[" + i + "].independentFlag"));
 						}
 						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].dependentRelationshipId"))) {
 							getResponseRows.add("");
@@ -2904,13 +3104,14 @@ public class CountryGraphQL extends Reporting {
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 200 && meta != null 
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				if (targetDate.equalsIgnoreCase("NoTargetDate")) {
@@ -2955,10 +3156,10 @@ public class CountryGraphQL extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data.countries[" + i + "].threeCharacterCountryCode"));
 						}
-						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independantFlag"))) {
+						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independentFlag"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data.countries[" + i + "].independantFlag"));
+							getResponseRows.add(js.getString("data.countries[" + i + "].independentFlag"));
 						}
 						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].dependentRelationshipId"))) {
 							getResponseRows.add("");
@@ -3235,13 +3436,14 @@ public class CountryGraphQL extends Reporting {
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
 			int Wscode = res.statusCode();
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 200 && meta != null 
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				if (targetDate.equalsIgnoreCase("NoTargetDate")) {
@@ -3257,7 +3459,7 @@ public class CountryGraphQL extends Reporting {
 				List<String> getResultDB = DbConnect.getResultSetFor(countryGetQuery, fields, fileName, testCaseID);
 				System.out.println("Response rows: " + responseRows.size());
 				System.out.println("DB records: " + getResultDB.size() / fields.size());
-				if (getResultDB.size() == responseRows.size() * fields.size()) {
+				if (getResultDB.size() >= responseRows.size() * fields.size()) {
 					logger.info("Total number of records matching between DB & Response: " + responseRows.size());
 					test.pass("Total number of records matching between DB & Response: " + responseRows.size());
 					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA", "", "", Wsstatus,
@@ -3285,10 +3487,10 @@ public class CountryGraphQL extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data.countries[" + i + "].threeCharacterCountryCode"));
 						}
-						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independantFlag"))) {
+						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].independentFlag"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data.countries[" + i + "].independantFlag"));
+							getResponseRows.add(js.getString("data.countries[" + i + "].independentFlag"));
 						}
 						if (StringUtils.isBlank(js.getString("data.countries[" + i + "].dependentRelationshipId"))) {
 							getResponseRows.add("");
@@ -3408,52 +3610,53 @@ public class CountryGraphQL extends Reporting {
 						logger.info("------------------------------------------------------------------");
 					}
 					int z = 1;
-					for (int j = 0; j < getResultDB.size(); j = j + fields.size()) {
-						for (int i = 0; i < getResponseRows.size(); i = i + fields.size()) {
-							if (getResultDB.get(j).toString().equals(getResponseRows.get(i).toString())
-									&& getResultDB.get(j + 1).toString().equals(getResponseRows.get(i + 1).toString())
-									&& getResultDB.get(j + 2).toString().equals(getResponseRows.get(i + 2).toString())
-									&& getResultDB.get(j + 3).toString().equals(getResponseRows.get(i + 3).toString())
-									&& getResultDB.get(j + 4).toString().equals(getResponseRows.get(i + 4).toString())
-									&& getResultDB.get(j + 5).toString().equals(getResponseRows.get(i + 5).toString())
-									&& getResultDB.get(j + 6).toString().equals(getResponseRows.get(i + 6).toString())
-									&& getResultDB.get(j + 7).toString().equals(getResponseRows.get(i + 7).toString())
-									&& getResultDB.get(j + 8).toString().equals(getResponseRows.get(i + 8).toString())
-									&& getResultDB.get(j + 9).toString().equals(getResponseRows.get(i + 9).toString())
-									&& getResultDB.get(j + 10).toString().equals(getResponseRows.get(i + 10).toString())
-									&& getResultDB.get(j + 11).toString().equals(getResponseRows.get(i + 11).toString())
-									&& getResultDB.get(j + 12).toString().equals(getResponseRows.get(i + 12).toString())
-									&& getResultDB.get(j + 13).toString().equals(getResponseRows.get(i + 13).toString())
-									&& getResultDB.get(j + 14).toString().equals(getResponseRows.get(i + 14).toString())
-									&& getResultDB.get(j + 15).toString().equals(getResponseRows.get(i + 15).toString())
-									&& getResultDB.get(j + 16).toString().equals(getResponseRows.get(i + 16).toString())
-									&& getResultDB.get(j + 17).toString().equals(getResponseRows.get(i + 17).toString())
-									&& getResultDB.get(j + 18).toString().equals(getResponseRows.get(i + 18).toString())
-									&& getResultDB.get(j + 19).toString().equals(getResponseRows.get(i + 19).toString())
-									&& getResultDB.get(j + 20).toString()
-											.equals(getResponseRows.get(i + 20).toString())) {
-								String[] responseDbFieldValues = { getResponseRows.get(i).toString(),
-										getResultDB.get(j).toString(), getResponseRows.get(i + 1).toString(),
-										getResultDB.get(j + 1).toString(), getResponseRows.get(i + 2).toString(),
-										getResultDB.get(j + 2).toString(), getResponseRows.get(i + 3).toString(),
-										getResultDB.get(j + 3).toString(), getResponseRows.get(i + 4).toString(),
-										getResultDB.get(j + 4).toString(), getResponseRows.get(i + 5).toString(),
-										getResultDB.get(j + 5).toString(), getResponseRows.get(i + 6).toString(),
-										getResultDB.get(j + 6).toString(), getResponseRows.get(i + 7).toString(),
-										getResultDB.get(j + 7).toString(), getResponseRows.get(i + 8).toString(),
-										getResultDB.get(j + 8).toString(), getResponseRows.get(i + 9).toString(),
-										getResultDB.get(j + 9).toString(), getResponseRows.get(i + 10).toString(),
-										getResultDB.get(j + 10).toString(), getResponseRows.get(i + 11).toString(),
-										getResultDB.get(j + 11).toString(), getResponseRows.get(i + 12).toString(),
-										getResultDB.get(j + 12).toString(), getResponseRows.get(i + 13).toString(),
-										getResultDB.get(j + 13).toString(), getResponseRows.get(i + 14).toString(),
-										getResultDB.get(j + 14).toString(), getResponseRows.get(i + 15).toString(),
-										getResultDB.get(j + 15).toString(), getResponseRows.get(i + 16).toString(),
-										getResultDB.get(j + 16).toString(), getResponseRows.get(i + 17).toString(),
-										getResultDB.get(j + 17).toString(), getResponseRows.get(i + 18).toString(),
-										getResultDB.get(j + 18).toString(), getResponseRows.get(i + 19).toString(),
-										getResultDB.get(j + 19).toString(), getResponseRows.get(i + 20).toString(),
-										getResultDB.get(j + 20).toString() };
+					for (int j = 0; j < getResponseRows.size(); j = j + fields.size()) {
+						for (int i = 0; i < getResultDB.size(); i = i + fields.size()) {
+							System.out.println("db record   "+getResultDB.get(i));
+							if (getResponseRows.get(j).toString().equals(getResultDB.get(i).toString())
+									&& getResponseRows.get(j + 1).toString().equals(getResultDB.get(i + 1).toString())
+									&& getResponseRows.get(j + 2).toString().equals(getResultDB.get(i + 2).toString())
+									&& getResponseRows.get(j + 3).toString().equals(getResultDB.get(i + 3).toString())
+									&& getResponseRows.get(j + 4).toString().equals(getResultDB.get(i + 4).toString())
+									&& getResponseRows.get(j + 5).toString().equals(getResultDB.get(i + 5).toString())
+									&& getResponseRows.get(j + 6).toString().equals(getResultDB.get(i + 6).toString())
+									&& getResponseRows.get(j + 7).toString().equals(getResultDB.get(i + 7).toString())
+									&& getResponseRows.get(j + 8).toString().equals(getResultDB.get(i + 8).toString())
+									&& getResponseRows.get(j + 9).toString().equals(getResultDB.get(i + 9).toString())
+									&& getResponseRows.get(j + 10).toString().equals(getResultDB.get(i + 10).toString())
+									&& getResponseRows.get(j + 11).toString().equals(getResultDB.get(i + 11).toString())
+									&& getResponseRows.get(j + 12).toString().equals(getResultDB.get(i + 12).toString())
+									&& getResponseRows.get(j + 13).toString().equals(getResultDB.get(i + 13).toString())
+									&& getResponseRows.get(j + 14).toString().equals(getResultDB.get(i + 14).toString())
+									&& getResponseRows.get(j + 15).toString().equals(getResultDB.get(i + 15).toString())
+									&& getResponseRows.get(j + 16).toString().equals(getResultDB.get(i + 16).toString())
+									&& getResponseRows.get(j + 17).toString().equals(getResultDB.get(i + 17).toString())
+									&& getResponseRows.get(j + 18).toString().equals(getResultDB.get(i + 18).toString())
+									&& getResponseRows.get(j + 19).toString().equals(getResultDB.get(i + 19).toString())
+									&& getResponseRows.get(j + 20).toString()
+											.equals(getResultDB.get(i + 20).toString())) {
+								String[] responseDbFieldValues = { getResultDB.get(i).toString(),
+										getResponseRows.get(j).toString(), getResultDB.get(i + 1).toString(),
+										getResponseRows.get(j + 1).toString(), getResultDB.get(i + 2).toString(),
+										getResponseRows.get(j + 2).toString(), getResultDB.get(i + 3).toString(),
+										getResponseRows.get(j + 3).toString(), getResultDB.get(i + 4).toString(),
+										getResponseRows.get(j + 4).toString(), getResultDB.get(i + 5).toString(),
+										getResponseRows.get(j + 5).toString(), getResultDB.get(i + 6).toString(),
+										getResponseRows.get(j + 6).toString(), getResultDB.get(i + 7).toString(),
+										getResponseRows.get(j + 7).toString(), getResultDB.get(i + 8).toString(),
+										getResponseRows.get(j + 8).toString(), getResultDB.get(i + 9).toString(),
+										getResponseRows.get(j + 9).toString(), getResultDB.get(i + 10).toString(),
+										getResponseRows.get(j + 10).toString(), getResultDB.get(i + 11).toString(),
+										getResponseRows.get(j + 11).toString(), getResultDB.get(i + 12).toString(),
+										getResponseRows.get(j + 12).toString(), getResultDB.get(i + 13).toString(),
+										getResponseRows.get(j + 13).toString(), getResultDB.get(i + 14).toString(),
+										getResponseRows.get(j + 14).toString(), getResultDB.get(i + 15).toString(),
+										getResponseRows.get(j + 15).toString(), getResultDB.get(i + 16).toString(),
+										getResponseRows.get(j + 16).toString(), getResultDB.get(i + 17).toString(),
+										getResponseRows.get(j + 17).toString(), getResultDB.get(i + 18).toString(),
+										getResponseRows.get(j + 18).toString(), getResultDB.get(i + 19).toString(),
+										getResponseRows.get(j + 19).toString(), getResultDB.get(i + 20).toString(),
+										getResponseRows.get(j + 20).toString() };
 								String[] responseDbFieldNames = { "Response_geopoliticalId: ", "DB_geopoliticalId: ",
 										"Response_countryNumberCd: ", "DB_countryNumberCd: ", "Response_countryCd: ",
 										"DB_countryCd: ", "Response_threeCharCountryCd: ", "DB_threeCharCountryCd: ",
@@ -4016,7 +4219,7 @@ public class CountryGraphQL extends Reporting {
 		List<String> responseRows = js.get("data.countries[" + k + "].currencies");
 		geopoliticalId = js.get("data.countries[" + k + "].geopoliticalId").toString();
 		// ***get query
-		String countryCurrencyGetQuery = query.countryCurrencyGetQuery(geopoliticalId, targetDate, endDate);
+		String countryCurrencyGetQuery = query.countryCurrencyGraphQLQuery(geopoliticalId, targetDate, endDate);
 		// ***get the fields needs to be validate in DB
 		List<String> fields = ValidationFields.countryCurrencyGraphQLMethodDbFields();
 
@@ -4048,8 +4251,8 @@ public class CountryGraphQL extends Reporting {
 			System.out.println("DB records: " + getResultDB.size() / fields.size());
 			if (getResultDB.size() == responseRows.size() * fields.size()) {
 				List<String> getResponseRows = new ArrayList<String>();
-				List<String> resGeoplId = null;
-				resGeoplId = js.getList("data.countries[" + k + "].currencies.geopoliticalId");
+				/*List<String> resGeoplId = null;
+				resGeoplId = js.getList("data.countries[" + k + "].currencies.geopoliticalId");*/
 				List<String> resCurrencyNumCd = null;
 				resCurrencyNumCd = js.getList("data.countries[" + k + "].currencies.currencyNumericCode");
 				List<String> resCurrencyCd = null;
@@ -4064,11 +4267,11 @@ public class CountryGraphQL extends Reporting {
 				resExpDate = js.getList("data.countries[" + k + "].currencies.expirationDate");
 				for (int i = 0; i < responseRows.size(); i++) {
 
-					if (resGeoplId.get(i) == null) {
+					/*if (resGeoplId.get(i) == null) {
 						getResponseRows.add("");
 					} else {
 						getResponseRows.add(resGeoplId.get(i).toString());
-					}
+					}*/
 					if (resCurrencyNumCd.get(i) == null) {
 						getResponseRows.add("");
 					} else {
@@ -4119,7 +4322,7 @@ public class CountryGraphQL extends Reporting {
 								&& getResultDB.get(j + 3).toString().equals(getResponseRows.get(i + 3).toString())
 								&& getResultDB.get(j + 4).toString().equals(getResponseRows.get(i + 4).toString())
 								&& getResultDB.get(j + 5).toString().equals(getResponseRows.get(i + 5).toString())
-								&& getResultDB.get(j + 6).toString().equals(getResponseRows.get(i + 6).toString())) {
+								/*&& getResultDB.get(j + 6).toString().equals(getResponseRows.get(i + 6).toString())*/) {
 							// ***write result to excel
 							String[] responseDbFieldValues = { getResponseRows.get(i).toString(),
 									getResultDB.get(j).toString(), getResponseRows.get(i + 1).toString(),
@@ -4127,9 +4330,9 @@ public class CountryGraphQL extends Reporting {
 									getResultDB.get(j + 2).toString(), getResponseRows.get(i + 3).toString(),
 									getResultDB.get(j + 3).toString(), getResponseRows.get(i + 4).toString(),
 									getResultDB.get(j + 4).toString(), getResponseRows.get(i + 5).toString(),
-									getResultDB.get(j + 5).toString(), getResponseRows.get(i + 6).toString(),
-									getResultDB.get(j + 6).toString(), };
-							String[] responseDbFieldNames = { "Response_geoplId: ", "DB_geoplId: ",
+									getResultDB.get(j + 5).toString(), /*getResponseRows.get(i + 6).toString(),
+									getResultDB.get(j + 6).toString(),*/ };
+							String[] responseDbFieldNames = { /*"Response_geoplId: ", "DB_geoplId: ",*/
 									"Response_currencyNumberCd: ", "DB_currencyNumberCd: ", "Response_currencyCd: ",
 									"DB_currencyCd: ", "Response_minorUnitCd: ", "DB_minorUnitCd: ",
 									"Response_moneyFormatDescription: ", "DB_moneyFormatDescription: ",
@@ -5039,7 +5242,7 @@ public class CountryGraphQL extends Reporting {
 			geopoliticalId = js.get("data.countries[" + k + "].geopoliticalId").toString();
 
 			// ***get query
-			String countryOrgStdGetQuery = query.countryOrgStdGetQuery(geopoliticalId, targetDate, endDate);
+			String countryOrgStdGetQuery = query.countryOrgStdGraphQLQuery(geopoliticalId, targetDate, endDate);
 			// ***get the fields needs to be validate in DB
 			List<String> fields = ValidationFields.countryOrgStdGraphQLMethodDbFields();
 
@@ -5075,24 +5278,24 @@ public class CountryGraphQL extends Reporting {
 
 					for (int i = 0; i < responseRows.size(); i++) {
 
-						String resGeoplId = js.getString(
+						/*String resGeoplId = js.getString(
 								"data.countries[" + k + "].countryOrganizationStandards[" + i + "].geopoliticalId");
 						String resOrgStdCd1 = js.getString("data.countries[" + k + "].countryOrganizationStandards[" + i
-								+ "].organizationStandardCode");
+								+ "].organizationStandardCode");*/
 						String resCountryFullNm = js.getString(
 								"data.countries[" + k + "].countryOrganizationStandards[" + i + "].countryFullName");
 						String resCountryShortNm = js.getString(
 								"data.countries[" + k + "].countryOrganizationStandards[" + i + "].countryShortName");
 						String resOrgStdCd2 = js.getString("data.countries[" + k + "].countryOrganizationStandards[" + i
-								+ "].geoPoliticalOrganizationStandard.organizationStandardCode");
+								+ "].organizationStandardCode");
 						String resOrgStdNm = js.getString("data.countries[" + k + "].countryOrganizationStandards[" + i
-								+ "].geoPoliticalOrganizationStandard.organizationStandardName");
+								+ "].organizationStandardName");
 						String resEffDate = js.getString(
 								"data.countries[" + k + "].countryOrganizationStandards[" + i + "].effectiveDate");
 						String resExpDate = js.getString(
 								"data.countries[" + k + "].countryOrganizationStandards[" + i + "].expirationDate");
 
-						if (resGeoplId == null) {
+						/*if (resGeoplId == null) {
 							getResponseRows.add("");
 						} else {
 							getResponseRows.add(resGeoplId);
@@ -5101,7 +5304,7 @@ public class CountryGraphQL extends Reporting {
 							getResponseRows.add("");
 						} else {
 							getResponseRows.add(resOrgStdCd1);
-						}
+						}*/
 						if (resCountryFullNm == null) {
 							getResponseRows.add("");
 						} else {
@@ -5153,9 +5356,9 @@ public class CountryGraphQL extends Reporting {
 									&& getResultDB.get(j + 3).toString().equals(getResponseRows.get(i + 3).toString())
 									&& getResultDB.get(j + 4).toString().equals(getResponseRows.get(i + 4).toString())
 									&& getResultDB.get(j + 5).toString().equals(getResponseRows.get(i + 5).toString())
-									&& getResultDB.get(j + 6).toString().equals(getResponseRows.get(i + 6).toString())
+									/*&& getResultDB.get(j + 6).toString().equals(getResponseRows.get(i + 6).toString())
 									&& getResultDB.get(j + 7).toString()
-											.equals(getResponseRows.get(i + 7).toString())) {
+											.equals(getResponseRows.get(i + 7).toString())*/) {
 								// ***write result to excel
 								String[] responseDbFieldValues = { getResponseRows.get(i).toString(),
 										getResultDB.get(j).toString(), getResponseRows.get(i + 1).toString(),
@@ -5163,12 +5366,12 @@ public class CountryGraphQL extends Reporting {
 										getResultDB.get(j + 2).toString(), getResponseRows.get(i + 3).toString(),
 										getResultDB.get(j + 3).toString(), getResponseRows.get(i + 4).toString(),
 										getResultDB.get(j + 4).toString(), getResponseRows.get(i + 5).toString(),
-										getResultDB.get(j + 5).toString(), getResponseRows.get(i + 6).toString(),
+										getResultDB.get(j + 5).toString(), /*getResponseRows.get(i + 6).toString(),
 										getResultDB.get(j + 6).toString(), getResponseRows.get(i + 7).toString(),
-										getResultDB.get(j + 7).toString(), };
+										getResultDB.get(j + 7).toString(),*/ };
 								// x+=2;
-								String[] responseDbFieldNames = { "Response_geopoliticalId: ", "DB_geopoliticalId: ",
-										"Response_organizationStandardCode: ", "DB_organizationStandardCode: ",
+								String[] responseDbFieldNames = { /*"Response_geopoliticalId: ", "DB_geopoliticalId: ",
+										"Response_organizationStandardCode: ", "DB_organizationStandardCode: ",*/
 										"Response_countryFullName: ", "DB_countryFullName: ",
 										"Response_countryShortName: ", "DB_countryShortName: ",
 										"Response_organizationStandardCode: ", "DB_organizationStandardCode: ",
@@ -6533,8 +6736,8 @@ public class CountryGraphQL extends Reporting {
 			System.out.println("DB records: " + getResultDB.size() / fields.size());
 			if (getResultDB.size() == responseRows.size() * fields.size()) {
 				List<String> getResponseRows = new ArrayList<String>();
-				List<String> resGeoplId = null;
-				resGeoplId = js.getList("data.countries[" + k + "].addressLabels.geopoliticalId");
+				/*List<String> resGeoplId = null;
+				resGeoplId = js.getList("data.countries[" + k + "].addressLabels.geopoliticalId");*/
 				List<String> resCurrencyNumCd = null;
 				resCurrencyNumCd = js.getList("data.countries[" + k + "].addressLabels.localeCode");
 				List<String> resCurrencyCd = null;
@@ -6552,11 +6755,11 @@ public class CountryGraphQL extends Reporting {
 				 */
 				for (int i = 0; i < responseRows.size(); i++) {
 
-					if (resGeoplId.get(i) == null) {
+					/*if (resGeoplId.get(i) == null) {
 						getResponseRows.add("");
 					} else {
 						getResponseRows.add(resGeoplId.get(i).toString());
-					}
+					}*/
 					if (resCurrencyNumCd.get(i) == null) {
 						getResponseRows.add("");
 					} else {
@@ -6604,14 +6807,14 @@ public class CountryGraphQL extends Reporting {
 								&& getResultDB.get(j + 1).toString().equals(getResponseRows.get(i + 1).toString())
 								&& getResultDB.get(j + 2).toString().equals(getResponseRows.get(i + 2).toString())
 								&& getResultDB.get(j + 3).toString().equals(getResponseRows.get(i + 3).toString())
-								&& getResultDB.get(j + 4).toString().equals(getResponseRows.get(i + 4).toString())) {
+								/*&& getResultDB.get(j + 4).toString().equals(getResponseRows.get(i + 4).toString())*/) {
 							// ***write result to excel
 							String[] responseDbFieldValues = { getResponseRows.get(i).toString(),
 									getResultDB.get(j).toString(), getResponseRows.get(i + 1).toString(),
 									getResultDB.get(j + 1).toString(), getResponseRows.get(i + 2).toString(),
 									getResultDB.get(j + 2).toString(), getResponseRows.get(i + 3).toString(),
-									getResultDB.get(j + 3).toString(), getResponseRows.get(i + 4).toString(),
-									getResultDB.get(j + 4).toString(),
+									getResultDB.get(j + 3).toString(), /*getResponseRows.get(i + 4).toString(),
+									getResultDB.get(j + 4).toString(),*/
 									/*
 									 * getResponseRows.get(i+5).toString(),
 									 * getResultDB.get(j+5).toString(),
@@ -6619,7 +6822,7 @@ public class CountryGraphQL extends Reporting {
 									 * getResultDB.get(j+6).toString(),
 									 */
 							};
-							String[] responseDbFieldNames = { "Response_geopoliticalID: ", "DB_geopoliticalID: ",
+							String[] responseDbFieldNames = { /*"Response_geopoliticalID: ", "DB_geopoliticalID: ",*/
 									"Response_localeCode: ", "DB_localeCode:", "Response_addressLineNumber: ",
 									"DB_addressLineNumber:", "Response_brandAddressLineDescription: ",
 									"DB_brandAddressLineDescription: ", "Response_applicable: ", "DB_applicable: " };

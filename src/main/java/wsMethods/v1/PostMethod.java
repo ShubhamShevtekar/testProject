@@ -9242,7 +9242,7 @@ public static String cntryPostRequestMissingComma(String userId,String countryNu
 			}
 
 
-
+/*
 		public static String addressLabelPostRequestWithoutMeta(String userId, String countryCode, String addressLineNumber,
 				String brandAddressLineDescription, String fullAddressLineDescription, String languageCode,
 				String applicable, String scriptCode) {
@@ -9413,8 +9413,171 @@ public static String cntryPostRequestMissingComma(String userId,String countryNu
 		return payload;
 	}
 
+*/
+
+		public static String addressLabelPostRequestWithoutMeta(String userId, String countryCode, String addressLineNumber,
+				String brandAddressLineDescription, String fullAddressLineDescription, String languageCode,
+				String applicable, String scriptCode) {
+			String payload = "{\"meta\":{\"addressLabels \":{" + "\"countryCode\":\"" + countryCode
+					+ "\",\"addressLineNumber\":\"" + addressLineNumber + "\"" + ",\"brandAddressLineDescription\":\""
+					+ brandAddressLineDescription + "\",\"fullAddressLineDescription\":\"" + fullAddressLineDescription
+					+ "\"" + ",\"languageCode\":\"" + languageCode + "\",\"applicable\":\"" + applicable + "\""
+					+ ",\"scriptCode\":\"" + scriptCode + "\"}}";
+			return payload;
+		}
+
+		// Address Label PUT
+		public static String addressLabelPutRequest(String userId, String countryCd, String addressLineNumber,
+				String brandAddressLineDescription, String fullAddressLineDescription, String languageCode, String flag,
+				String scriptCode) {
+
+			String payload = "{ " + "  \"meta\": { " + "    \"userName\": \"" + userId + "\" " + "   }, "
+					+ "    \"addressLabels \": { " + " \"countryCode\": \"" + countryCd + "\","
+					+ " \"addressLineNumber\": \"" + addressLineNumber + "\"," + " \"brandAddressLineDescription\":\""
+					+ brandAddressLineDescription + "\",  \"fullAddressLineDescription\": \"" + fullAddressLineDescription
+					+ "\"," + " \"languageCode\": \" " + languageCode + " \"," + " \"applicable\": \"" + flag + "\", "
+					+ " \"scriptCode\": \" " + scriptCode + "" + "    } " + "} ";
+			return payload;
+		}
+
+		public static String addressLabelPutRequestWithoutMeta(String userId, String countryCd, String addressLineNumber,
+				String brandAddressLineDescription, String fullAddressLineDescription, String languageCode, String flag,
+				String scriptCode) {
+
+			String payload = "{ " + "  \"addressLabels \": { " + " \"countryCode\": \"" + countryCd + "\","
+					+ " \"addressLineNumber\": \"" + addressLineNumber + "\"," + " \"brandAddressLineDescription\":\""
+					+ brandAddressLineDescription + "\",  \"fullAddressLineDescription\": \"" + fullAddressLineDescription
+					+ "\"," + " \"languageCode\": \" " + languageCode + " \"," + " \"applicable\": \"" + flag + "\", "
+					+ " \"scriptCode\": \" " + scriptCode + "" + "    } " + "} ";
+			return payload;
+		}
 
 
+		public static String addressLabelPostRequest(String userId, String geopoliticalId, String languageCode,
+				String addressLineNumber, String fullAddressLineLabelDescription, String brandAddressLineLabelDescription,
+				String applicableFlag, String effectiveDate, String expirationDate) {
+
+			String payload = "{\"meta\":{\"userName\":\"" + userId + "\"},\"addressLabel\":{" + "\"geopoliticalId\":"
+					+ geopoliticalId + ",\"languageCode\":\"" + languageCode + "\"" + ",\"addressLineNumber\":"
+					+ addressLineNumber + ",\"fullAddressLineLabelDescription\":\"" + fullAddressLineLabelDescription + "\""
+					+ ",\"brandAddressLineLabelDescription\":\"" + brandAddressLineLabelDescription
+					+ "\",\"applicableFlag\":\"" + applicableFlag + "\"" + ",\"effectiveDate\":\"" + effectiveDate
+					+ "\",\"expirationDate\":\"" + expirationDate + "\"}}";
+			return payload;
+
+		}
+
+	public static String addressLabelPostRequestWithoutEffectiveDate(String userId, String geopoliticalId, String languageCode,
+			String addressLineNumber, String fullAddressLineLabelDescription, String brandAddressLineLabelDescription,
+			String applicableFlag,  String expirationDate) {
+
+		String payload = "{\"meta\":{\"userName\":\"" + userId + "\"},\"addressLabel\":{" + "\"geopoliticalId\":"
+				+ geopoliticalId + ",\"languageCode\":\"" + languageCode + "\"" + ",\"addressLineNumber\":"
+				+ addressLineNumber + ",\"fullAddressLineLabelDescription\":\"" + fullAddressLineLabelDescription + "\""
+				+ ",\"brandAddressLineLabelDescription\":\"" + brandAddressLineLabelDescription
+				+ "\",\"applicableFlag\":\"" + applicableFlag + "\""
+				+ ",\"expirationDate\":\"" + expirationDate + "\"}}";
+		return payload;
+	}
+	
+
+	public static String addressLabelPostRequestWithoutExpiratioDate(String userId, String geopoliticalId, String languageCode,
+			String addressLineNumber, String fullAddressLineLabelDescription, String brandAddressLineLabelDescription,
+			String applicableFlag, String effectiveDate) {
+
+		String payload = "{\"meta\":{\"userName\":\"" + userId + "\"},\"addressLabel\":{" + "\"geopoliticalId\":"
+				+ geopoliticalId + ",\"languageCode\":\"" + languageCode + "\"" + ",\"addressLineNumber\":"
+				+ addressLineNumber + ",\"fullAddressLineLabelDescription\":\"" + fullAddressLineLabelDescription + "\""
+				+ ",\"brandAddressLineLabelDescription\":\"" + brandAddressLineLabelDescription
+				+ "\",\"applicableFlag\":\"" + applicableFlag + "\"" + ",\"effectiveDate\":\"" + effectiveDate
+				+ "\"}}";
+		return payload;
+
+	}
+
+	public static String addressLabelWithoutCommaPostRequest(String userId, String geopoliticalId, String languageCode, String addressLineNumber, String fullAddressLineLabelDescription, String brandAddressLineLabelDescription, String applicableFlag, String effectiveDate, String expirationDate)
+	{
+
+	String payload =
+			"{\"meta\":{\"userName\":\""+userId+"\"},\"addressLabel\":{"
+				+ "\"geopoliticalId\":"+geopoliticalId+" \"languageCode\":\""+languageCode+"\""
+						+ ",\"addressLineNumber\":"+addressLineNumber+" \"fullAddressLineLabelDescription\":\""+fullAddressLineLabelDescription+"\""
+								+ ",\"brandAddressLineLabelDescription\":\""+brandAddressLineLabelDescription+"\",\"applicableFlag\":\""+applicableFlag+"\""
+										+ " \"effectiveDate\":\""+effectiveDate+"\",\"expirationDate\":\""+expirationDate+"\"}}";
+		return payload;
+
+	}
+
+	public static String addressLabelPostRequestgeoplIdNull(String userId, String geopoliticalId, String languageCode,
+			String addressLineNumber, String fullAddressLineLabelDescription, String brandAddressLineLabelDescription,
+			String applicableFlag, String effectiveDate, String expirationDate) {
+
+		String payload = "{\"meta\":{\"userName\":\"" + userId + "\"},\"addressLabel\":{" + "\"geopoliticalId\":"
+				+ geopoliticalId + ",\"languageCode\":\"" + languageCode + "\"" + ",\"addressLineNumber\":"
+				+ addressLineNumber + ",\"fullAddressLineLabelDescription\":\"" + fullAddressLineLabelDescription + "\""
+				+ ",\"brandAddressLineLabelDescription\":\"" + brandAddressLineLabelDescription
+				+ "\",\"applicableFlag\":\"" + applicableFlag + "\"" + ",\"effectiveDate\":\"" + effectiveDate
+				+ "\",\"expirationDate\":\"" + expirationDate + "\"}}";
+		return payload;
+
+	}
+
+
+	public static String addressLabelPostRequestApllFlagNull(String userId, String geopoliticalId, String languageCode,
+			String addressLineNumber, String fullAddressLineLabelDescription, String brandAddressLineLabelDescription,
+			String applicableFlag, String effectiveDate, String expirationDate) {
+
+		String payload = "{\"meta\":{\"userName\":\"" + userId + "\"},\"addressLabel\":{" + "\"geopoliticalId\":"
+				+ geopoliticalId + ",\"languageCode\":\"" + languageCode + "\"" + ",\"addressLineNumber\":"
+				+ addressLineNumber + ",\"fullAddressLineLabelDescription\":\"" + fullAddressLineLabelDescription + "\""
+				+ ",\"brandAddressLineLabelDescription\":\"" + brandAddressLineLabelDescription
+				+ "\",\"applicableFlag\":" + applicableFlag + "" + ",\"effectiveDate\":\"" + effectiveDate
+				+ "\",\"expirationDate\":\"" + expirationDate + "\"}}";
+		return payload;
+
+	}
+
+	public static String addressLabelPostRequestUsernameNull(String userId, String geopoliticalId, String languageCode,
+			String addressLineNumber, String fullAddressLineLabelDescription, String brandAddressLineLabelDescription,
+			String applicableFlag, String effectiveDate, String expirationDate) {
+
+		String payload = "{\"meta\":{\"userName\":" + userId + "},\"addressLabel\":{" + "\"geopoliticalId\":"
+				+ geopoliticalId + ",\"languageCode\":\"" + languageCode + "\"" + ",\"addressLineNumber\":"
+				+ addressLineNumber + ",\"fullAddressLineLabelDescription\":\"" + fullAddressLineLabelDescription + "\""
+				+ ",\"brandAddressLineLabelDescription\":\"" + brandAddressLineLabelDescription
+				+ "\",\"applicableFlag\":\"" + applicableFlag + "\"" + ",\"effectiveDate\":\"" + effectiveDate
+				+ "\",\"expirationDate\":\"" + expirationDate + "\"}}";
+		return payload;
+
+	}
+
+	public static String addressLabelPostRequestnullLangCD(String userId, String geopoliticalId, String languageCode,
+			String addressLineNumber, String fullAddressLineLabelDescription, String brandAddressLineLabelDescription,
+			String applicableFlag, String effectiveDate, String expirationDate) {
+
+		String payload = "{\"meta\":{\"userName\":\"" + userId + "\"},\"addressLabel\":{" + "\"geopoliticalId\":"
+				+ geopoliticalId + ",\"languageCode\":" + languageCode + "" + ",\"addressLineNumber\":"
+				+ addressLineNumber + ",\"fullAddressLineLabelDescription\":\"" + fullAddressLineLabelDescription + "\""
+				+ ",\"brandAddressLineLabelDescription\":\"" + brandAddressLineLabelDescription
+				+ "\",\"applicableFlag\":\"" + applicableFlag + "\"" + ",\"effectiveDate\":\"" + effectiveDate
+				+ "\",\"expirationDate\":\"" + expirationDate + "\"}}";
+		return payload;
+
+	}
+
+	public static String addressLabelPostRequestWithoutMeta(String userId, String geopoliticalId, String languageCode,
+			String addressLineNumber, String fullAddressLineLabelDescription, String brandAddressLineLabelDescription,
+			String applicableFlag, String effectiveDate, String expirationDate) {
+		String payload = "{\"addressLabel\":{" + "\"geopoliticalId\":\"" + geopoliticalId + "\",\"languageCode\":\""
+				+ languageCode + "\"" + ",\"addressLineNumber\":\"" + addressLineNumber
+				+ "\",\"fullAddressLineLabelDescription\":\"" + fullAddressLineLabelDescription + "\""
+				+ ",\"brandAddressLineLabelDescription\":\"" + brandAddressLineLabelDescription
+				+ "\",\"applicableFlag\":\"" + applicableFlag + "\"" + ",\"effectiveDate\":\"" + effectiveDate
+				+ "\",\"expirationDate\":\"" + expirationDate + "\"}}";
+		return payload;
+	}
+
+		
 /**
  * Country Post Request New*/
 	public static String cntryPostRequestNew(String userId,String countryNumberCd,String countryCd,String threeCharCountryCd,String independentFlag,String postalFormatDescription,

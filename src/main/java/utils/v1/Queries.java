@@ -1529,6 +1529,15 @@ public String countryGeopoliticalTypeJMSQuery(String whereField) {
 				"				 (effective_dt <=to_date('"+ whereField3 +"','YYYY-MM-DD')))) ";;
 		return geoPostQuery;
 	}
+	
+	public String countryCurrencyGraphQLQuery(String whereField, String whereField2, String whereField3) {
+		String geoPostQuery = "select CURR_NUM_CD, CURR_CD, MINOR_UNIT_CD, MONEY_FORMT_DESC, " +
+				"to_char(EFFECTIVE_DT,'YYYY-MM-DD') \"EFFECTIVE_DT\", to_char(EXPIRATION_DT,'YYYY-MM-DD') \"EXPIRATION_DT\" from currency where geopl_id='"+whereField+"'"
+				+ " and " +
+				"				 ((effective_dt BETWEEN to_date('"+ whereField2 +"','YYYY-MM-DD') AND to_date('"+ whereField3 +"','YYYY-MM-DD')) or (expiration_dt >= to_date('"+ whereField2 +"','YYYY-MM-DD') and" +
+				"				 (effective_dt <=to_date('"+ whereField3 +"','YYYY-MM-DD')))) ";;
+		return geoPostQuery;
+	}
 
 	public String countryOrgStdGetQuery(String whereField, String whereField2, String whereField3) {
 		String geoPostQuery = "select co.geopl_id,go.org_std_cd, go.org_std_nm,co.cntry_full_nm, co.cntry_sht_nm, to_char(co.EFFECTIVE_DT,'YYYY-MM-DD') \"EFFECTIVE_DT\", to_char(co.EXPIRATION_DT,'YYYY-MM-DD') \"EXPIRATION_DT\" from geopl_org_std go inner join cntry_org_std co on go.org_std_cd = co.org_std_cd where co.geopl_id = '"+ whereField +"'"
@@ -1538,6 +1547,13 @@ public String countryGeopoliticalTypeJMSQuery(String whereField) {
 		return geoPostQuery;
 	}
 
+	public String countryOrgStdGraphQLQuery(String whereField, String whereField2, String whereField3) {
+		String geoPostQuery = "select go.org_std_cd, go.org_std_nm,co.cntry_full_nm, co.cntry_sht_nm, to_char(co.EFFECTIVE_DT,'YYYY-MM-DD') \"EFFECTIVE_DT\", to_char(co.EXPIRATION_DT,'YYYY-MM-DD') \"EXPIRATION_DT\" from geopl_org_std go inner join cntry_org_std co on go.org_std_cd = co.org_std_cd where co.geopl_id = '"+ whereField +"'"
+				+ " and " +
+				"				 ((effective_dt BETWEEN to_date('"+ whereField2 +"','YYYY-MM-DD') AND to_date('"+ whereField3 +"','YYYY-MM-DD')) or (expiration_dt >= to_date('"+ whereField2 +"','YYYY-MM-DD') and" +
+				"				 (effective_dt <=to_date('"+ whereField3 +"','YYYY-MM-DD')))) ";
+		return geoPostQuery;
+	}
 
 
 	public String countryUomTypeGraphQLQuery(String whereField, String whereField2, String whereField3) {

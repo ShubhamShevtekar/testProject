@@ -1524,8 +1524,8 @@ public class ValidationFields {
 	public static List<String> countryOrgStdGraphQLMethodDbFields()
 	{
 		List<String> fields = new ArrayList<>();
-		fields.add("GEOPL_ID");
-		fields.add("ORG_STD_CD");
+		//fields.add("GEOPL_ID");
+		//fields.add("ORG_STD_CD");
 		fields.add("CNTRY_FULL_NM");
 		fields.add("CNTRY_SHT_NM");
 		fields.add("ORG_STD_CD");
@@ -1573,7 +1573,7 @@ public class ValidationFields {
 	public static List<String> countryCurrencyGraphQLMethodDbFields()
 	{
 		List<String> fields = new ArrayList<>();
-		fields.add("GEOPL_ID");
+		//fields.add("GEOPL_ID");
 		fields.add("CURR_NUM_CD");
 		fields.add("CURR_CD");
 		fields.add("MINOR_UNIT_CD");
@@ -1595,7 +1595,7 @@ public class ValidationFields {
 	public static List<String> addressLabelsGraphQLMethodDbFields()
 	{
 		List<String> fields = new ArrayList<>();
-		fields.add("GEOPL_ID");
+		//fields.add("GEOPL_ID");
 		fields.add("LOCL_CD");
 		fields.add("ADDR_LINE_NBR");
 		fields.add("BRAND_ADDR_LINE_LABEL_DESC");

@@ -3,21 +3,35 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="scenarios.GEO.v1.ScriptGet">
+      <class name="scenarios.GEO.v1.CountryGraphQL">
         <methods>
           <include name="startReport"/>
-          <include name="before"/>
+          <include name="TC_01"/>
+          <include name="TC_03"/>
           <include name="TC_05"/>
-          <include name="beforeSuite"/>
           <include name="TC_02"/>
-          <include name="zipFolder"/>
-          <include name="cleanFolder"/>
+          <include name="TC_07"/>
+          <include name="TC_04"/>
+          <include name="TC_09"/>
+          <include name="TC_06"/>
+          <include name="TC_08"/>
           <include name="startRepo"/>
+          <include name="beforeSuite"/>
+          <include name="after"/>
+          <include name="cleanFolder"/>
+          <include name="TC_10"/>
+          <include name="TC_12"/>
+          <include name="TC_14"/>
+          <include name="TC_11"/>
+          <include name="TC_16"/>
+          <include name="TC_13"/>
+          <include name="TC_15"/>
+          <include name="TC_17"/>
+          <include name="before"/>
           <include name="getCurrentDate"/>
           <include name="getToken"/>
-          <include name="endReport"/>
         </methods>
-      </class> <!-- scenarios.GEO.v1.ScriptGet -->
+      </class> <!-- scenarios.GEO.v1.CountryGraphQL -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

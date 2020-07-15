@@ -112,13 +112,13 @@ public class GeoOrgStdGraphQL extends Reporting {
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
 			String internalMsg = js.getString("meta.message.internalMessage");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 200 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+				
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String geoOrgStdGetQuery = query.geoOrgStdGetQuery();
@@ -276,13 +276,13 @@ public class GeoOrgStdGraphQL extends Reporting {
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
 			String internalMsg = js.getString("meta.message.internalMessage");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 200 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+				
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String geoOrgStdPostQuery = query.geoOrgStdPostQuery(orgStdCd);
@@ -440,22 +440,22 @@ public class GeoOrgStdGraphQL extends Reporting {
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			int errrorMsgLength = js.get("meta.errors.size");
+			int errrorMsgLength = js.get("errors.size");
 			String expectMessag1 = resMsgs.GeoOrgStdErrorMsg1;
 			String expectMessage2 = resMsgs.GeoOrgStdErrorMsg2;
 			List<String> errorMsg1 = new ArrayList<String>();
 			List<String> errorMsg2 = new ArrayList<String>();
 			for (int i = 0; i < errrorMsgLength; i++) {
-				errorMsg1.add(js.getString("meta.errors[" + i + "].error"));
-				errorMsg2.add(js.getString("meta.errors[" + i + "].message"));
+				errorMsg1.add(js.getString("errors[" + i + "].error"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+				
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				if ((errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessag1))
 						&& (errorMsg1.get(1).equals("ValidationError") && errorMsg2.get(1).equals(expectMessage2))) {
@@ -561,22 +561,39 @@ public class GeoOrgStdGraphQL extends Reporting {
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
 			String internalMsg = js.getString("meta.message.internalMessage");
-			int errrorMsgLength = js.get("meta.errors.size");
+			/*int errrorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<String>();
 			List<String> errorMsg2 = new ArrayList<String>();
 			for (int i = 0; i < errrorMsgLength; i++) {
-				errorMsg1.add(js.getString("meta.errors[" + i + "].error"));
-				errorMsg2.add(js.getString("meta.errors[" + i + "].message"));
-			}
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+				errorMsg1.add(js.getString("errors[" + i + "].error"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
+			}*/
+			if (Wscode == 200 && internalMsg == null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
-				// ***get the DB query
+				if(js.getInt("data.geopoliticalOrganizationStandards.size")<1){
+
+					logger.info("GeoOrgStd records are not available for this orgStdCd: " + orgStdCd);
+					test.info("GeoOrgStd records are not available for this orgStdCd: " + orgStdCd);
+					test.pass("GeoOrgStd records are not available for this orgStdCd: " + orgStdCd);
+					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", "",
+							"" + Wscode, responsestr1, "Pass", internalMsg);
+				
+				}
+				else {
+					logger.error("GeoOrgStd records are available for this orgStdCd: " + orgStdCd);
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("GeoOrgStd records are available for this  orgStdCd: " + orgStdCd);
+					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", "",
+							"" + Wscode, responsestr1, "Fail", internalMsg);
+					Assert.fail("Test Failed");
+				}
+				/*get the DB query
 				String geoOrgStdPostQuery = query.geoOrgStdPostQuery(orgStdCd);
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.geoOrgStdGetMethodDbFields();
@@ -588,15 +605,7 @@ public class GeoOrgStdGraphQL extends Reporting {
 					test.pass("GeoOrgStd records are not available for this orgStdCd: " + orgStdCd);
 					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", "",
 							"" + Wscode, responsestr1, "Pass", internalMsg);
-				} else {
-					logger.error("GeoOrgStd records are available for this orgStdCd: " + orgStdCd);
-					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
-					logger.error("------------------------------------------------------------------");
-					test.fail("GeoOrgStd records are available for this  orgStdCd: " + orgStdCd);
-					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", "",
-							"" + Wscode, responsestr1, "Fail", internalMsg);
-					Assert.fail("Test Failed");
-				}
+				}*/ 
 
 			} else {
 				if (Wscode != 200) {

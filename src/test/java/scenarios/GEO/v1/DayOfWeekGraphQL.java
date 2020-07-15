@@ -108,13 +108,13 @@ public class DayOfWeekGraphQL extends Reporting {
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 200 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String dayOfWeekGetQuery = query.dayOfWeekGetQuery();
@@ -278,20 +278,20 @@ public class DayOfWeekGraphQL extends Reporting {
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			int errorMsgLength = js.get("meta.errors.size");
+			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
 			for (int i = 0; i < errorMsgLength; i++) {
-				errorMsg1.add(js.getString("meta.errors[" + i + "].error"));
-				errorMsg2.add(js.getString("meta.errors[" + i + "].message"));
+				errorMsg1.add(js.getString("errors[" + i + "].error"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
-				logger.info("Response status code 200 validation passed: " + Wscode);
-				test.pass("Response status code 200 validation passed: " + Wscode);
+			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+				logger.info("Response status code validation passed: " + Wscode);
+				test.pass("Response status code validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				if (errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessage)) {
@@ -314,7 +314,7 @@ public class DayOfWeekGraphQL extends Reporting {
 					Assert.fail("Test Failed");
 				}
 			} else {
-				if (Wscode != 200) {
+				if (Wscode != 400) {
 					logger.error("Response status validation failed: " + Wscode);
 					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
 					logger.error("------------------------------------------------------------------");
@@ -340,8 +340,8 @@ public class DayOfWeekGraphQL extends Reporting {
 						"" + Wscode, responsestr1, "Fail", "");
 				Assert.fail("Test Failed");
 			}
-			test.info("Response Recieved:");
-			test.info(responsestr1.replaceAll("\n", "<br />"));
+//			test.info("Response Recieved:");
+//			test.info(responsestr1.replaceAll("\n", "<br />"));
 			logger.info("------------------------------------------------------------------");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -396,21 +396,21 @@ public class DayOfWeekGraphQL extends Reporting {
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			int errorMsgLength = js.get("meta.errors.size");
+			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
 			for (int i = 0; i < errorMsgLength; i++) {
-				errorMsg1.add(js.getString("meta.errors[" + i + "].error"));
-				errorMsg2.add(js.getString("meta.errors[" + i + "].message"));
+				errorMsg1.add(js.getString("errors[" + i + "].error"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
 
 			}
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response status code 200 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				if ((errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessage))
@@ -436,7 +436,7 @@ public class DayOfWeekGraphQL extends Reporting {
 					Assert.fail("Test Failed");
 				}
 			} else {
-				if (Wscode != 200) {
+				if (Wscode != 400) {
 					logger.error("Response status validation failed: " + Wscode);
 					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
 					logger.error("------------------------------------------------------------------");

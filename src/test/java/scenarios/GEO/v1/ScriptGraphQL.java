@@ -116,13 +116,13 @@ public class ScriptGraphQL extends Reporting {
 			responseRows.size();
 			int Wscode = res.statusCode();
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 200 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String scriptPostQuery = query.scriptGetQuery();
@@ -285,13 +285,13 @@ public class ScriptGraphQL extends Reporting {
 			List<String> responseRows = js.get("data.scripts");
 			int Wscode = res.statusCode();
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 200 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String scriptPostQuery = query.scriptPostQuery(scriptCode);
@@ -454,13 +454,13 @@ public class ScriptGraphQL extends Reporting {
 			System.out.println("responseRows Size  :  " + siz);
 			int Wscode = res.statusCode();
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 200 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 
 				// ***get the DB query
@@ -619,13 +619,13 @@ public class ScriptGraphQL extends Reporting {
 			List<String> responseRows = js.get("data.scripts");
 			int Wscode = res.statusCode();
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 200 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 
 				// ***error message validation
@@ -725,21 +725,21 @@ public class ScriptGraphQL extends Reporting {
 			String internalMsg = js.getString("meta.message.internalMessage");
 			int Wscode = res.statusCode();
 			String expectMessage = resMsgs.scriptInvalidAttribute1;
-			int errrorMsgLength = js.get("meta.errors.size");
+			int errrorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<String>();
 			List<String> errorMsg2 = new ArrayList<String>();
 			for (int i = 0; i < errrorMsgLength; i++) {
-				errorMsg1.add(js.getString("meta.errors[" + i + "].error"));
-				errorMsg2.add(js.getString("meta.errors[" + i + "].message"));
+				errorMsg1.add(js.getString("errors[" + i + "].error"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 
@@ -764,7 +764,7 @@ public class ScriptGraphQL extends Reporting {
 
 				}
 			} else {
-				if (Wscode != 200) {
+				if (Wscode != 400) {
 					logger.error("Response status validation failed: " + Wscode);
 					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
 					logger.error("------------------------------------------------------------------");
@@ -844,21 +844,21 @@ public class ScriptGraphQL extends Reporting {
 			int Wscode = res.statusCode();
 			String expectMessage = resMsgs.scriptInvalidAttribute2;
 			String expectMessage1 = resMsgs.scriptInvalidAttribute3;
-			int errrorMsgLength = js.get("meta.errors.size");
+			int errrorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<String>();
 			List<String> errorMsg2 = new ArrayList<String>();
 			for (int i = 0; i < errrorMsgLength; i++) {
-				errorMsg1.add(js.getString("meta.errors[" + i + "].error"));
-				errorMsg2.add(js.getString("meta.errors[" + i + "].message"));
+				errorMsg1.add(js.getString("errors[" + i + "].error"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
 			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 
 				if ((errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessage))
@@ -884,7 +884,7 @@ public class ScriptGraphQL extends Reporting {
 
 				}
 			} else {
-				if (Wscode != 200) {
+				if (Wscode != 400) {
 					logger.error("Response status validation failed: " + Wscode);
 					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
 					logger.error("------------------------------------------------------------------");

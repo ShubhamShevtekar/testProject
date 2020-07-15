@@ -116,13 +116,13 @@ public class DepnCountryRltspTypeGraphQL extends Reporting {
 			String actualRespVersionNum = js.getString("meta.version");
 			String timestamp = js.getString("meta.timestamp");
 			String internalMsg = js.getString("meta.message.internalMessage");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 200 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String depnCntryRltspTypeGetQuery = query.depnCntryRltspTypeGetQuery();
@@ -287,25 +287,25 @@ public class DepnCountryRltspTypeGraphQL extends Reporting {
 			String actualRespVersionNum = js.getString("meta.version");
 			String timestamp = js.getString("meta.timestamp");
 			String internalMsg = js.getString("meta.message.internalMessage");
-			if (Wscode == 200 && meta != null && (!meta.contains("timestamp"))
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
+			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorGraphQLversion)) {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				test.pass("Response timestamp validation passed");
+
 				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 
 				// ***get the DB query
 				String depnCntryRltspTypeGetQuery = query.depnCntryRltspTypeGetQuery();
-				int errrorMsgLength = js.get("meta.errors.size");
+				int errrorMsgLength = js.get("errors.size");
 				String expectMessag1 = resMsgs.DepCntryOrgTypeErrorMsg1;
 				String expectMessage2 = resMsgs.DepCntryOrgTypeErrorMsg2;
 				List<String> errorMsg1 = new ArrayList<String>();
 				List<String> errorMsg2 = new ArrayList<String>();
 				for (int i = 0; i < errrorMsgLength; i++) {
-					errorMsg1.add(js.getString("meta.errors[" + i + "].error"));
-					errorMsg2.add(js.getString("meta.errors[" + i + "].message"));
+					errorMsg1.add(js.getString("errors[" + i + "].error"));
+					errorMsg2.add(js.getString("errors[" + i + "].message"));
 				}
 				if ((errorMsg1.get(0).equals("ValidationError") && errorMsg2.get(0).equals(expectMessag1))
 						&& (errorMsg1.get(1).equals("ValidationError") && errorMsg2.get(1).equals(expectMessage2))) {
