@@ -112,7 +112,8 @@ public class GeoOrgStdGet extends Reporting {
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 				test.pass("Response API version number validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String geoOrgStdGetQuery = query.geoOrgStdGetQuery();
 				// ***get the fields needs to be validate in DB
@@ -258,7 +259,8 @@ public class GeoOrgStdGet extends Reporting {
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 				test.pass("Response API version number validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***get the DB query
 				String geoOrgStdGetQuery = query.geoOrgStdPostQuery(orgStdCd);
 				// ***get the fields needs to be validate in DB
@@ -411,7 +413,8 @@ public class GeoOrgStdGet extends Reporting {
 					logger.info("Response status code 200 validation passed: " + Wscode);
 					test.pass("Response status code 200 validation passed: " + Wscode);
 					test.pass("Response API version number validation passed");
-					ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+					ValidationFields.timestampValidation(js, res);
+					ValidationFields.transactionIdValidation(js, res);
 					// ***error message validation
 					String expectMessage = resMsgs.getErrorMsg;
 					if (internalMsg.equals(expectMessage)) {
@@ -616,7 +619,8 @@ public class GeoOrgStdGet extends Reporting {
 				logger.info("Response status code 405 validation passed: " + Wscode);
 				test.pass("Response status code 405 validation passed: " + Wscode);
 				test.pass("Response API version number validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				String expectMessage = resMsgs.usedPOSTinGetErrorMsg;
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
@@ -711,7 +715,8 @@ public class GeoOrgStdGet extends Reporting {
 				test.pass("Response status code 401 validation passed: " + Wscode);
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
-				//ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
+				// ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				String expectMessage = resMsgs.missingHTTPHeaderInRequestMsg;
 				if (errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage)) {

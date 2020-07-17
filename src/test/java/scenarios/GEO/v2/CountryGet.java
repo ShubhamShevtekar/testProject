@@ -85,7 +85,7 @@ public class CountryGet extends Reporting{
 		}
 	}
 	
-	@AfterMethod
+	/*@AfterMethod
 	public void after()
 	{
 		try {
@@ -93,7 +93,7 @@ public class CountryGet extends Reporting{
 		} catch (SQLException e) {
 			test.fail("DB connection close failed or connection not active: "+e);
 		}
-	}
+	}*/
 	
 	@Test
 	public void TC_01()

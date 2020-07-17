@@ -648,6 +648,389 @@ public class GeoOrgStdGraphQL extends Reporting {
 		}
 	}
 
+
+	@Test
+	public void TC_05() {
+		// ***get test case ID with method name
+		String testCaseID = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: " + testCaseID);
+		if (!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. " + testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+
+		try {
+			// ***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			// ***send the data to create request and get request
+			String payload = PostMethod.geoOrgStdGraphQLWithoutparam();
+			String reqFormatted = Miscellaneous.jsonFormat(payload);
+			test.info("Input Request created:");
+			logger.info("Input Request created");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+			// ***get end point url
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("graphQLGet", fileName, level + ".GraphQL");
+			logger.info("URI passed: " + getEndPoinUrl);
+			test.pass("URI passed: " + getEndPoinUrl);
+			// ***send request and get response
+			String expiredToken = "v1%3AAPP3534861%3ACNs7wqTWQDe1xJivTxQcPl9%2Bb94XKxfVKC9WQbULqn5hKunN9PKQwv%2BE7ZXK%2FQwqpsf66XzflXZVcQOpMk%2BtufNG3awVeYy9FQeqY%2Btosnt7ONkSHd8I3sIUXHEEuVXEBKJe1pUoVOauy1BvIPMQeYDP2HmxtaiZ5zlXuu2nXI4%3D%3AAPP3534861";
+			Response res = GetResponse.sendRequestPost(payload, tokenValues[0], expiredToken, getEndPoinUrl, fileName,
+					testCaseID);
+			String responsestr = res.asString();
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			logger.info("Response Recieved");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus= res.getStatusLine();
+			String errorMsg1 = js.getString("meta.message.internalMessage");
+			String	errorMsg2 = js.getString("errors.message");
+
+	        int Wscode= res.statusCode();
+	        String expectMessage = resMsgs.countryExpiredTokenGraphQLMsg;
+	        String meta = js.getString("meta");
+	        String timestamp = js.getString("meta.timestamp");
+	        if(Wscode == 401)
+		    {
+	        	logger.info("Response status code 401 validation passed: "+Wscode);
+	        	test.pass("Response status code 401 validation passed: "+Wscode);
+	        	ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+	        	//***error message validation
+
+	        	if(errorMsg1.equals("Security Error") && errorMsg2.contains(expectMessage))
+				{
+
+	        		logger.info("No records are getting received in response when sending the expired token");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the expired token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	"", "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
+					logger.error("Expected error message is not getting received in response");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Expected error message is not getting received in response");
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
+			} else {
+
+				logger.error("Response status validation failed: " + Wscode);
+				logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+				logger.error("------------------------------------------------------------------");
+				test.fail("Response status validation failed: " + Wscode);
+
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
+						"" + Wscode, responsestr, "Fail", "countryCd" + expectMessage);
+				Assert.fail("Test Failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: " + e);
+			logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: " + e);
+			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "", "Fail",
+					"" + e);
+			Assert.fail("Test Failed");
+		}
+	}
+
+	@Test
+	public void TC_06() {
+		// ***get test case ID with method name
+		String testCaseID = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: " + testCaseID);
+		if (!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. " + testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+
+		try {
+			// ***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			// ***send the data to create request and get request
+			String payload = PostMethod.geoOrgStdGraphQLWithoutparam();
+			String reqFormatted = Miscellaneous.jsonFormat(payload);
+			test.info("Input Request created:");
+			logger.info("Input Request created");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+			// ***get end point url
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("graphQLGet", fileName, level + ".GraphQL");
+			logger.info("URI passed: " + getEndPoinUrl);
+			test.pass("URI passed: " + getEndPoinUrl);
+			// ***send request and get response
+			String invalidToken = "v1%3AAPP3534861%3AX9Z6LxTsQaqGSBgYt75nuRYV6RxUd2HQqrTcnlebLHKAK8Ohv8yB0jn0uryBIkdLkuFjZfNA5jjL%2FHd%2B3PHx9u36ozad4QEKz2Ag7P71uBX6xvSqmpEM1pRdBpcKXGGcwQ4JPSdDXX15Av%2FH3pUJoVZbgfKuBizus%2F4jhk9BGA%3D%3AAPP3534862";
+			Response res = GetResponse.sendRequestPost(payload, tokenValues[0], invalidToken, getEndPoinUrl, fileName,
+					testCaseID);
+			String responsestr = res.asString();
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			logger.info("Response Recieved");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus= res.getStatusLine();
+			String errorMsg1 = js.getString("meta.message.internalMessage");
+			String	errorMsg2 = js.getString("errors.message");
+
+	        int Wscode= res.statusCode();
+	        String expectMessage = resMsgs.countryInvalidTokenGraphQLMsg;
+	        String meta = js.getString("meta");
+	        String timestamp = js.getString("meta.timestamp");
+	        if(Wscode == 401)
+		    {
+	        	logger.info("Response status code 401 validation passed: "+Wscode);
+	        	test.pass("Response status code 401 validation passed: "+Wscode);
+	        	ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+	        	//***error message validation
+
+	        	if(errorMsg1.equals("Security Error") && errorMsg2.contains(expectMessage))
+				{
+
+	        		logger.info("No records are getting received in response when sending the invalid token");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the invalid token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	writableInputFields, "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
+					logger.error("Expected error message is not getting received in response");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Expected error message is not getting received in response");
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
+			} else {
+
+				logger.error("Response status validation failed: " + Wscode);
+				logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+				logger.error("------------------------------------------------------------------");
+				test.fail("Response status validation failed: " + Wscode);
+
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
+						"" + Wscode, responsestr, "Fail", "countryCd" + expectMessage);
+				Assert.fail("Test Failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: " + e);
+			logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: " + e);
+			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "", "Fail",
+					"" + e);
+			Assert.fail("Test Failed");
+		}
+	}
+	
+	@Test
+	public void TC_07() {
+		// ***get test case ID with method name
+		String testCaseID = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: " + testCaseID);
+		if (!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. " + testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+
+		try {
+			// ***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			// ***send the data to create request and get request
+			String payload = PostMethod.geoOrgStdGraphQLWithoutparam();
+			String reqFormatted = Miscellaneous.jsonFormat(payload);
+			test.info("Input Request created:");
+			logger.info("Input Request created");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+			// ***get end point url
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("graphQLGet", fileName, level + ".GraphQL");
+			logger.info("URI passed: " + getEndPoinUrl);
+			test.pass("URI passed: " + getEndPoinUrl);
+			// ***send request and get response
+			Response res = GetResponse.sendRequestPost(payload, "", token, getEndPoinUrl, fileName, testCaseID);
+			String responsestr = res.asString();
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			logger.info("Response Recieved");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus = res.getStatusLine();
+			int errrorMsgLength = js.get("errors.size");
+			List<String> errorMsg1 = new ArrayList<String>();
+			List<String> errorMsg2 = new ArrayList<String>();
+			for (int i = 0; i < errrorMsgLength; i++) {
+				errorMsg1.add(js.getString("errors[" + i + "].fieldName"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
+			}
+			int Wscode = res.statusCode();
+			String expectMessage = resMsgs.missingHTTPHeaderInRequestMsg;
+			String meta = js.getString("meta");
+			String actualRespVersionNum = js.getString("meta.version");
+			if (Wscode == 401 && meta != null) {
+				logger.info("Response status code 401 validation passed: " + Wscode);
+				test.pass("Response status code 401 validation passed: " + Wscode);
+				test.pass("Response meta validation passed");
+
+				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
+	        	//***error message validation
+
+				if (errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage)) {
+
+	        		logger.info("No records are getting received in response when sending blank http header");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the invalid token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	writableInputFields, "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
+					logger.error("Expected error message is not getting received in response");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Expected error message is not getting received in response");
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
+			} else {
+
+				logger.error("Response status validation failed: " + Wscode);
+				logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+				logger.error("------------------------------------------------------------------");
+				test.fail("Response status validation failed: " + Wscode);
+
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
+						"" + Wscode, responsestr, "Fail", "countryCd" + expectMessage);
+				Assert.fail("Test Failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: " + e);
+			logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: " + e);
+			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "", "Fail",
+					"" + e);
+			Assert.fail("Test Failed");
+		}
+	}
+	
+	
+	@Test
+	public void TC_08() {
+		// ***get test case ID with method name
+		String testCaseID = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: " + testCaseID);
+		if (!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. " + testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+
+		try {
+			// ***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			// ***send the data to create request and get request
+			String payload = PostMethod.geoOrgStdGraphQLWithoutparam();
+			String reqFormatted = Miscellaneous.jsonFormat(payload);
+			test.info("Input Request created:");
+			logger.info("Input Request created");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+			// ***get end point url
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("graphQLGet", fileName, level + ".GraphQL");
+			logger.info("URI passed: " + getEndPoinUrl);
+			test.pass("URI passed: " + getEndPoinUrl);
+			// ***send request and get response
+			Response res = GetResponse.sendRequestPost(payload, tokenValues[0], "", getEndPoinUrl, fileName,
+					testCaseID);
+			String responsestr = res.asString();
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			logger.info("Response Recieved");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus = res.getStatusLine();
+			int errrorMsgLength = js.get("errors.size");
+			List<String> errorMsg1 = new ArrayList<String>();
+			List<String> errorMsg2 = new ArrayList<String>();
+			for (int i = 0; i < errrorMsgLength; i++) {
+				errorMsg1.add(js.getString("errors[" + i + "].fieldName"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
+			}
+			int Wscode = res.statusCode();
+			String expectMessage = resMsgs.missingHTTPHeaderInRequestMsg;
+			String meta = js.getString("meta");
+			String actualRespVersionNum = js.getString("meta.version");
+			if (Wscode == 401 && meta != null) {
+				logger.info("Response status code 401 validation passed: " + Wscode);
+				test.pass("Response status code 401 validation passed: " + Wscode);
+				test.pass("Response meta validation passed");
+
+				test.pass("Response API version number validation passed");
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
+	        	//***error message validation
+
+				if (errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage)) {
+
+	        		logger.info("No records are getting received in response when sending blank http header");
+	        		logger.info("Execution is completed for Passed Test Case No. "+testCaseID);
+	    			logger.info("------------------------------------------------------------------");
+	        		test.pass("No records are getting received in response when sending the invalid token");
+	        		ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",	writableInputFields, "NA",
+	    					Wsstatus, ""+Wscode, responsestr1, "Pass", "" );
+					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				}else {
+					logger.error("Expected error message is not getting received in response");
+					logger.error("Execution is completed for Failed Test Case No. "+testCaseID);
+	    			logger.error("------------------------------------------------------------------");
+					test.fail("Expected error message is not getting received in response");
+		        	ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA","", "", Wsstatus, ""+Wscode,
+							responsestr, "Fail", "geoTypeName"+expectMessage );
+		        	Assert.fail("Test Failed");
+		        }
+			} else {
+
+				logger.error("Response status validation failed: " + Wscode);
+				logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+				logger.error("------------------------------------------------------------------");
+				test.fail("Response status validation failed: " + Wscode);
+
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
+						"" + Wscode, responsestr, "Fail", "countryCd" + expectMessage);
+				Assert.fail("Test Failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: " + e);
+			logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: " + e);
+			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "", "Fail",
+					"" + e);
+			Assert.fail("Test Failed");
+		}
+	}
+
 	// ***get the values from test data sheet
 	public void testDataFields(String scenarioName, String testCaseId) {
 		HashMap<String, LinkedHashMap<String, String>> inputData1 = null;

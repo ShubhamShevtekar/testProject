@@ -78,12 +78,10 @@ public class CountryGraphQL extends Reporting {
 		// *** getting actautor version
 		String tokenKey = tokenValues[0];
 		String tokenVal = token;
-		/*
-		 * String actuatorGraphQLVersionURL=RetrieveEndPoints.getEndPointUrl(
-		 * "graphQLActuator", fileName, level+".graphQL.version");
-		 * actuatorGraphQLversion =resultValidation.versionValidation(fileName,
-		 * tokenKey, tokenVal,actuatorGraphQLVersionURL);
-		 */
+		String actuatorGraphQLVersionURL = RetrieveEndPoints.getEndPointUrl("graphQLActuator", fileName,
+				level + ".graphQL.version");
+		// actuatorGraphQLversion =resultValidation.versionValidation(fileName,
+		// tokenKey, tokenVal,actuatorGraphQLVersionURL);
 	}
 
 	@BeforeMethod
@@ -96,16 +94,18 @@ public class CountryGraphQL extends Reporting {
 		}
 	}
 
-	@AfterMethod
+	/*@AfterMethod
 	public void after() {
 		try {
+			con.isClosed();
 			con.close();
+			
 		} catch (SQLException e) {
 			test.fail("DB connection close failed or connection not active: " + e);
 		}
 		System.gc();
 		Runtime.getRuntime().gc();
-	}
+	}*/
 
 	@Test
 	public void TC_01() {
@@ -161,11 +161,8 @@ public class CountryGraphQL extends Reporting {
 		// dependentRelationshipDescription } stateProvStndList { geopoliticalId
 		// organizationStandardCode stateProvinceCode stateProvinceName
 		// effectiveDate expirationDate } }}\"}";
-		String payload = "{\"query\":\"{  countries (geopoliticalId : \\\"" + geopoliticalId
-				+ "\\\", countryCode : \\\"" + countryCode + "\\\",countryShortName : \\\"" + countryShortName
-				+ "\\\", orgStandardCode : \\\"" + orgStandardCode + "\\\",targetDate : \\\"" + targetDate
-				+ "\\\",endDate : \\\"" + endDate
-				+ "\\\") {    geopoliticalId    countryNumericCode    countryCode    threeCharacterCountryCode    independentFlag    dependentRelationshipId    dependentCountryCode    postalFormatDescription    postalFlag    postalLength    firstWorkWeekDayName    lastWorkWeekDayName    weekendFirstDayName    internetDomainName    effectiveDate    expirationDate    phoneNumberFormatPattern    internationalDialingCode    landPhoneMinimumLength    landPhoneMaximumLength    mobilePhoneMinimumLength    mobilePhoneMaximumLength    currencies {      geopoliticalId      currencyNumericCode      currencyCode      minorUnitCode      moneyFormatDescription      effectiveDate      expirationDate    }    countryOrganizationStandards {      geopoliticalId      countryShortName      countryFullName      organizationStandardCode      effectiveDate      expirationDate      geoPoliticalOrganizationStandard {      organizationStandardCode        organizationStandardName      }    }    addressLabels {      geopoliticalId      localeCode      addressLineNumber      brandAddressLineDescription      applicable    }  }}\",\"variables\":null,\"operationName\":null}";
+		String payload = "{\"query\":\"{countries (targetDate : \\\"2020-08-01\\\",endDate : \\\"9999-12-31\\\") {geopoliticalId countryNumericCode countryCode threeCharacterCountryCode independentFlag dependentRelationshipId dependentCountryCode postalFormatDescription postalFlag postalLength firstWorkWeekDayName lastWorkWeekDayName weekendFirstDayName internetDomainName internationalDialingCode landPhoneMaximumLength landPhoneMinimumLength mobilePhoneMaximumLength mobilePhoneMinimumLength phoneNumberFormatPattern  effectiveDate expirationDate currencies { currencyNumericCode currencyCode minorUnitCode moneyFormatDescription effectiveDate expirationDate } countryOrganizationStandards {organizationStandardCode organizationStandardName countryFullName countryShortName effectiveDate expirationDate } addressLabels {localeCode brandAddressLineDescription  addressLineNumber applicable } }}\"}";
+				
 		countryWithGeoplId(testCaseID, payload);
 	}
 
@@ -4222,30 +4219,30 @@ public class CountryGraphQL extends Reporting {
 		String countryCurrencyGetQuery = query.countryCurrencyGraphQLQuery(geopoliticalId, targetDate, endDate);
 		// ***get the fields needs to be validate in DB
 		List<String> fields = ValidationFields.countryCurrencyGraphQLMethodDbFields();
-
-		List<String> getResultDB = new ArrayList<>();
-		try {
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			ResultSet result = stmt.executeQuery(countryCurrencyGetQuery);
-			result.last();
-			result.beforeFirst();
-			String checkNull = null;
-			while (result.next()) {
-				for (int d = 0; d < fields.size(); d++) {
-					checkNull = result.getString(fields.get(d));
-					if (StringUtils.isBlank(checkNull)) {
-						checkNull = "";
-					}
-					getResultDB.add(checkNull.trim());
-				}
-			}
-			stmt.close();
-		} catch (SQLException e) {
-			ex.writeExcel(fileName, testCaseID, "", "", "", "", "", "", "", "", "Fail",
-					"DB Connection Exception: " + e.toString());
-			test.fail("DB connection failed: " + e);
-			Assert.fail("Test Failed");
-		}
+		List<String> getResultDB = DbConnect.getResultSetFor(countryCurrencyGetQuery, fields, fileName, testCaseID);
+//		List<String> getResultDB = new ArrayList<>();
+//		try {
+//			stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//			ResultSet result = stmt.executeQuery(countryCurrencyGetQuery);
+//			result.last();
+//			result.beforeFirst();
+//			String checkNull = null;
+//			while (result.next()) {
+//				for (int d = 0; d < fields.size(); d++) {
+//					checkNull = result.getString(fields.get(d));
+//					if (StringUtils.isBlank(checkNull)) {
+//						checkNull = "";
+//					}
+//					getResultDB.add(checkNull.trim());
+//				}
+//			}
+//			stmt.close();
+//		} catch (SQLException e) {
+//			ex.writeExcel(fileName, testCaseID, "", "", "", "", "", "", "", "", "Fail",
+//					"DB Connection Exception: " + e.toString());
+//			test.fail("DB connection failed: " + e);
+//			Assert.fail("Test Failed");
+//		}
 		if (getResultDB.size() != 0 && responseRows != null) {
 			System.out.println("Response rows: " + responseRows.size());
 			System.out.println("DB records: " + getResultDB.size() / fields.size());
@@ -5246,8 +5243,8 @@ public class CountryGraphQL extends Reporting {
 			// ***get the fields needs to be validate in DB
 			List<String> fields = ValidationFields.countryOrgStdGraphQLMethodDbFields();
 
-			List<String> getResultDB = new ArrayList<>();
-			try {
+			List<String> getResultDB = DbConnect.getResultSetFor(countryOrgStdGetQuery, fields, fileName, testCaseID);
+			/*try {
 				stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet result = stmt.executeQuery(countryOrgStdGetQuery);
 				result.last();
@@ -5268,7 +5265,7 @@ public class CountryGraphQL extends Reporting {
 						"DB Connection Exception: " + e.toString());
 				test.fail("DB connection failed: " + e);
 				Assert.fail("Test Failed");
-			}
+			}*/
 
 			if (getResultDB.size() != 0 && responseRows != null) {
 
@@ -6707,8 +6704,8 @@ public class CountryGraphQL extends Reporting {
 		// ***get the fields needs to be validate in DB
 		List<String> fields = ValidationFields.addressLabelsGraphQLMethodDbFields();
 
-		List<String> getResultDB = new ArrayList<>();
-		try {
+		List<String> getResultDB = DbConnect.getResultSetFor(countryAdressLabelGetQuery, fields, fileName, testCaseID);
+		/*try {
 			stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet result = stmt.executeQuery(countryAdressLabelGetQuery);
 			result.last();
@@ -6729,7 +6726,7 @@ public class CountryGraphQL extends Reporting {
 					"DB Connection Exception: " + e.toString());
 			test.fail("DB connection failed: " + e);
 			Assert.fail("Test Failed");
-		}
+		}*/
 		String resMoneyFormatDesc1;
 		if (getResultDB.size() != 0 && responseRows != null) {
 			System.out.println("Response rows: " + responseRows.size());

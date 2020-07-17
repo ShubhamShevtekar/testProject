@@ -95,7 +95,7 @@ public class CountryGraphQL extends Reporting{
 		}
 	}
 
-	@AfterMethod
+	/*@AfterMethod
 	public void after()
 	{
 		try {
@@ -105,7 +105,7 @@ public class CountryGraphQL extends Reporting{
 		}
 		System.gc();
 		Runtime.getRuntime().gc();
-	}
+	}*/
 
 
 	@Test

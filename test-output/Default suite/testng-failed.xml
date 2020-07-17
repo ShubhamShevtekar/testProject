@@ -6,18 +6,18 @@
       <class name="scenarios.GEO.v1.CountryGraphQL">
         <methods>
           <include name="startReport"/>
+          <include name="endReport"/>
           <include name="TC_01"/>
           <include name="TC_03"/>
           <include name="TC_05"/>
-          <include name="TC_02"/>
           <include name="TC_07"/>
           <include name="TC_04"/>
           <include name="TC_09"/>
           <include name="TC_06"/>
+          <include name="zipFolder"/>
           <include name="TC_08"/>
           <include name="startRepo"/>
           <include name="beforeSuite"/>
-          <include name="after"/>
           <include name="cleanFolder"/>
           <include name="TC_10"/>
           <include name="TC_12"/>
