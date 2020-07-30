@@ -3642,7 +3642,7 @@ public class LanguagePut extends Reporting {
 				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
 			int Wscode = res.statusCode();
-			String expectMessage = resMsgs.requiredFieldMsg;
+			String expectMessage = resMsgs.langCntryCdrequiredFieldMsg;
 			if (Wscode == 400 && meta != null && (!meta.contains("timestamp"))
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
 				logger.info("Response status code 400 validation passed: " + Wscode);
@@ -3653,7 +3653,7 @@ public class LanguagePut extends Reporting {
 				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
-				if (errorMsg1.get(0).equals("countryCode") && errorMsg2.get(0).equals(expectMessage)) {
+				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
 
 					logger.info(
 							"Expected error message is getting received in response when the countryCode is null or Empty in JSON");
@@ -3759,7 +3759,7 @@ public class LanguagePut extends Reporting {
 					errorMsg2.add(js.getString("errors[" + i + "].message"));
 				}
 
-				String expectMessage = resMsgs.requiredFieldMsg;
+				String expectMessage = resMsgs.langLoclCdrequiredField;
 				if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
 					logger.info("Response status code 400 validation passed: " + Wscode);
 					test.pass("Response status code 400 validation passed: " + Wscode);
@@ -3770,7 +3770,7 @@ public class LanguagePut extends Reporting {
 					ValidationFields.transactionIdValidation(js, res);
 					// ***error message validation
 
-					if (errorMsg1.get(0).equals("localeCd") && errorMsg2.get(0).equals(expectMessage)) {
+					if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
 
 						logger.info(
 								"Expected error message is getting received in response when localeCd is passed as empty/ null in JSON request");
@@ -5614,6 +5614,7 @@ public class LanguagePut extends Reporting {
 				String langPostPostQuery1 = query.langPostQuery(languageCode);
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.langNewDbFields();
+				fields.remove(0);
 				// ***get the result from DB
 				List<String> getResultDB1 = DbConnect.getResultSetFor(langPostPostQuery1, fields, fileName, testCaseID);
 				getResultDBFinal.addAll(getResultDB1);
@@ -5626,14 +5627,14 @@ public class LanguagePut extends Reporting {
 						logger.info("Success response is getting received with Language Code: " + languageCode);
 						test.pass("Success response is getting received with Language Code: " + languageCode);
 						// ***send the input, response, DB result for validation
-						String[] inputFieldValues = new String[6];
+						String[] inputFieldValues = new String[5];
 
-						inputFieldValues[0] = userId;
-						inputFieldValues[1] = languageCode;
-						inputFieldValues[2] = nativeScriptLanguageName;
-						inputFieldValues[3] = nativeScriptCode;
-						inputFieldValues[4] = languageName;
-						inputFieldValues[5] = userId;
+						//inputFieldValues[0] = userId;
+						inputFieldValues[0] = languageCode;
+						inputFieldValues[1] = nativeScriptLanguageName;
+						inputFieldValues[2] = nativeScriptCode;
+						inputFieldValues[3] = languageName;
+						inputFieldValues[4] = userId;
 
 						// ***get response fields values
 						List<String> resFields = ValidationFields.langResponseFileds(res);
@@ -5643,13 +5644,13 @@ public class LanguagePut extends Reporting {
 						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDBFinal,
 								resFields);
 						// ***write result to excel
-						String[] inputFieldNames = { "Input_UserName: ", "Input_languageCode: ",
+						String[] inputFieldNames = { "Input_languageCode: ",
 								"Input_nativeScriptLanguageName: ", "Input_nativeScriptCode: ", "Input_languageName: ",
 								"Input_LastUpdateUserName: " };
 
 						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 
-						String[] dbFieldNames = { "DB_UserName: ", "DB_languageCode: ", "DB_nativeScriptLanguageName: ",
+						String[] dbFieldNames = { "DB_languageCode: ", "DB_nativeScriptLanguageName: ",
 								"DB_nativeScriptCode: ", "DB_languageName: ", "DB_LastUpdateUserName: " };
 
 						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDBFinal, dbFieldNames);
@@ -6337,7 +6338,9 @@ public class LanguagePut extends Reporting {
 		formatLocalesExpirationDate = destDf.format(dateLocalesExpirationDate);
 		formatLocalesExpirationDate = formatLocalesExpirationDate.toUpperCase();
 
-		String auditLangLocalePostQuery = query.auditLangLocalesNewPutQuery(languageCode, localesScriptCd, localeCd);
+		String revisionTypeCd = "1";
+		
+		String auditLangLocalePostQuery = query.auditLangLocalesNewPutQuery(languageCode, localesScriptCd, localeCd, revisionTypeCd);
 		// ***get the fields needs to be validate in DB
 		List<String> fields = ValidationFields.auditLangLocalesNewDbFields();
 		// ***get the result from DB
@@ -6508,10 +6511,11 @@ public class LanguagePut extends Reporting {
 	public boolean auditDOWDBValidation(String testCaseID, Response res) {
 		List<String> getResultDBFinal = new ArrayList<String>();
 		String[] inputFieldValues = new String[21];
+		String revisionTypeCd = "1";
 		for (int i = 0; i < translatedDOWs.size() / 2; i++) {
 
 			String dowPutAuditQuery = query.langTrnslDowPostAuditQuery(languageCode,
-					translatedDOWs.get("translatedDOWs_dayOfWeekNumber" + (i + 1)));
+					translatedDOWs.get("translatedDOWs_dayOfWeekNumber" + (i + 1)), revisionTypeCd);
 			// ***get the fields needs to be validate in DB
 			List<String> auditfields = ValidationFields.langTrnslDowDbAuditFields();
 			// ***get the result from DB
@@ -6570,10 +6574,11 @@ public class LanguagePut extends Reporting {
 	public boolean auditMOYDBValidation(String testCaseID, Response res) {
 		List<String> getResultDBFinal = new ArrayList<String>();
 		String[] inputFieldValues = new String[36];
+		String revisionTypeCd = "1";
 		for (int i = 0; i < translatedMOYs.size() / 2; i++) {
 
 			String languagePostQuery = query.langTrnslMonthOfYearPostAuditQuery(languageCode,
-					translatedMOYs.get("translatedMOYs_monthOfYearNumber" + (i + 1)));
+					translatedMOYs.get("translatedMOYs_monthOfYearNumber" + (i + 1)), revisionTypeCd);
 			// ***get the fields needs to be validate in DB
 			List<String> auditFields = ValidationFields.langTrnslMonthOfYearDbAuditFields();
 			// ***get the result from DB
@@ -6664,7 +6669,8 @@ public class LanguagePut extends Reporting {
 		localesScriptCd = inputData1.get(testCaseId).get("localesScriptCd");
 		cldrVersionNumber = inputData1.get(testCaseId).get("cldrVersionNumber");
 		cldrVersionDate = inputData1.get(testCaseId).get("cldrVersionDate");
-
+		localeCd1 = inputData1.get(testCaseId).get("localeCd1");
+		countryCode1 = inputData1.get(testCaseId).get("countryCd1");
 		dateFullFormatDescription = inputData1.get(testCaseId).get("dateFullFormatDescription");
 		dateLongFormatDescription = inputData1.get(testCaseId).get("dateLongFormatDescription");
 		dateMediumFormatDescription = inputData1.get(testCaseId).get("dateMediumFormatDescription");

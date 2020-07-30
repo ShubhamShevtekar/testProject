@@ -1222,6 +1222,7 @@ public class ValidationFields {
 		List<String> fields = new ArrayList<>();
 		fields.add("LANGUAGE_CD");
 		fields.add("ENGL_LANGUAGE_NM");
+		fields.add("NATV_SCRIPT_CD");
 		fields.add("NATIVE_SCRIPT_LANGUAGE_NM");
 		return fields;
 	}

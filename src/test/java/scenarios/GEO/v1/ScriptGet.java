@@ -613,120 +613,81 @@ public class ScriptGet extends Reporting {
 			test.info("Response Recieved:");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String Wsstatus = js.getString("meta.message.status");
-			String internalMsg = js.getString("meta.message.internalMessage");
-			List<String> responseRows = js.get("data");
 			int Wscode = res.statusCode();
+			String Wsstatus = js.getString("meta.message.status");
+			String internalMsg = js.getString("errors.message");
+			int errorMsgLength = js.get("errors.size");
+			List<String> errorMgs1 = new ArrayList<String>();
+			List<String> errorMgs2 = new ArrayList<String>();
+			for (int i = 0; i < errorMsgLength; i++) {
+				errorMgs1.add(js.getString("errors[" + i + "].fieldName"));
+				errorMgs2.add(js.getString("errors[" + i + "].message"));
+			}
 			String meta = js.getString("meta");
 			if (meta != null) {
 				test.pass("Response meta validation passed");
 			} else {
 				test.fail("Response validation failed as meta not found");
 			}
-			String actualRespVersionNum = js.getString("meta.version");
-			if (Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS")
-					&& actualRespVersionNum.equalsIgnoreCase(actuatorQueryVersion)) {
-				logger.info("Response status validation passed: " + Wscode);
-				test.pass("Response status validation passed: " + Wscode);
-				test.pass("Response API version number validation passed");
-				// ***get the DB query
-				String scriptPostQuery = query.scriptPostQuery(scriptCode);
-				// ***get the fields needs to be validate in DB
-				List<String> fields = ValidationFields.scriptGetMethodDbFields();
-				// ***get the result from DB
-				List<String> getResultDB = DbConnect.getResultSetFor(scriptPostQuery, fields, fileName, testCaseID);
-
-				if (getResultDB.size() == responseRows.size() * fields.size()) {
-					logger.info("Total number of records matching between DB & Response: " + responseRows.size());
-					test.pass("Total number of records matching between DB & Response: " + responseRows.size());
-					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA", "", "", Wsstatus,
-							"" + Wscode, "", "Pass", "Total number of records matching between DB & Response: "
-									+ responseRows.size() + ", below are the test steps for this test case");
-					List<String> getResponseRows = new ArrayList<>();
-					for (int i = 0; i < responseRows.size(); i++) {
-						if (StringUtils.isBlank(js.getString("data[" + i + "].scriptCode"))) {
-							getResponseRows.add("");
-						} else {
-							getResponseRows.add(js.getString("data[" + i + "].scriptCode"));
-						}
-						if (StringUtils.isBlank(js.getString("data[" + i + "].scriptName"))) {
-							getResponseRows.add("");
-						} else {
-							getResponseRows.add(js.getString("data[" + i + "].scriptName"));
-						}
-						if (StringUtils.isBlank(js.getString("data[" + i + "].scriptDescription"))) {
-							getResponseRows.add("");
-						} else {
-							getResponseRows.add(js.getString("data[" + i + "].scriptDescription"));
-						}
+			if (Wscode == 400) {
+				//logger.info("As expected total number of records available in response: " + responseRows.size());
+				//test.pass("As expected total number of records available in response: " + responseRows.size());
+				String actualRespVersionNum = js.getString("meta.version");
+				if (Wscode == 400 && Wsstatus.equalsIgnoreCase("ERROR")
+						&& actualRespVersionNum.equalsIgnoreCase(actuatorQueryVersion)) {
+					logger.info("Response status code validation passed: " + Wscode);
+					test.pass("Response status code validation passed: " + Wscode);
+					test.pass("Response API version number validation passed");
+					ValidationFields.timestampValidation(js, res);  ValidationFields.transactionIdValidation(js, res);
+					// ***error message validation
+					String expectMessage = resMsgs.getScriptErrorMsg;
+					if (internalMsg.contains(expectMessage)) {
+						String[] inputFieldValues = { scriptCode };
+						String[] inputFieldNames = { "Input_scriptCode: " };
+						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
+						logger.info(
+								"Expected error message is getting received in response when passing the invalid scriptCode in URI");
+						logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
+						logger.info("------------------------------------------------------------------");
+						test.pass(
+								"Expected error message is getting received in response when passing the invalid scriptCode in URI");
+						ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA",
+								writableInputFields, "NA", Wsstatus, "" + Wscode, responsestr1, "Pass", "");
+						test.log(Status.PASS, MarkupHelper.createLabel("test status", ExtentColor.GREEN));
+					} else {
+						logger.error("Expected error message is not getting received in response");
+						logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+						logger.error("------------------------------------------------------------------");
+						test.fail("Expected error message is not getting received in response");
+						ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA", "", "", Wsstatus,
+								"" + Wscode, responsestr, "Fail", internalMsg);
+						Assert.fail("Test Failed");
 					}
-					logger.info("Each record validation starts");
-					test.info("Each record validation starts");
-					int z = 1;
-					for (int j = 0; j < getResultDB.size(); j = j + fields.size()) {
-						if (getResultDB.get(j).toString().equals(getResponseRows.get(j).toString())
-								&& getResultDB.get(j + 1).toString().equals(getResponseRows.get(j + 1).toString())) {
-							// ***write result to excel
-							String[] responseDbFieldValues = { getResponseRows.get(j).toString(),
-									getResultDB.get(j).toString(), getResponseRows.get(j + 1).toString(),
-									getResultDB.get(j + 1).toString(), getResponseRows.get(j + 2).toString(),
-									getResultDB.get(j + 2).toString() };
-							String[] responseDbFieldNames = { "Response_scriptCode: ", "DB_scriptCode: ",
-									"Response_scriptName: ", "DB_scriptName: ", "Response_scriptDescription: ",
-									"DB_scriptDescription: " };
-							writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues,
-									responseDbFieldNames);
-							test.info("Record " + z + " Validation:");
-							test.pass(writableResult.replaceAll("\n", "<br />"));
-							ex.writeExcel(fileName, "", TestCaseDescription, scenarioType, "NA", "", "", "", "",
-									writableResult, "Pass", "");
-							z++;
-						} else {
-							String[] responseDbFieldValues = { getResponseRows.get(j).toString(),
-									getResultDB.get(j).toString(), getResponseRows.get(j + 1).toString(),
-									getResultDB.get(j + 1).toString(), getResponseRows.get(j + 2).toString(),
-									getResultDB.get(j + 2).toString() };
-							String[] responseDbFieldNames = { "Response_scriptCode: ", "DB_scriptCode: ",
-									"Response_scriptName: ", "DB_scriptName: ", "Response_scriptDescription: ",
-									"DB_scriptDescription: " };
-							writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues,
-									responseDbFieldNames);
-							test.info("Record " + z + " Validation:");
-							test.fail(writableResult.replaceAll("\n", "<br />"));
-							logger.info("Record " + z + " Validation:");
-							logger.error(writableResult);
-							ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA", "", "", "", "",
-									writableResult, "Fail", "This record is not matching");
-							z++;
-						}
-					}
-				} else {
-					logger.error("Total number of records matching between DB: " + getResultDB.size() / fields.size()
-							+ " & Response: " + responseRows.size());
+				} else if (!actualRespVersionNum.equalsIgnoreCase(actuatorQueryVersion)) {
+					logger.error("Response validation failed as API version number is not matching with expected");
 					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
 					logger.error("------------------------------------------------------------------");
-					test.fail("Total number of records matching between DB: " + getResultDB.size() / fields.size()
-							+ " & Response: " + responseRows.size());
+					test.fail("Response validation failed as API version number is not matching with expected");
+				} else {
+					logger.error("Response status validation failed: " + Wscode);
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response status validation failed: " + Wscode);
 					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus,
 							"" + Wscode, responsestr1, "Fail", internalMsg);
 					Assert.fail("Test Failed");
 				}
-			} else if (!actualRespVersionNum.equalsIgnoreCase(actuatorQueryVersion)) {
-				logger.error("Response validation failed as API version number is not matching with expected");
-				logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
-				logger.error("------------------------------------------------------------------");
-				test.fail("Response validation failed as API version number is not matching with expected");
 			} else {
-				logger.error("Response status validation failed: " + Wscode);
+//				logger.error("Total number of records are available in response is: " + responseRows.size()
+//						+ " , instead 0");
 				logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
 				logger.error("------------------------------------------------------------------");
-				test.fail("Response status validation failed: " + Wscode);
+//				test.fail("Total number of records are available in response is: " + responseRows.size()
+//						+ " , instead 0");
 				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", Wsstatus,
-						"" + Wscode, responsestr1, "Fail", internalMsg);
+						"" + Wscode, responsestr1, "Fail", "");
 				Assert.fail("Test Failed");
 			}
-//			test.info("Response Recieved:");
-//			test.info(responsestr1.replaceAll("\n", "<br />"));
 			logger.info("------------------------------------------------------------------");
 		} catch (Exception e) {
 			e.printStackTrace();

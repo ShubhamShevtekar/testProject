@@ -822,7 +822,7 @@ public class DayOfWeekPost extends Reporting {
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 
-				if (errorMsg1.get(1).equals("dayOfWeekNumber") && errorMsg2.get(1).equals(expectMessage)) {
+				if (errorMsg1.get(0).equals("dayOfWeekNumber") && errorMsg2.get(0).equals(expectMessage)) {
 					String[] inputFieldValues = { userId, dayOfWeekNbr, dayOfWeekShortName, dayOfWeekFullName };
 					String[] inputFieldNames = { "Input_UserName: ", "Input_dayOfWeekNumber: ",
 							"Input_dayOfWeekShortName: ", "Input_dayOfWeekFullName: " };

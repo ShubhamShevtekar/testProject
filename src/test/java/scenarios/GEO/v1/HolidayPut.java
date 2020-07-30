@@ -1700,15 +1700,15 @@ public class HolidayPut extends Reporting {
 			String timestamp = js.getString("meta.timestamp");
 			String expectMessage = resMsgs.wrongFormatIdMsg;
 			int Wscode = res.statusCode();
-			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
-				logger.info("Response status code 400 validation passed: " + Wscode);
-				test.pass("Response status code 400 validation passed: " + Wscode);
+			if (Wscode == 404 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
+				logger.info("Response status code validation passed: " + Wscode);
+				test.pass("Response status code validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
-				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
+				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0) == null) {
 					String[] inputFieldValues = { userId, holidayName, holidayParamText };
 					String[] inputFieldNames = { "Input_UserName: ", "Input_HolidayName: ",
 							"Input_holidayDateParameterText: " };
@@ -1811,13 +1811,13 @@ public class HolidayPut extends Reporting {
 			String actualRespVersionNum = js.getString("meta.version");
 			String expectMessage = resMsgs.wrongFormatIdMsg;
 			int Wscode = res.statusCode();
-			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
-				logger.info("Response status code 400 validation passed: " + Wscode);
-				test.pass("Response status code 400 validation passed: " + Wscode);
+			if (Wscode == 404 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
+				logger.info("Response status code validation passed: " + Wscode);
+				test.pass("Response status code validation passed: " + Wscode);
 				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
-				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
+				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0) == null) {
 					String[] inputFieldValues = { userId, holidayName, holidayParamText };
 					String[] inputFieldNames = { "Input_UserName: ", "Input_HolidayName: ",
 							"Input_holidayDateParameterText: " };

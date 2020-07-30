@@ -5,7 +5,7 @@ public class ResponseMessages {
 	// Version validation message
 	public String expectedApiVersionNumber = "1.0.0";
 
-	//***success messages
+	// ***success messages
 	public String geoTypePostSuccessMsg = "Geopolitical Type Details successfully saved with GeopoliticalTypeId :";
 	public String geoTypePutSuccessMsg = "Geopolitical Type Details successfully updated with GeopoliticalTypeId :";
 	public String geoRsTypePostSuccessMsg = "GeopoliticalRelationshipType Details successfully saved with geopoliticalRelationshipTypeCode :";
@@ -14,7 +14,7 @@ public class ResponseMessages {
 	public String geoOrgStdPutSuccessMsg = "GEOPLORGSTD Details successfully updated with OrgStdCd :";
 	public String depnCntryRltspPostSuccessMsg = "Dependent Country Relationship Details successfully saved with DependentRelationshipId :";
 	public String depnCntryRltspPutSuccessMsg = "Dependent Country Relationship Details successfully updated with DependentRelationshipId :";
-	public String holidayPostSuccessMsg = "Holiday Details successfully saved with HolidayId :";
+	public String holidayPostSuccessMsg = "Holiday Details successfully saved with holidayId :";
 	public String holidayPutSuccessMsg = "Holiday Details successfully updated with HolidayId :";
 	public String uomTypePostSuccessMsg = "REFUOMTYPE Details successfully saved with uomTypeCd :";
 	public String uomTypePutSuccessMsg = "REFUOMTYPE Details successfully updated with uomTypeCd :";
@@ -35,7 +35,6 @@ public class ResponseMessages {
 	public String stProvStdPostSuccessMsg = " State Province Details successfully saved with stateProvinceCode :";
 	public String stProvStdPutSuccessMsg = "State Province Details successfully updated with stateProvinceCode :";
 
-
 	public String affilTypePostSuccessMsg = "GeoplAffilType Details successfully saved with affilTypeId :";
 	public String affilTypePostSuccessNewMsg = "GeopoliticalAffiliatedType Details successfully saved with affiliationTypeId :";
 	public String AffillengthExceeds10CharNew = "affilTypeCode cannot be greater than 10 characters";
@@ -50,16 +49,16 @@ public class ResponseMessages {
 	public String geoRltspPostSuccessNewMsg = "GeopoliticalRelationship Details successfully saved with GeopoliticalRelationshipComponentId :";
 	public String geoRltspPutSuccessNewMsg = "GeopoliticalRelationship Details successfully updated with GeopoliticalRelationshipComponentId :";
 	public String holidayPutSuccessNewMsg = "Holiday Details successfully updated with holidayId :";
-	//***Get general success message
+	// ***Get general success message
 	public String getSuccessMsg = "Records Fetched Successfully";
 
 	public String lengthExceeds80Char1 = " cannot be greater than 80 character!";
 
-	//*** Address label Error message
+	// *** Address label Error message
 	public String addressLineNumberNullMegNew = " should be in between 1 and 99 inclusive";
 	public String lengthExceeds3CharLanguageCd = " cannot be greater than 3 characters!";
 
-	//*** new Error Message
+	// *** new Error Message
 
 	public String invalidUrlMsgAddresslabelPOST = "Could not find the POST method for URL /v1/addressLa";
 	public String invalidUrlMsgAddresslabelPUT = "Could not find the PUT method for URL /v1/addressLa";
@@ -74,7 +73,7 @@ public class ResponseMessages {
 	public String missingCommaInRequestMsg = "JSON parse error: Unexpected character ('\"' (code 34)): was expecting comma to separate Object entries";
 	public String usedGETinCommanderrorMsg = "Request method 'GET' not supported";
 	public String usedPOSTinGetErrorMsg = "Request method 'POST' not supported";
-	public String missingHTTPHeaderInRequestMsg ="Missing HTTP header X-CSR-SECURITY_TOKEN";
+	public String missingHTTPHeaderInRequestMsg = "Missing HTTP header X-CSR-SECURITY_TOKEN";
 	public String invalidUrlMsgMOYPost = "Could not find the POST method for URL /v1/month";
 	public String invalidUrlMsgMOYPut = "Could not find the PUT method for URL /v1/month";
 	public String invalidUrlMsgLangPost = "Could not find the POST method for URL /v1/la";
@@ -90,7 +89,7 @@ public class ResponseMessages {
 	public String invalidUrlcountryOrgStdMsgstPut1 = "[Could not find the PUT method for URL /v1/cntry]";
 	public String invalidUrlcountryOrgStdMsgstPost1 = "[Could not find the POST method for URL /v1/cntry]";
 
-	//New query Message:
+	// New query Message:
 	public String invalidUrlAffilTypeGet = "Could not find the GET method for URL /v2/affiliationType";
 	public String invalidUrlHolidayGet = "Could not find the GET method for URL /v2/holiday";
 	public String invalidUrlUOMTypeGet = "Could not find the GET method for URL /v2/uomType";
@@ -107,8 +106,9 @@ public class ResponseMessages {
 	public String invalidUrlAddreLblGet = "Could not find the GET method for URL /v2/addressLabel";
 	public String geoplIdNullAddressLabelErrorMsg = " is a required field";
 
-	//***Get general error message
+	// ***Get general error message
 	public String getErrorMsg = "There are no records for the specified criteria";
+	public String getScriptErrorMsg = "getReferenceScriptsOnCd.scrptCd";
 
 	public String addrLblGeoplIdErrorMsg = "Validation error of type FieldUndefined: Field 'geopoliticalI' in type 'AddressLabel' is undefined @ 'addressLabels/geopoliticalI'";
 	public String addrLblLocaleCdErrorMsg = "Validation error of type FieldUndefined: Field 'localeCod' in type 'AddressLabel' is undefined @ 'addressLabels/localeCod'";
@@ -116,24 +116,23 @@ public class ResponseMessages {
 	public String addrLblBrandAddrErrorMsg = "Validation error of type FieldUndefined: Field 'brandAddressLineDescriptio' in type 'AddressLabel' is undefined @ 'addressLabels/brandAddressLineDescriptio'";
 	public String addrLblapplicableErrorMsg = "Validation error of type FieldUndefined: Field 'applicabl' in type 'AddressLabel' is undefined @ 'addressLabels/applicabl'";
 
-
-	//***Get format error message
+	// ***Get format error message
 	public String getFormatErrorMsg = "Not correct format for Id!";
 
-	//***Get exception error message
+	// ***Get exception error message
 	public String getAddressInvalidCd = " getAddressByCountryCd.countryCode: must match \"^[a-zA-Z]$\"";
 
-	//*** GraphQL Error message
-	//MOY
+	// *** GraphQL Error message
+	// MOY
 	public String moyNumberErrorMsg = "Validation error of type FieldUndefined: Field 'monthOfYearNumbe' in type 'RefMonthOfYear' is undefined @ 'monthsOfYear/monthOfYearNumbe'";
 	public String moyShortNameErrorMsg = "Validation error of type FieldUndefined: Field 'monthOfYearShortNam' in type 'RefMonthOfYear' is undefined @ 'monthsOfYear/monthOfYearShortNam'";
 
-	//DOW
+	// DOW
 	public String dowNumberErrorMsg = "Validation error of type FieldUndefined: Field 'dayOfWeekNumbe' in type 'RefDayOfWeek' is undefined @ 'daysOfWeek/dayOfWeekNumbe'";
 	public String dowFullNamErrorMsg = "Validation error of type FieldUndefined: Field 'dayOfWeekFullNam' in type 'RefDayOfWeek' is undefined @ 'daysOfWeek/dayOfWeekFullNam'";
 	public String dowShortNamErrorMsg = "Validation error of type FieldUndefined: Field 'dayOfWeekShortNam' in type 'RefDayOfWeek' is undefined @ 'daysOfWeek/dayOfWeekShortNam'";
 
-	//Language
+	// Language
 	public String moyLangLocaleErrorMsg = "Validation error of type FieldUndefined: Field 'translatedMOY' in type 'Locale' is undefined @ 'languages/locales/translatedMOY'";
 	public String dowLangLocaleErrorMsg = "Validation error of type FieldUndefined: Field 'translatedDOW' in type 'Locale' is undefined @ 'languages/locales/translatedDOW'";
 	public String langCodeErrorMsg = "Validation error of type FieldUndefined: Field 'languageCod' in type 'Language' is undefined @ 'languages/languageCod'";
@@ -160,19 +159,17 @@ public class ResponseMessages {
 	public String scriptInvalidAttribute2 = "Validation error of type FieldUndefined: Field 'scriptName2' in type 'Script' is undefined @ 'scripts/scriptName2'";
 	public String scriptInvalidAttribute3 = "Validation error of type FieldUndefined: Field 'scriptDescription2' in type 'Script' is undefined @ 'scripts/scriptDescription2'";
 
-
-
-	public String ErrorMsg="Validation error of type FieldUndefined: Field 'holidayDateParameterTexts' in type 'Holiday' is undefined @ 'holidays/holidayDateParameterTexts'";
-	public String ErrorMsg1="Validation error of type FieldUndefined: Field 'holidayNames' in type 'Holiday' is undefined @ 'holidays/holidayNames'";
-	public String GeoOrgStdErrorMsg2="Validation error of type FieldUndefined: Field 'organizationStandardNames1' in type 'GeoPoliticalOrganizationStandard' is undefined @ 'geopoliticalOrganizationStandards/organizationStandardNames1'";
-	public String GeoOrgStdErrorMsg1="Validation error of type FieldUndefined: Field 'organizationStandardCodes1' in type 'GeoPoliticalOrganizationStandard' is undefined @ 'geopoliticalOrganizationStandards/organizationStandardCodes1'";
-	public String DepCntryOrgTypeErrorMsg1="Validation error of type FieldUndefined: Field 'dependentRelationshipIds' in type 'DependentCountryRelationship' is undefined @ 'dependentCountryRelationshipTypes/dependentRelationshipIds'";
-	public String DepCntryOrgTypeErrorMsg2="Validation error of type FieldUndefined: Field 'dependentRelationshipDescriptions' in type 'DependentCountryRelationship' is undefined @ 'dependentCountryRelationshipTypes/dependentRelationshipDescriptions'";
-	public String HolidayErrorMsg1="Validation error of type FieldUndefined: Field 'holidayNames' in type 'Holiday' is undefined @ 'holidays/holidayNames'";
-	public String HolidayErrorMsg2="Validation error of type FieldUndefined: Field 'holidayDateParameterTexts' in type 'Holiday' is undefined @ 'holidays/holidayDateParameterTexts'";
-	public String DepCntryOrgeErrorMsg1="Validation error of type WrongType: argument 'dependentCountryCd' with value 'StringValue{value=''}' is not a valid 'Long' @ 'countries'";
-	public String DepCntryOrgeErrorMsg2="Validation error of type FieldUndefined: Field 'geopoliticalIds' in type 'Country' is undefined @ 'countries/geopoliticalIds'";
-	public String DepCntryOrgeErrorMsg3="Validation error of type FieldUndefined: Field 'dependentCountryRelationships' in type 'Country' is undefined @ 'countries/dependentCountryRelationships'";
+	public String ErrorMsg = "Validation error of type FieldUndefined: Field 'holidayDateParameterTexts' in type 'Holiday' is undefined @ 'holidays/holidayDateParameterTexts'";
+	public String ErrorMsg1 = "Validation error of type FieldUndefined: Field 'holidayNames' in type 'Holiday' is undefined @ 'holidays/holidayNames'";
+	public String GeoOrgStdErrorMsg2 = "Validation error of type FieldUndefined: Field 'organizationStandardNames1' in type 'GeoPoliticalOrganizationStandard' is undefined @ 'geopoliticalOrganizationStandards/organizationStandardNames1'";
+	public String GeoOrgStdErrorMsg1 = "Validation error of type FieldUndefined: Field 'organizationStandardCodes1' in type 'GeoPoliticalOrganizationStandard' is undefined @ 'geopoliticalOrganizationStandards/organizationStandardCodes1'";
+	public String DepCntryOrgTypeErrorMsg1 = "Validation error of type FieldUndefined: Field 'dependentRelationshipIds' in type 'DependentCountryRelationship' is undefined @ 'dependentCountryRelationshipTypes/dependentRelationshipIds'";
+	public String DepCntryOrgTypeErrorMsg2 = "Validation error of type FieldUndefined: Field 'dependentRelationshipDescriptions' in type 'DependentCountryRelationship' is undefined @ 'dependentCountryRelationshipTypes/dependentRelationshipDescriptions'";
+	public String HolidayErrorMsg1 = "Validation error of type FieldUndefined: Field 'holidayNames' in type 'Holiday' is undefined @ 'holidays/holidayNames'";
+	public String HolidayErrorMsg2 = "Validation error of type FieldUndefined: Field 'holidayDateParameterTexts' in type 'Holiday' is undefined @ 'holidays/holidayDateParameterTexts'";
+	public String DepCntryOrgeErrorMsg1 = "Validation error of type WrongType: argument 'dependentCountryCd' with value 'StringValue{value=''}' is not a valid 'Long' @ 'countries'";
+	public String DepCntryOrgeErrorMsg2 = "Validation error of type FieldUndefined: Field 'geopoliticalIds' in type 'Country' is undefined @ 'countries/geopoliticalIds'";
+	public String DepCntryOrgeErrorMsg3 = "Validation error of type FieldUndefined: Field 'dependentCountryRelationships' in type 'Country' is undefined @ 'countries/dependentCountryRelationships'";
 
 	public String geoTypeInvalid1AttributeGraphQLMsg = "Validation error of type FieldUndefined: Field 'geopoliticalTypeId1' in type 'GeoPoliticalType' is undefined @ 'geopoliticalTypes/geopoliticalTypeId1'";
 	public String geoTypeInvalid2AttributeGraphQLMsg = "Validation error of type FieldUndefined: Field 'geopoliticalTypeName2' in type 'GeoPoliticalType' is undefined @ 'geopoliticalTypes/geopoliticalTypeName2'";
@@ -182,10 +179,13 @@ public class ResponseMessages {
 	public String countryExpiredTokenGraphQLMsg = "Unable to find a certificate that can decode the token";
 	public String countryInvalidTokenGraphQLMsg = "Input byte array has wrong 4-byte ending unit";
 	public String geoRltspInvalid1AttributeGraphQLMsg = "Validation error of type FieldUndefined: Field 'geopoliticalComponentId1' in type 'GeoPoliticalRelationship' is undefined @ 'relationships/geopoliticalComponentId1'";
-    public String geoRltspInvalid2AttributeGraphQLMsg = "Validation error of type FieldUndefined: Field 'relateGeopoliticalComponentId2' in type 'GeoPoliticalRelationship' is undefined @ 'relationships/relateGeopoliticalComponentId2'";
+	public String geoRltspInvalid2AttributeGraphQLMsg = "Validation error of type FieldUndefined: Field 'relateGeopoliticalComponentId2' in type 'GeoPoliticalRelationship' is undefined @ 'relationships/relateGeopoliticalComponentId2'";
 
-	//***error messages  " is a required field"
+	// ***error messages " is a required field"
 
+	public String langCntryCdrequiredFieldMsg = "countryCode is a required field";
+	public String langLoclCdrequiredField = "localeCode is a required field";
+	
 	public String requiredFieldMsg = " is a required field";
 	public String invalidUrlMsg = "Not Found";
 	public String invalidPostUrlMsg = "Could not find the POST method for URL";
@@ -217,17 +217,17 @@ public class ResponseMessages {
 	public String MoyNumInBetween1and12 = " should be between 1 and 12";
 	public String lengthExceeds18Char = " cannot be greater than 18 characters";
 	public String jsonParserErrorMsg = "JSON parse error: InvalidFormatException:  Cannot deserialize value of type `java.lang.Long` from String ";
-	public String jsonParserErrorMsg1 ="JSON parse error: InvalidFormatException:  Cannot deserialize value of type `java.math.BigInteger` from String ";
-	public String lengthExceeds9Char1=" cannot be greater than 9 characters";
+	public String jsonParserErrorMsg1 = "JSON parse error: InvalidFormatException:  Cannot deserialize value of type `java.math.BigInteger` from String ";
+	public String lengthExceeds9Char1 = " cannot be greater than 9 characters";
 	public String lengthExceeds50Char = " cannot be greater than 50 characters!";
-	public String lengthExceeds50Char1 = "cannot be greater than 50 digits";
-	public String lengthExceeds256CharMsg1 =" cannot be greater than 256 characters";
-	public String lengthExceeds20Char1="  cannot be greater than 20 characters ";
-	public String lengthExceeds20Char2=" cannot be greater than 20 characters!";
-	public String lengthExceeds100Char1=" cannot be greater than 100 characters!";
+	public String lengthExceeds50Char1 = " cannot be greater than 50 characters";
+	public String lengthExceeds256CharMsg1 = " cannot be greater than 256 characters";
+	public String lengthExceeds20Char1 = "  cannot be greater than 20 characters ";
+	public String lengthExceeds20Char2 = " cannot be greater than 20 characters!";
+	public String lengthExceeds100Char1 = " cannot be greater than 100 characters!";
 	public String countryNotFoundMsg = "Country not found";
-	public String invalidDateMsg="Invalid Date Format";
-	public String geoRltspeffectiveDateBlankMsg="Effective Date cannot be a null field!";
+	public String invalidDateMsg = "Invalid Date Format";
+	public String geoRltspeffectiveDateBlankMsg = "Effective Date cannot be a null field!";
 	public String requiredField = " is a required field";
 	public String lengthExceeds18Char1 = " cannot be greater than 18 characters!";
 	public String lengthExceeds4000Char1 = "scriptDesc cannot be greater than 4000 characters";
@@ -244,60 +244,58 @@ public class ResponseMessages {
 	public String lengthExceeds35Char = " cannot be greater than 35 characters!";
 	public String lengthExceeds80Char = " cannot be greater than 80 characters!";
 	public String lengthExceeds3Char1 = " cannot be greater than 3 characters!";
-	public String lengthExceeds50CharNew =" cannot be greater than 50 characters";
-		///geoType
+	public String lengthExceeds50CharNew = " cannot be greater than 50 characters";
+	/// geoType
 	public String geoTypeNameBlankMsg = "Geopolitical Type Name not found null";
 	public String geoTypeInvalidUrl = "The request was rejected because the URL contained a potentially malicious String \"%25\"";
 
+	// geoRltsp
+	public String invalidToGeopoliticalIdMsg = "State not found";
+	public String invalidRelationshipTypeCodedMsg = "Relationship Type code not found";
 
-	//geoRltsp
-	public String invalidToGeopoliticalIdMsg="State not found";
-	public String invalidRelationshipTypeCodedMsg= "Relationship Type code not found";
-
-	//geoRsType
+	// geoRsType
 	public String geoRsTypeCodeBlankMsg = "geopoliticalRelationshipTypeCd cannot be null, ";
-	//GraphQL
+	// GraphQL
 	public String geoRsTypeCdFieldNotPresent = "Validation error of type FieldUndefined: Field 'geopoliticalRelationshipTypeCode1' in type 'GeoPoliticalRelationshipType' is undefined @ 'relationshipTypes/geopoliticalRelationshipTypeCode1'";
 	public String geoRsTypeDescFieldNotPresent = "Validation error of type FieldUndefined: Field 'areaRelationshipTypeDescription1' in type 'GeoPoliticalRelationshipType' is undefined @ 'relationshipTypes/areaRelationshipTypeDescription1'";
 
-	//***geoOrgStd
+	// ***geoOrgStd
 	public String geoOrgStdCodeBlankMsg = "orgStdCd cannot be null, ";
 	public String geoOrgStdCodeNotInJson = "Organization Standard Code cannot be a null or blank field!, Organization Standard Code cannot be a null or blank field!, ";
 	public String geoOrgStdCodeLengthMsg = "Organization Standard Code cannot be greater than 10 characters!, ";
 	public String geoorgStdNmLengthMsg = "Organization Standard Name cannot be greater than 65 characters!, ";
 
-	//depnCntryRltsp
+	// depnCntryRltsp
 	public String depnCntryRltspDescBlankMsg = "dependentRelationshipDescription cannot be null, ";
 	public String depnCntryRltspDescLimitMsg = "DependentRelationshipDescription cannot be greater than 65 characters!, ";
 	public String depnCntryRltspIdNotInDbMsg = "Not correct format for Id!";
 
-	//holiday
+	// holiday
 	public String holidayNameBlankMsg = "holidayName cannot be null, ";
 
-	//UOM type
+	// UOM type
 	public String UomTypeNmNullMsg = "uomTypeNm cannot be null, ";
 	public String UomTypeCdNullMsg = "uomTypeCd cannot be null, ";
 	public String uomTypeNmFieldNotPresent = "Validation error of type FieldUndefined: Field 'uomTypeName1' in type 'RefUOMType' is undefined @ 'uomTypes/uomTypeName1'";
 	public String uomTypeCdFieldNotPresent = "Validation error of type FieldUndefined: Field 'uomTypeCode1' in type 'RefUOMType' is undefined @ 'uomTypes/uomTypeCode1'";
 	public String uomTypeDescFieldNotPresent = "Validation error of type FieldUndefined: Field 'uomTypeDesc1' in type 'RefUOMType' is undefined @ 'uomTypes/uomTypeDesc1'";
 
-	//script
+	// script
 	public String scriptNameBlankMsg = "scrptNm cannot be null, ";
 	public String dayOfWeekShNmBlankMsg = "dayOfweekShortName cannot be null, ";
 
-
-	//DOW
-	public String dayOfWeekNbrLengthMsg = "Numeric value required for field \"dayOfweekNumber\"";
+	// DOW
+	public String jsonParseErrorMsg = "JSON parse error";
 
 	public String countryOrgStdContryCodeBlankMsg = "Country Code cannot be a null field!, ";
 	public String countryOrgStdCntryShNmBlankMsg = "Country Short Name cannot be blank!, ";
 	public String countryOrgStdOrgStdCdBlankMsg = "Organisation Standard code cannot be a null field!, ";
 	public String OrgStdCdNotFoundMsg = "Organisation standard Code not existing";
 
-	//***GeoRltsp
+	// ***GeoRltsp
 	public String geoRltspFromGeoIdBlankMsg = "geopoliticalTypeName cannot be null, ";
 
-	//***StProvStd
+	// ***StProvStd
 	public String stProvStdOrgStdCdBlankMsg = "Organization Standard Code cannot be a null or blank field!, ";
 	public String stProvStdstProvCdBlankMsg = "State Province Code cannot be blank!, ";
 	public String stProvStdOrgStdCdNotFoundMsg = "Organization Standard Code not found";
@@ -309,9 +307,8 @@ public class ResponseMessages {
 	public String stProvStdEffeDtFieldNotPresent = "Validation error of type FieldUndefined: Field 'effectiveDate1' in type 'StateProvinceStandard' is undefined @ 'stProvStds/effectiveDate1'";
 	public String stProvStdExpirDtFieldNotPresent = "Validation error of type FieldUndefined: Field 'expirationDate1' in type 'StateProvinceStandard' is undefined @ 'stProvStds/expirationDate1'";
 
-
-	//***Country
-	public String geopoliticalTypeNameBlanckMsg ="Geopolitical Type Name not found ";
+	// ***Country
+	public String geopoliticalTypeNameBlanckMsg = "Geopolitical Type Name not found ";
 	public String currencyNumberCodeNullMsg = "currencyNumberCode is a required field";
 	public String affiltypecdnullmsg = "JSON parse error: InvalidFormatException: Cannot deserialize value of type `java.lang.Long` from String ";
 
@@ -323,22 +320,21 @@ public class ResponseMessages {
 	public String cntryNewPostSuccessMsg = "Country Details successfully saved with geopoliticalId :";
 	public String cntryNewPutSuccessMsg = "Country Details successfully updated with geopoliticalId:";
 
-	//Address Labels
+	// Address Labels
 	public String addressLabelLocalCode = "locale code is a required field";
 	public String applicableFlagRequiredMeg = " code is a required field";
 	public String lengthExceeds35Char1 = " cannot be greater than 35 character!";
 	public String lengthExceeds18CharLocalCd = " cannot be greater than 18 characters!";
-		public String NotValidValueMsg = " is not a valid value";
-		public String addressLineNumberNullMeg = "addressLineNumber is a required field";
-		public String lengthExceeds80CharAddressLabel = " cannot be greater than 80 character!";
-		public String lengthExceeds35CharAddressLabel = " cannot be greater than 35 character!";
+	public String NotValidValueMsg = " is not a valid value";
+	public String addressLineNumberNullMeg = "addressLineNumber is a required field";
+	public String lengthExceeds80CharAddressLabel = " cannot be greater than 80 character!";
+	public String lengthExceeds35CharAddressLabel = " cannot be greater than 35 character!";
 
-		public String Invalidgeopolitical = "There are no records for the specified criteria";
-		public String InvalidgeopoliticalIDAndLocale = "There are no records for the specified criteria";
-		public String InvalidgeopoliticalIDAndLocaleAndAddressLine = "There are no records for the specified criteria";
+	public String Invalidgeopolitical = "There are no records for the specified criteria";
+	public String InvalidgeopoliticalIDAndLocale = "There are no records for the specified criteria";
+	public String InvalidgeopoliticalIDAndLocaleAndAddressLine = "There are no records for the specified criteria";
 
-
-		 public String addressLabelsErrorMsg1 = "Validation error of type FieldUndefined: Field 'countryCodee' in type 'AddressLabels' is undefined @ 'AddressLabels/countryCodee'";
-			public String addressLabelsErrorMsg2 = "Validation error of type FieldUndefined: Field 'languageCodee' in type 'AddressLabels' is undefined @ 'AddressLabels/languageCodee'";
-			public String addressLabelsErrorMsg3 = "Validation error of type FieldUndefined: Field 'addressLineNumberr' in type 'AddressLabels' is undefined @ 'AddressLabels/addressLineNumberr'";
+	public String addressLabelsErrorMsg1 = "Validation error of type FieldUndefined: Field 'countryCodee' in type 'AddressLabels' is undefined @ 'AddressLabels/countryCodee'";
+	public String addressLabelsErrorMsg2 = "Validation error of type FieldUndefined: Field 'languageCodee' in type 'AddressLabels' is undefined @ 'AddressLabels/languageCodee'";
+	public String addressLabelsErrorMsg3 = "Validation error of type FieldUndefined: Field 'addressLineNumberr' in type 'AddressLabels' is undefined @ 'AddressLabels/addressLineNumberr'";
 }

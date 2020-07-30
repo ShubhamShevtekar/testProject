@@ -3791,7 +3791,7 @@ public class LanguagePost extends Reporting {
 					errorMsg2.add(js.getString("errors[" + i + "].message"));
 				}
 
-				String expectMessage = resMsgs.requiredFieldMsg;
+				String expectMessage = resMsgs.langCntryCdrequiredFieldMsg;
 				if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
 					logger.info("Response status code 400 validation passed: " + Wscode);
 					test.pass("Response status code 400 validation passed: " + Wscode);
@@ -3802,7 +3802,7 @@ public class LanguagePost extends Reporting {
 					ValidationFields.transactionIdValidation(js, res);
 					// ***error message validation
 
-					if (errorMsg1.get(0).equals("countryCode") && errorMsg2.get(0).equals(expectMessage)) {
+					if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
 
 						logger.info(
 								"Expected error message is getting received in response when the countryCode is null or Empty in JSON");
@@ -3911,7 +3911,7 @@ public class LanguagePost extends Reporting {
 					errorMsg2.add(js.getString("errors[" + i + "].message"));
 				}
 
-				String expectMessage = resMsgs.requiredFieldMsg;
+				String expectMessage = resMsgs.langLoclCdrequiredField;
 				if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
 					logger.info("Response status code 400 validation passed: " + Wscode);
 					test.pass("Response status code 400 validation passed: " + Wscode);
@@ -3922,7 +3922,7 @@ public class LanguagePost extends Reporting {
 					ValidationFields.transactionIdValidation(js, res);
 					// ***error message validation
 
-					if (errorMsg1.get(0).equals("localeCd") && errorMsg2.get(0).equals(expectMessage)) {
+					if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
 
 						logger.info(
 								"Expected error message is getting received in response when localeCd is passed as empty/ null in JSON request");
@@ -6270,8 +6270,10 @@ public class LanguagePost extends Reporting {
 		formatLocalesEffectiveDate = formatLocalesEffectiveDate.toUpperCase();
 		formatLocalesExpirationDate = destDf.format(dateLocalesExpirationDate);
 		formatLocalesExpirationDate = formatLocalesExpirationDate.toUpperCase();
+		
+		String revisionTypeCd = "0";
 
-		String auditLangLocalePostQuery = query.auditLangLocalesNewPutQuery(languageCode, localesScriptCd, localeCd);
+		String auditLangLocalePostQuery = query.auditLangLocalesNewPutQuery(languageCode, localesScriptCd, localeCd, revisionTypeCd);
 		// ***get the fields needs to be validate in DB
 		List<String> fields = ValidationFields.auditLangLocalesNewDbFields();
 		// ***get the result from DB
@@ -6442,10 +6444,11 @@ public class LanguagePost extends Reporting {
 	public boolean auditDOWDBValidation(String testCaseID, Response res) {
 		List<String> getResultDBFinal = new ArrayList<String>();
 		String[] inputFieldValues = new String[21];
+		String revisionTypeCd = "0";
 		for (int i = 0; i < translatedDOWs.size() / 2; i++) {
 
 			String dowPutAuditQuery = query.langTrnslDowPostAuditQuery(languageCode,
-					translatedDOWs.get("translatedDOWs_dayOfWeekNumber" + (i + 1)));
+					translatedDOWs.get("translatedDOWs_dayOfWeekNumber" + (i + 1)), revisionTypeCd);
 			// ***get the fields needs to be validate in DB
 			List<String> auditfields = ValidationFields.langTrnslDowDbAuditFields();
 			// ***get the result from DB
@@ -6504,10 +6507,11 @@ public class LanguagePost extends Reporting {
 	public boolean auditMOYDBValidation(String testCaseID, Response res) {
 		List<String> getResultDBFinal = new ArrayList<String>();
 		String[] inputFieldValues = new String[36];
+		String revisionTypeCd = "0";
 		for (int i = 0; i < translatedMOYs.size() / 2; i++) {
 
 			String languagePostQuery = query.langTrnslMonthOfYearPostAuditQuery(languageCode,
-					translatedMOYs.get("translatedMOYs_monthOfYearNumber" + (i + 1)));
+					translatedMOYs.get("translatedMOYs_monthOfYearNumber" + (i + 1)), revisionTypeCd);
 			// ***get the fields needs to be validate in DB
 			List<String> auditFields = ValidationFields.langTrnslMonthOfYearDbAuditFields();
 			// ***get the result from DB

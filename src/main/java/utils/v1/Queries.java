@@ -529,7 +529,7 @@ public class Queries {
 		return geoPostQuery;
 	}
 
-	public String auditLangLocalesNewPutQuery(String whereField1,String whereField2,String whereField3) {
+	public String auditLangLocalesNewPutQuery(String whereField1,String whereField2,String whereField3,String revisionTypeCd) {
 		String geoPostQuery = "WITH CTE AS( Select loc.LOCL_CD, "
 				+ "cntry.CNTRY_CD,"
 				+ " loc.SCRIPT_CD, "
@@ -543,9 +543,10 @@ public class Queries {
 				+ " To_Char( loc.EXPIRATION_DT ,'yyyy-mm-dd') as EXPIRATION_DT, "
 				+ " loc.REVISION_TYPE_CD "
 				+ " From  LOCALE_au loc inner join country_au cntry on loc. GEOPL_ID = cntry.GEOPL_ID inner join  language_au lang on lang.LANGUAGE_CD = loc.LANGUAGE_CD "
-						+ " where loc.LANGUAGE_CD = '"+whereField1+"' "
-								+ "And loc.SCRIPT_CD = '"+whereField2+"'  "
-										+ "And loc.LOCL_CD = '"+whereField3+"'  ORDER BY loc.LAST_UPDATED_TMSTP DESC ) Select * from CTE where rownum ='1'";
+				+ " where loc.LANGUAGE_CD = '"+whereField1+"' "
+				+ "And loc.SCRIPT_CD = '"+whereField2+"'  "
+				+ "And loc.REVISION_TYPE_CD = '"+revisionTypeCd+"'  "
+				+ "And loc.LOCL_CD = '"+whereField3+"'  ORDER BY loc.LAST_UPDATED_TMSTP DESC ) Select * from CTE where rownum ='1'";
 
 		return geoPostQuery;
 	}
@@ -633,8 +634,8 @@ public class Queries {
 		return geoPostQuery;
 	}
 
-	public String langTrnslDowPostAuditQuery(String whereField1, String whereField2) {
-		String geoPostQuery = "WITH CTE AS(select * from trnsl_dow_au t INNER JOIN Locale l ON t.LOCL_CD = l.LOCL_CD WHERE l.language_cd='"+whereField1+"' and t.DAY_OF_WEEK_NBR='"+whereField2+"' ORDER BY l.LAST_UPDATED_TMSTP DESC) Select * from CTE where rownum ='1'";
+	public String langTrnslDowPostAuditQuery(String whereField1, String whereField2, String revisionTypeCd) {
+		String geoPostQuery = "WITH CTE AS(select * from trnsl_dow_au t INNER JOIN Locale l ON t.LOCL_CD = l.LOCL_CD WHERE l.language_cd='"+whereField1+"' and t.DAY_OF_WEEK_NBR='"+whereField2+"' and t.REVISION_TYPE_CD='"+revisionTypeCd+"' ORDER BY l.LAST_UPDATED_TMSTP DESC) Select * from CTE where rownum ='1'";
 		return geoPostQuery;
 	}
 
@@ -645,8 +646,8 @@ public class Queries {
 //		return geoPostQuery;
 //	}
 
-	public String langTrnslMonthOfYearPostAuditQuery(String whereField1, String whereField2) {
-		String geoPostQuery = "WITH CTE AS(select * from TRNSL_MTH_OF_YR_AU t INNER JOIN Locale l ON t.LOCL_CD = l.LOCL_CD WHERE l.language_cd='"+whereField1+"' and t.MONTH_OF_YEAR_NBR='"+whereField2+"' ORDER BY l.LAST_UPDATED_TMSTP DESC) Select * from CTE where rownum ='1'";
+	public String langTrnslMonthOfYearPostAuditQuery(String whereField1, String whereField2, String revisionTypeCd) {
+		String geoPostQuery = "WITH CTE AS(select * from TRNSL_MTH_OF_YR_AU t INNER JOIN Locale l ON t.LOCL_CD = l.LOCL_CD WHERE l.language_cd='"+whereField1+"' and t.MONTH_OF_YEAR_NBR='"+whereField2+"' and t.REVISION_TYPE_CD='"+revisionTypeCd+"' ORDER BY l.LAST_UPDATED_TMSTP DESC) Select * from CTE where rownum ='1'";
 		return geoPostQuery;
 	}
 
@@ -1659,12 +1660,12 @@ public String countryGeopoliticalTypeJMSQuery(String whereField) {
 		return geoPostQuery;
 	}
 
-	public String addressLabelPostNewQueryAudit(String whereField, String whereField1) {
+	public String addressLabelPostNewQueryAudit(String whereField, String whereField1, String whereField2) {
 		String geoPostQuery = "WITH CTE AS(select cal.CREATED_BY_USER_ID, cal.GEOPL_ID, loc.LANGUAGE_CD, cal.ADDR_LINE_NBR,"
 				+ "	cal.FULL_ADDR_LINE_LABEL_DESC,cal.BRAND_ADDR_LINE_LABEL_DESC, APPL_FLG	,to_char(cal.EFFECTIVE_DT,'YYYY-MM-DD') \"EFFECTIVE_DT\""
 				+ "	,to_char(cal.EXPIRATION_DT,'YYYY-MM-DD') \"EXPIRATION_DT\",  cal.REVISION_TYPE_CD	"
 				+ "from country_address_label_au cal inner join locale_au loc on cal.geopl_id= loc.geopl_id	"
-				+ "where cal.geopl_id='"+whereField+"' and  cal.LOCL_CD ='"+whereField1+"'   ORDER BY cal.LAST_UPDATED_TMSTP DESC) Select * from CTE where rownum ='1' ";
+				+ "where cal.geopl_id='"+whereField+"' and  cal.LOCL_CD ='"+whereField1+"' and  loc.language_cd ='"+whereField2+"'   ORDER BY cal.LAST_UPDATED_TMSTP DESC) Select * from CTE where rownum ='1' ";
 
 		return geoPostQuery;
 	}
@@ -1680,11 +1681,11 @@ public String countryGeopoliticalTypeJMSQuery(String whereField) {
 
 
 	public String addressLabelPostNewQuery(String whereField, String whereField1, String whereField2, String whereField3) {
-		String geoPostQuery = "select cal.CREATED_BY_USER_ID, cal.GEOPL_ID, loc.LANGUAGE_CD, cal.ADDR_LINE_NBR,"
+		String geoPostQuery = "WITH CTE AS(select cal.CREATED_BY_USER_ID, cal.GEOPL_ID, loc.LANGUAGE_CD, cal.ADDR_LINE_NBR,"
 				+ "	cal.FULL_ADDR_LINE_LABEL_DESC,cal.BRAND_ADDR_LINE_LABEL_DESC, APPL_FLG	,to_char(cal.EFFECTIVE_DT,'YYYY-MM-DD') \"EFFECTIVE_DT\""
 				+ "	,to_char(cal.EXPIRATION_DT,'YYYY-MM-DD') \"EXPIRATION_DT\"	"
 				+ "from country_address_label cal inner join locale loc on cal.geopl_id= loc.geopl_id	"
-				+ "where cal.geopl_id='"+whereField+"' and  cal.LOCL_CD ='"+whereField1+"'";
+				+ "where cal.geopl_id='"+whereField+"' and  cal.LOCL_CD ='"+whereField1+"' and  loc.language_cd ='"+whereField2+"'  ORDER BY cal.LAST_UPDATED_TMSTP DESC) Select * from CTE where rownum ='1' ";
 		return geoPostQuery;
 	}
 

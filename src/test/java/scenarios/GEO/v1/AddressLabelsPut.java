@@ -2187,7 +2187,7 @@ public class AddressLabelsPut extends Reporting {
 				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
 
-			String expectMessage = resMsgs.lengthExceeds35Char1;
+			String expectMessage = resMsgs.lengthExceeds80CharAddressLabel;
 			int Wscode = res.statusCode();
 			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
 				logger.info("Response status code 400 validation passed: " + Wscode);

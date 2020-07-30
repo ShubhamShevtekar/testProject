@@ -462,7 +462,7 @@ public class AddressLabelsGet extends Reporting {
 						"" + Wscode, responsestr1, "Fail", internalMsg);
 				Assert.fail("Test Failed");
 			}
-
+			
 			logger.info("------------------------------------------------------------------");
 
 		} catch (Exception e) {

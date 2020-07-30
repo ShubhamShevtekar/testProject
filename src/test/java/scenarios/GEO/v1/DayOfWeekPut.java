@@ -1880,7 +1880,7 @@ public class DayOfWeekPut extends Reporting {
 		}
 
 		// ***get test case ID with method name
-
+		boolean testResult = false;
 		try {
 			// ***get the test data from sheet
 			testDataFields(scenarioName, testCaseID);
@@ -1904,55 +1904,93 @@ public class DayOfWeekPut extends Reporting {
 			logger.info("Response Recieved");
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
-			String Wsstatus = res.getStatusLine();
+			String Wsstatus = js.getString("meta.message.status");
+			String internalMsg = js.getString("meta.message.internalMessage");
 			int Wscode = res.statusCode();
 			String meta = js.getString("meta");
 			String actualRespVersionNum = js.getString("meta.version");
-			List<String> errorMsg1 = new ArrayList<String>();
-			List<String> errorMsg2 = new ArrayList<String>();
-			int errorMsgLength = js.getInt("errors.size");
-			for (int i = 0; i < errorMsgLength; i++) {
 
-				errorMsg1.add(js.getString("errors[" + i + "].fieldName"));
-				errorMsg2.add(js.getString("errors[" + i + "].message"));
-			}
-			String expectMessage = resMsgs.recordExistsMsg;
-			if (Wscode == 400 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta != null && (!meta.contains("timestamp"))
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
-				logger.info("Response status code 400 validation passed: " + Wscode);
-				test.pass("Response status code 400 validation passed: " + Wscode);
+				logger.info("Response status validation passed: " + Wscode);
+				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
 				ValidationFields.transactionIdValidation(js, res);
-				// ***error message validation
-
-				if (errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, dayOfWeekNbr, dayOfWeekShortName, dayOfWeekFullName };
-					String[] inputFieldNames = { "Input_UserName: ", "Input_dayOfWeekNumber: ",
-							"Input_dayOfWeekShortName: ", "Input_dayOfWeekFullName: " };
-					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
-					logger.info(
-							"Expected error message is getting received in response when sending the blank DayOfWeek Number");
-					logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
-					logger.info("------------------------------------------------------------------");
-					test.pass(
-							"Expected error message is getting received in response when sending the blank DayOfWeek Number");
-					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
-							writableInputFields, "NA", Wsstatus, "" + Wscode, responsestr1, "Pass", "");
-					test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+				// ***get the DB query
+				String dayOfWeekPutQuery = query.dayOfWeekPostQuery(dayOfWeekNbr);
+				// ***get the fields needs to be validate in DB
+				List<String> fields = ValidationFields.dayOfWeekDbFields();
+				fields.remove(0);// ***removing user name field since we are
+									// going to validate only last updated user
+									// name
+				// ***get the result from DB
+				List<String> getResultDB = DbConnect.getResultSetFor(dayOfWeekPutQuery, fields, fileName, testCaseID);
+				if (js.getString("data.dayOfWeekNumber") != null) {
+					String dayOfWeekNumber1 = js.getString("data.dayOfWeekNumber");
+					// ***success message validation
+					// resMsgs.dayOfWeekPostSuccessMsg+dayOfWeekNumber1
+					String expectMessage = resMsgs.dayOfWeekPutSuccessMsg + dayOfWeekNumber1;
+					if (internalMsg.equals(expectMessage)) {
+						logger.info("Success message with Script Code is getting received as expected in response");
+						test.pass("Success message with Script Code is getting received as expected in response");
+						// ***send the input, response, DB result for validation
+						String[] inputFieldValues = { dayOfWeekNbr, dayOfWeekShortName, dayOfWeekFullName, userId };
+						// ***get response fields values
+						List<String> resFields = ValidationFields.dayOfWeekResponseFileds(res);
+						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDB,
+								resFields);
+						// ***write result to excel
+						String[] inputFieldNames = { "Input_dayOfWeekNumber: ", "Input_dayOfWeekShortName: ",
+								"Input_dayOfWeekFullName: ", "Input_LastUpdateUserName: " };
+						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
+						String[] dbFieldNames = { "DB_dayOfWeekNumber: ", "DB_dayOfWeekShortName: ",
+								"DB_dayOfWeekFullName: ", "DB_LastUpdateUserName: " };
+						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
+						test.info("Input Data Values:");
+						test.info(writableInputFields.replaceAll("\n", "<br />"));
+						test.info("DB Data Values:");
+						test.info(writableDB_Fields.replaceAll("\n", "<br />"));
+						if (testResult) {
+							logger.info("Comparison between input data & DB data matching and passed");
+							logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
+							logger.info("------------------------------------------------------------------");
+							test.pass("Comparison between input data & DB data matching and passed");
+							ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+									writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Pass",
+									"");
+							test.log(Status.PASS, MarkupHelper.createLabel("Test Passed", ExtentColor.GREEN));
+						} else {
+							logger.error("Comparison between input data & DB data not matching and failed");
+							logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+							logger.error("------------------------------------------------------------------");
+							test.fail("Comparison between input data & DB data not matching and failed");
+							ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+									writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Fail",
+									"Comparison between input data & DB data not matching and failed");
+							Assert.fail("Test Failed");
+						}
+					} else {
+						logger.error("Success message is not getting received as expected in response");
+						test.fail("Success message is not getting received as expected in response");
+						ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+								writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Fail",
+								"Success message is not getting received as expected in response");
+						Assert.fail("Test Failed");
+					}
 				} else {
-					logger.error("Expected error message is not getting received as expected in response");
+					logger.error("Day of Week number is not available in response");
 					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
 					logger.error("------------------------------------------------------------------");
-					test.fail("Expected error message is not getting received as expected in response");
+					test.fail("Day of Week number is not available in response");
 					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "",
-							Wsstatus, "" + Wscode, responsestr, "Fail", "Error " + expectMessage);
+							Wsstatus, "" + Wscode, responsestr1, "Fail", "");
 					Assert.fail("Test Failed");
 				}
 			} else {
-				if (Wscode != 400) {
+				if (Wscode != 200) {
 					logger.error("Response status validation failed: " + Wscode);
 					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
 					logger.error("------------------------------------------------------------------");
@@ -1975,7 +2013,7 @@ public class DayOfWeekPut extends Reporting {
 				}
 
 				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
-						"" + Wscode, responsestr, "Fail", "Error " + expectMessage);
+						"" + Wscode, responsestr1, "Fail", internalMsg);
 				Assert.fail("Test Failed");
 			}
 		} catch (Exception e) {
@@ -2196,10 +2234,10 @@ public class DayOfWeekPut extends Reporting {
 				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
 			String expectMessage = resMsgs.lengthExceeds1to7digit;
-			if (Wscode == 404 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 400 && meta != null && (!meta.contains("timestamp"))
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
-				logger.info("Response status code 404 validation passed: " + Wscode);
-				test.pass("Response status code 404 validation passed: " + Wscode);
+				logger.info("Response status code validation passed: " + Wscode);
+				test.pass("Response status code validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 
 				test.pass("Response API version number validation passed");
@@ -2307,15 +2345,15 @@ public class DayOfWeekPut extends Reporting {
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String Wsstatus = res.getStatusLine();
-			String internalMsg = js.getString("errorMessages.e");
+			String internalMsg = js.getString("errors.message");
 			int Wscode = res.statusCode();
 
 			if (Wscode == 400) {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				// ***error message validation
-				String expectMessage = resMsgs.dayOfWeekNbrLengthMsg;
-				if (internalMsg.equals(expectMessage)) {
+				String expectMessage = resMsgs.jsonParseErrorMsg;
+				if (internalMsg.contains(expectMessage)) {
 					String[] inputFieldValues = { userId, dayOfWeekNbr, dayOfWeekShortName, dayOfWeekFullName };
 					String[] inputFieldNames = { "Input_UserName: ", "Input_dayOfWeekNumber: ",
 							"Input_dayOfWeekShortName: ", "Input_dayOfWeekFullName: " };
@@ -2394,14 +2432,14 @@ public class DayOfWeekPut extends Reporting {
 			test.info(responsestr1.replaceAll("\n", "<br />"));
 			JsonPath js = new JsonPath(responsestr);
 			String Wsstatus = res.getStatusLine();
-			String internalMsg = js.getString("errorMessages.e");
+			String internalMsg = js.getString("errors.message");
 			int Wscode = res.statusCode();
 			if (Wscode == 400) {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				// ***error message validation
-				String expectMessage = resMsgs.dayOfWeekNbrLengthMsg;
-				if (internalMsg.equals(expectMessage)) {
+				String expectMessage = resMsgs.jsonParseErrorMsg;
+				if (internalMsg.contains(expectMessage)) {
 					String[] inputFieldValues = { userId, dayOfWeekNbr, dayOfWeekShortName, dayOfWeekFullName };
 					String[] inputFieldNames = { "Input_UserName: ", "Input_dayOfWeekNumber: ",
 							"Input_dayOfWeekShortName: ", "Input_dayOfWeekFullName: " };

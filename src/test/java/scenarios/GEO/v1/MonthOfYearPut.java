@@ -2628,7 +2628,7 @@ public class MonthOfYearPut extends Reporting {
 		}
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 1)
 	public void TC_22() {
 		String testCaseID = new Object() {
 		}.getClass().getEnclosingMethod().getName();

@@ -1264,16 +1264,16 @@ public class DepnCountryRltspPut extends Reporting {
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
-			String expectMessage = resMsgs.wrongFormatIdMsg;
+			String expectMessage = resMsgs.recordNotFoundMsg;
 			for (int i = 0; i < errorMsgLength; i++) {
 				errorMsg1.add(js.getString("errors[" + i + "].fieldName"));
 				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
 
-			if (Wscode == 400 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 404 && meta != null && (!meta.contains("timestamp"))
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
-				logger.info("Response status code 400 validation passed: " + Wscode);
-				test.pass("Response status code 400 validation passed: " + Wscode);
+				logger.info("Response status code validation passed: " + Wscode);
+				test.pass("Response status code validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
@@ -1389,16 +1389,16 @@ public class DepnCountryRltspPut extends Reporting {
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
-			String expectMessage = resMsgs.wrongFormatIdMsg;
+			String expectMessage = resMsgs.recordNotFoundMsg;
 			for (int i = 0; i < errorMsgLength; i++) {
 				errorMsg1.add(js.getString("errors[" + i + "].fieldName"));
 				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
 
-			if (Wscode == 400 && meta != null && (!meta.contains("timestamp"))
+			if (Wscode == 404 && meta != null && (!meta.contains("timestamp"))
 					&& actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
-				logger.info("Response status code 400 validation passed: " + Wscode);
-				test.pass("Response status code 400 validation passed: " + Wscode);
+				logger.info("Response status code validation passed: " + Wscode);
+				test.pass("Response status code validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);

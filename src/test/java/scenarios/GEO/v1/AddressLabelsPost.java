@@ -131,7 +131,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 
 				// ***Converting dateFormat according to DB
@@ -177,7 +178,7 @@ public class AddressLabelsPost extends Reporting {
 
 				// ***get the DB query
 				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd,
-						formatEffectiveDate, formatExpirationDate);
+						languageCode, formatExpirationDate);
 
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
@@ -222,8 +223,8 @@ public class AddressLabelsPost extends Reporting {
 							ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
 									writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Pass",
 									"");
-							String addrLabelPostPostQueryAudit = query
-									.addressLabelPostNewQueryAudit(addrLabelResponseId, localCd);
+							String addrLabelPostPostQueryAudit = query.addressLabelPostNewQueryAudit(addrLabelResponseId, localCd, languageCode);
+									
 							// ***get the fields needs to be validate in DB
 							List<String> fieldsAudit = ValidationFields.addressLabelsAuditPOSTNewMethodDbFields();
 							// ***get the result from DB
@@ -391,7 +392,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 
 				// ***Converting dateFormat according to DB
@@ -437,7 +439,7 @@ public class AddressLabelsPost extends Reporting {
 
 				// ***get the DB query
 				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd,
-						formatEffectiveDate, formatExpirationDate);
+						languageCode, formatExpirationDate);
 
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
@@ -598,7 +600,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 
 				// ***Converting dateFormat according to DB
@@ -644,7 +647,7 @@ public class AddressLabelsPost extends Reporting {
 
 				// ***get the DB query
 				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd,
-						formatEffectiveDate, formatExpirationDate);
+						languageCode, formatExpirationDate);
 
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
@@ -805,7 +808,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 
 				// ***Converting dateFormat according to DB
@@ -851,7 +855,7 @@ public class AddressLabelsPost extends Reporting {
 
 				// ***get the DB query
 				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd,
-						formatEffectiveDate, formatExpirationDate);
+						languageCode, formatExpirationDate);
 
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
@@ -1025,7 +1029,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -1155,7 +1160,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -1285,7 +1291,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -1415,7 +1422,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 404 validation passed: " + Wscode);
 				test.pass("Response status code 404 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -1545,7 +1553,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 404 validation passed: " + Wscode);
 				test.pass("Response status code 404 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -1806,7 +1815,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -1936,7 +1946,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -2066,7 +2077,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -2191,13 +2203,14 @@ public class AddressLabelsPost extends Reporting {
 				errorMsg2.add(js.getString("errors[" + i + "].message"));
 			}
 
-			String expectMessage = resMsgs.lengthExceeds35CharAddressLabel;
+			String expectMessage = resMsgs.lengthExceeds80CharAddressLabel;
 			int Wscode = res.statusCode();
 			if (Wscode == 400 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -2328,7 +2341,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -2458,7 +2472,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -2588,7 +2603,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -2718,7 +2734,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -2846,7 +2863,8 @@ public class AddressLabelsPost extends Reporting {
 			if (Wscode == 404) {
 				logger.info("Response status code 404 validation passed: " + Wscode);
 				test.pass("Response status code 404 validation passed: " + Wscode);
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 				String expectMessage = resMsgs.invalidUrlMsgAddresslabelPOST;
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
@@ -2945,7 +2963,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 
 				// ***Converting dateFormat according to DB
@@ -2989,7 +3008,7 @@ public class AddressLabelsPost extends Reporting {
 				languageCode = languageCode + "-" + DBgetCntryCd.get(0);
 
 				String addrLabelPostPostQuery = query.addressLabelPostQuery(addrLabelResponseId, languageCode,
-						formatEffectiveDate, formatExpirationDate);
+						languageCode, formatExpirationDate);
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.addressLabelsPOSTMethodDbFields();
 				// ***get the result from DB
@@ -3153,7 +3172,8 @@ public class AddressLabelsPost extends Reporting {
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 				test.pass("Response API version number validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
@@ -3269,7 +3289,8 @@ public class AddressLabelsPost extends Reporting {
 				test.pass("Response status code 405 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
 				test.pass("Response API version number validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
@@ -3382,7 +3403,7 @@ public class AddressLabelsPost extends Reporting {
 				test.pass("Response meta validation passed");
 				test.pass("Response API version number validation passed");
 				ValidationFields.timestampValidation(js, res);
-				//ValidationFields.transactionIdValidation(js, res);
+				// ValidationFields.transactionIdValidation(js, res);
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage)) {
@@ -3494,7 +3515,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 
 				// ***Converting dateFormat according to DB
@@ -3541,7 +3563,7 @@ public class AddressLabelsPost extends Reporting {
 
 				// ***get the DB query
 				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd,
-						formatEffectiveDate, formatExpirationDate);
+						languageCode, formatExpirationDate);
 
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
@@ -3702,7 +3724,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 
 				// ***Converting dateFormat according to DB
@@ -3750,7 +3773,7 @@ public class AddressLabelsPost extends Reporting {
 
 				// ***get the DB query
 				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd,
-						formatEffectiveDate, formatExpirationDate);
+						languageCode, formatExpirationDate);
 
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
@@ -3925,7 +3948,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -4055,7 +4079,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response status code 400 validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 				// ***error message validation
 
@@ -4174,7 +4199,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 
 				// ***Converting dateFormat according to DB
@@ -4221,7 +4247,7 @@ public class AddressLabelsPost extends Reporting {
 
 				// ***get the DB query
 				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd,
-						formatEffectiveDate, formatExpirationDate);
+						languageCode, formatExpirationDate);
 
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
@@ -4382,7 +4408,8 @@ public class AddressLabelsPost extends Reporting {
 				logger.info("Response status validation passed: " + Wscode);
 				test.pass("Response status validation passed: " + Wscode);
 				test.pass("Response meta validation passed");
-				ValidationFields.timestampValidation(js, res);   ValidationFields.transactionIdValidation(js, res);
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
 				test.pass("Response API version number validation passed");
 
 				// ***Converting dateFormat according to DB
@@ -4408,7 +4435,6 @@ public class AddressLabelsPost extends Reporting {
 					formatExpirationDate = expirationDate;
 					dateEffectiveDate = srcDf.parse(formatEffectiveDate);
 
-
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -4416,8 +4442,6 @@ public class AddressLabelsPost extends Reporting {
 
 				formatEffectiveDate = destDf.format(dateEffectiveDate);
 				formatEffectiveDate = formatEffectiveDate.toUpperCase();
-
-
 
 				// ***get the locale code from DB
 				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode);
@@ -4430,7 +4454,7 @@ public class AddressLabelsPost extends Reporting {
 
 				// ***get the DB query
 				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd,
-						formatEffectiveDate, formatExpirationDate);
+						languageCode, formatExpirationDate);
 
 				// ***get the fields needs to be validate in DB
 				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
