@@ -1624,6 +1624,7 @@ public class ValidationFields {
 		fields.add("LAST_UPDATED_BY_USER_ID");
 		fields.add("GEOPL_ID");
 		fields.add("LANGUAGE_CD");
+		fields.add("SCRIPT_CD");
 		fields.add("ADDR_LINE_NBR");
 		fields.add("FULL_ADDR_LINE_LABEL_DESC");
 		fields.add("BRAND_ADDR_LINE_LABEL_DESC");
@@ -1638,6 +1639,7 @@ public class ValidationFields {
 		fields.add("LAST_UPDATED_BY_USER_ID");
 		fields.add("GEOPL_ID");
 		fields.add("LANGUAGE_CD");
+		fields.add("SCRIPT_CD");
 		fields.add("ADDR_LINE_NBR");
 		fields.add("FULL_ADDR_LINE_LABEL_DESC");
 		fields.add("BRAND_ADDR_LINE_LABEL_DESC");
@@ -1653,6 +1655,7 @@ public class ValidationFields {
 		fields.add("CREATED_BY_USER_ID");
 		fields.add("GEOPL_ID");
 		fields.add("LANGUAGE_CD");
+		fields.add("SCRIPT_CD");
 		fields.add("ADDR_LINE_NBR");
 		fields.add("FULL_ADDR_LINE_LABEL_DESC");
 		fields.add("BRAND_ADDR_LINE_LABEL_DESC");
@@ -1667,6 +1670,7 @@ public class ValidationFields {
 		fields.add("CREATED_BY_USER_ID");
 		fields.add("GEOPL_ID");
 		fields.add("LANGUAGE_CD");
+		fields.add("SCRIPT_CD");
 		fields.add("ADDR_LINE_NBR");
 		fields.add("FULL_ADDR_LINE_LABEL_DESC");
 		fields.add("BRAND_ADDR_LINE_LABEL_DESC");

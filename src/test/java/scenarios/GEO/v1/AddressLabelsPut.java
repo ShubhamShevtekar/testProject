@@ -45,7 +45,7 @@ public class AddressLabelsPut extends Reporting {
 	String scenarioName = getClass().getSimpleName();
 	String userId, TestCaseDescription, scenarioType;
 	String geopoliticalId, languageCode, addressLineNumber, fullAddressLineLabelDescription,
-			brandAddressLineLabelDescription, applicableFlag, effectiveDate, expirationDate;
+			brandAddressLineLabelDescription, applicableFlag, effectiveDate, expirationDate, scriptCode;
 	Queries query = new Queries();
 	String fileName = this.getClass().getSimpleName();
 	ExcelUtil ex = new ExcelUtil();
@@ -105,7 +105,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -168,7 +168,7 @@ public class AddressLabelsPut extends Reporting {
 				formatExpirationDate = formatExpirationDate.toUpperCase();
 
 				// ***get the DB query
-				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode);
+				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode, scriptCode);
 				// ***get the fields needs to be validate in DB
 				List<String> LocaleCdfields = ValidationFields.addressLabelsGetLocaleCodePUTMethodDbFields();
 				// ***get the result from DB
@@ -190,21 +190,21 @@ public class AddressLabelsPut extends Reporting {
 								"geopoliticalId is getting updated and received in response: " + addrLabelResponseId);
 						test.pass("geopoliticalId is getting updated and received in response: " + addrLabelResponseId);
 						// ***send the input, response, DB result for validation
-						String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
-								fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
-								effectiveDate, expirationDate };
+						String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode,
+								addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+								applicableFlag, effectiveDate, expirationDate };
 						// ***get response fields values
 						List<String> resFields = ValidationFields.addressLabelResponseFileds(res);
 						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDB,
 								resFields);
 						// ***write result to excel
 						String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ",
-								"Input_languageCode: ", "Input_addressLineNumber: ",
+								"Input_languageCode: ", "Input_scriptCode: ", "Input_addressLineNumber: ",
 								"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
 								"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 						String[] dbFieldNames = { "DB_UserName: ", "DB_geopoliticalId: ", "DB_languageCode: ",
-								"DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
+								"DB_scriptCode: ", "DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
 								"DB_brandAddressLineLabelDescription: ", "DB_applicableFlag: ", "DB_effectiveDate: ",
 								"DB_expirationDate: " };
 						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
@@ -227,21 +227,22 @@ public class AddressLabelsPut extends Reporting {
 							// ***get the result from DB
 							List<String> getResultDBAudit = DbConnect.getResultSetFor(addrLabelPutQueryAudit,
 									fieldsAudit, fileName, testCaseID);
-							String[] inputFieldValuesAudit = { userId, geopoliticalId, languageCode, addressLineNumber,
-									fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
-									effectiveDate, expirationDate, "1" };
+							String[] inputFieldValuesAudit = { userId, geopoliticalId, languageCode, scriptCode,
+									addressLineNumber, fullAddressLineLabelDescription,
+									brandAddressLineLabelDescription, applicableFlag, effectiveDate, expirationDate,
+									"1" };
 							testResult = false;
 							testResult = TestResultValidation.testValidationWithDB(res, inputFieldValuesAudit,
 									getResultDBAudit, resFields);
 							String[] inputFieldNamesAudit = { "Input_UserName: ", "Input_geopoliticalId: ",
-									"Input_languageCode: ", "Input_addressLineNumber: ",
+									"Input_languageCode: ", "Input_scriptCode: ", "Input_addressLineNumber: ",
 									"Input_fullAddressLineLabelDescription: ",
 									"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
 									"Input_effectiveDate: ", "Input_expirationDate: ", "Expected RevisionType CD:" };
 							writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValuesAudit,
 									inputFieldNamesAudit);
 							String[] dbFieldNamesAudit = { "DB_UserName: ", "DB_geopoliticalId: ", "DB_languageCode: ",
-									"DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
+									"DB_scriptCode: ", "DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
 									"DB_brandAddressLineLabelDescription: ", "DB_applicableFlag: ",
 									"DB_effectiveDate: ", "DB_expirationDate: ", "DB_RevisionType CD:" };
 							writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDBAudit, dbFieldNamesAudit);
@@ -364,7 +365,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -425,7 +426,7 @@ public class AddressLabelsPut extends Reporting {
 				formatExpirationDate = destDf.format(dateExpirationDate);
 				formatExpirationDate = formatExpirationDate.toUpperCase();
 				// ***get the DB query
-				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode);
+				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode, scriptCode);
 				// ***get the fields needs to be validate in DB
 				List<String> LocaleCdfields = ValidationFields.addressLabelsGetLocaleCodePUTMethodDbFields();
 				// ***get the result from DB
@@ -447,21 +448,21 @@ public class AddressLabelsPut extends Reporting {
 								"geopoliticalId is getting updated and received in response: " + addrLabelResponseId);
 						test.pass("geopoliticalId is getting updated and received in response: " + addrLabelResponseId);
 						// ***send the input, response, DB result for validation
-						String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
-								fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
-								effectiveDate, expirationDate };
+						String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode,
+								addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+								applicableFlag, effectiveDate, expirationDate };
 						// ***get response fields values
 						List<String> resFields = ValidationFields.addressLabelResponseFileds(res);
 						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDB,
 								resFields);
 						// ***write result to excel
 						String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ",
-								"Input_languageCode: ", "Input_addressLineNumber: ",
+								"Input_languageCode: ", "Input_scriptCode: ", "Input_addressLineNumber: ",
 								"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
 								"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 						String[] dbFieldNames = { "DB_UserName: ", "DB_geopoliticalId: ", "DB_languageCode: ",
-								"DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
+								"DB_scriptCode: ", "DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
 								"DB_brandAddressLineLabelDescription: ", "DB_applicableFlag: ", "DB_effectiveDate: ",
 								"DB_expirationDate: " };
 						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
@@ -567,7 +568,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -629,7 +630,7 @@ public class AddressLabelsPut extends Reporting {
 				formatExpirationDate = formatExpirationDate.toUpperCase();
 
 				// ***get the DB query
-				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode);
+				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode, scriptCode);
 				// ***get the fields needs to be validate in DB
 				List<String> LocaleCdfields = ValidationFields.addressLabelsGetLocaleCodePUTMethodDbFields();
 				// ***get the result from DB
@@ -651,21 +652,21 @@ public class AddressLabelsPut extends Reporting {
 								"geopoliticalId is getting updated and received in response: " + addrLabelResponseId);
 						test.pass("geopoliticalId is getting updated and received in response: " + addrLabelResponseId);
 						// ***send the input, response, DB result for validation
-						String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
-								fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
-								effectiveDate, expirationDate };
+						String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode,
+								addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+								applicableFlag, effectiveDate, expirationDate };
 						// ***get response fields values
 						List<String> resFields = ValidationFields.addressLabelResponseFileds(res);
 						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDB,
 								resFields);
 						// ***write result to excel
 						String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ",
-								"Input_languageCode: ", "Input_addressLineNumber: ",
+								"Input_languageCode: ", "Input_scriptCode: ", "Input_addressLineNumber: ",
 								"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
 								"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 						String[] dbFieldNames = { "DB_UserName: ", "DB_geopoliticalId: ", "DB_languageCode: ",
-								"DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
+								"DB_scriptCode: ", "DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
 								"DB_brandAddressLineLabelDescription: ", "DB_applicableFlag: ", "DB_effectiveDate: ",
 								"DB_expirationDate: " };
 						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
@@ -771,7 +772,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequestApllFlagNull(userId, geopoliticalId, languageCode,
 					addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
-					applicableFlag, effectiveDate, expirationDate);
+					applicableFlag, effectiveDate, expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -833,7 +834,7 @@ public class AddressLabelsPut extends Reporting {
 				formatExpirationDate = formatExpirationDate.toUpperCase();
 
 				// ***get the DB query
-				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode);
+				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode, scriptCode);
 				// ***get the fields needs to be validate in DB
 				List<String> LocaleCdfields = ValidationFields.addressLabelsGetLocaleCodePUTMethodDbFields();
 				// ***get the result from DB
@@ -857,21 +858,21 @@ public class AddressLabelsPut extends Reporting {
 						if (applicableFlag.contains("null"))
 							applicableFlag = "0";
 						// ***send the input, response, DB result for validation
-						String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
-								fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
-								effectiveDate, expirationDate };
+						String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode,
+								addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+								applicableFlag, effectiveDate, expirationDate };
 						// ***get response fields values
 						List<String> resFields = ValidationFields.addressLabelResponseFileds(res);
 						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDB,
 								resFields);
 						// ***write result to excel
 						String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ",
-								"Input_languageCode: ", "Input_addressLineNumber: ",
+								"Input_languageCode: ", "Input_scriptCode: ", "Input_addressLineNumber: ",
 								"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
 								"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 						String[] dbFieldNames = { "DB_UserName: ", "DB_geopoliticalId: ", "DB_languageCode: ",
-								"DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
+								"DB_scriptCode: ", "DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
 								"DB_brandAddressLineLabelDescription: ", "DB_applicableFlag: ", "DB_effectiveDate: ",
 								"DB_expirationDate: " };
 						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
@@ -973,7 +974,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequestgeoplIdNull(userId, geopoliticalId, languageCode,
 					addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
-					applicableFlag, effectiveDate, expirationDate);
+					applicableFlag, effectiveDate, expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1019,14 +1020,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("geopoliticalId") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when sending the null value for geopoliticalId");
@@ -1104,7 +1105,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequestnullLangCD(userId, geopoliticalId, languageCode,
 					addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
-					applicableFlag, effectiveDate, expirationDate);
+					applicableFlag, effectiveDate, expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1150,14 +1151,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("languageCode") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when sending the null value for languageCode");
@@ -1235,7 +1236,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1281,14 +1282,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("addressLineNumber") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when sending the null value for addressLineNumber");
@@ -1366,7 +1367,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1412,14 +1413,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("geopoliticalId") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when sending the non exist value for geopoliticalId");
@@ -1497,7 +1498,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1543,14 +1544,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("languageCode") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when sending the non exist value for languageCode");
@@ -1628,7 +1629,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1674,14 +1675,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("geopoliticalId") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when sending geopoliticalId is more than 50 characters length");
@@ -1759,7 +1760,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1805,14 +1806,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("languageCode") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when sending languageCode is more than 18 characters length");
@@ -1890,7 +1891,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -1936,14 +1937,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("addressLineNumber") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when the addressLineNumber is more than 2 number length");
@@ -2021,7 +2022,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -2068,14 +2069,14 @@ public class AddressLabelsPut extends Reporting {
 
 				if (errorMsg1.get(0).equals("fullAddressLineLabelDescription")
 						&& errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when the fullAddressLineLabelDescription is more than 80 number length");
@@ -2153,7 +2154,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -2200,14 +2201,14 @@ public class AddressLabelsPut extends Reporting {
 
 				if (errorMsg1.get(0).equals("brandAddressLineLabelDescription")
 						&& errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when the brandAddressLineLabelDescription is more than 35 number length");
@@ -2285,7 +2286,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -2331,14 +2332,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("userName") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when the userName is more than 25 number length");
@@ -2416,7 +2417,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequestUsernameNull(userId, geopoliticalId, languageCode,
 					addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
-					applicableFlag, effectiveDate, expirationDate);
+					applicableFlag, effectiveDate, expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -2462,14 +2463,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("userName") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when blank value passed for UserName");
@@ -2547,7 +2548,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequestWithoutMeta(userId, geopoliticalId, languageCode,
 					addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
-					applicableFlag, effectiveDate, expirationDate);
+					applicableFlag, effectiveDate, expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -2593,14 +2594,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("meta") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when the meta data section is not passed");
@@ -2678,7 +2679,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -2720,14 +2721,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 				String expectMessage = resMsgs.invalidUrlMsgAddresslabelPUT;
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info("Expected error message is getting received in response  when the URI is not correct");
 					logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
@@ -2783,12 +2784,12 @@ public class AddressLabelsPut extends Reporting {
 			testDataFields(scenarioName, testCaseID);
 			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
 			// ***get end point url
-			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level + ".addressLabel.put");
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPut", fileName, level + ".addressLabel.put");
 			test.info("URL: " + getEndPoinUrl);
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelWithoutCommaPostRequest(userId, geopoliticalId, languageCode,
 					addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
-					applicableFlag, effectiveDate, expirationDate);
+					applicableFlag, effectiveDate, expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -2825,13 +2826,13 @@ public class AddressLabelsPut extends Reporting {
 
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
 
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when missinbg comma's in request ");
@@ -2901,12 +2902,12 @@ public class AddressLabelsPut extends Reporting {
 			testDataFields(scenarioName, testCaseID);
 			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
 			// ***get end point url
-			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level + ".addressLabel.put");
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPut", fileName, level + ".addressLabel.put");
 			test.info("URL: " + getEndPoinUrl);
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -2941,13 +2942,13 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response we use PUT url but selecting GET method.");
@@ -3019,12 +3020,12 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
 			// ***get end point url
-			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPost", fileName, level + ".addressLabel.put");
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPut", fileName, level + ".addressLabel.put");
 			// ***send request and get response
 			Response res = GetResponse.sendRequestPost(payload, "", token, getEndPoinUrl, fileName, testCaseID);
 			String responsestr = res.asString();
@@ -3054,13 +3055,13 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("NA") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when HTTP Header X-CSR-SECURITY_TOKEN in request ");
@@ -3133,7 +3134,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -3179,14 +3180,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("effectiveDate") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when sending the empty value for effectiveDate");
@@ -3268,7 +3269,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -3330,7 +3331,7 @@ public class AddressLabelsPut extends Reporting {
 				formatEffectiveDate = formatEffectiveDate.toUpperCase();
 
 				// ***get the DB query
-				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode);
+				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode, scriptCode);
 				// ***get the fields needs to be validate in DB
 				List<String> LocaleCdfields = ValidationFields.addressLabelsGetLocaleCodePUTMethodDbFields();
 				// ***get the result from DB
@@ -3358,21 +3359,21 @@ public class AddressLabelsPut extends Reporting {
 						}
 
 						// ***send the input, response, DB result for validation
-						String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
-								fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
-								effectiveDate, expirationDate };
+						String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode,
+								addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+								applicableFlag, effectiveDate, expirationDate };
 						// ***get response fields values
 						List<String> resFields = ValidationFields.addressLabelResponseFileds(res);
 						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDB,
 								resFields);
 						// ***write result to excel
 						String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ",
-								"Input_languageCode: ", "Input_addressLineNumber: ",
+								"Input_languageCode: ", "Input_scriptCode: ", "Input_addressLineNumber: ",
 								"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
 								"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 						String[] dbFieldNames = { "DB_UserName: ", "DB_geopoliticalId: ", "DB_languageCode: ",
-								"DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
+								"DB_scriptCode: ", "DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
 								"DB_brandAddressLineLabelDescription: ", "DB_applicableFlag: ", "DB_effectiveDate: ",
 								"DB_expirationDate: " };
 						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
@@ -3474,7 +3475,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -3520,14 +3521,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when the effectiveDate is other than timestamp format");
@@ -3605,7 +3606,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
 					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
-					expirationDate);
+					expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -3651,14 +3652,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("Error") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when the expirationDate is other than timestamp format");
@@ -3736,7 +3737,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequestWithoutEffectiveDate(userId, geopoliticalId,
 					languageCode, addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
-					applicableFlag, expirationDate);
+					applicableFlag, expirationDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -3782,14 +3783,14 @@ public class AddressLabelsPut extends Reporting {
 				// ***error message validation
 
 				if (errorMsg1.get(0).equals("effectiveDate") && errorMsg2.get(0).equals(expectMessage)) {
-					String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
 							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
 							effectiveDate, expirationDate };
 
 					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
-							"Input_addressLineNumber: ", "Input_fullAddressLineLabelDescription: ",
-							"Input_brandAddressLineLabelDescription: ", "Input_applicableFlag: ",
-							"Input_effectiveDate: ", "Input_expirationDate: " };
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 					logger.info(
 							"Expected error message is getting received in response when effectiveDate attribute not passed in request");
@@ -3871,7 +3872,7 @@ public class AddressLabelsPut extends Reporting {
 			// ***send the data to create request and get request
 			String payload = PostMethod.addressLabelPostRequestWithoutExpiratioDate(userId, geopoliticalId,
 					languageCode, addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
-					applicableFlag, effectiveDate);
+					applicableFlag, effectiveDate, scriptCode);
 			String reqFormatted = Miscellaneous.jsonFormat(payload);
 			test.info("Input Request created:");
 			test.info(reqFormatted.replaceAll("\n", "<br />"));
@@ -3932,7 +3933,7 @@ public class AddressLabelsPut extends Reporting {
 				formatEffectiveDate = destDf.format(dateEffectiveDate);
 				formatEffectiveDate = formatEffectiveDate.toUpperCase();
 				// ***get the DB query
-				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode);
+				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode, scriptCode);
 				// ***get the fields needs to be validate in DB
 				List<String> LocaleCdfields = ValidationFields.addressLabelsGetLocaleCodePUTMethodDbFields();
 				// ***get the result from DB
@@ -3959,21 +3960,21 @@ public class AddressLabelsPut extends Reporting {
 						}
 
 						// ***send the input, response, DB result for validation
-						String[] inputFieldValues = { userId, geopoliticalId, languageCode, addressLineNumber,
-								fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
-								effectiveDate, expirationDate };
+						String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode,
+								addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+								applicableFlag, effectiveDate, expirationDate };
 						// ***get response fields values
 						List<String> resFields = ValidationFields.addressLabelResponseFileds(res);
 						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDB,
 								resFields);
 						// ***write result to excel
 						String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ",
-								"Input_languageCode: ", "Input_addressLineNumber: ",
+								"Input_languageCode: ", "Input_scriptCode: ", "Input_addressLineNumber: ",
 								"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
 								"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
 						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
 						String[] dbFieldNames = { "DB_UserName: ", "DB_geopoliticalId: ", "DB_languageCode: ",
-								"DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
+								"DB_scriptCode: ", "DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
 								"DB_brandAddressLineLabelDescription: ", "DB_applicableFlag: ", "DB_effectiveDate: ",
 								"DB_expirationDate: " };
 						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
@@ -4056,8 +4057,562 @@ public class AddressLabelsPut extends Reporting {
 		}
 	}
 
-	@Test(priority = 1)
+	@Test(priority = 2)
 	public void TC_28() {
+		// ***get test case ID with method name
+		String testCaseID = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: " + testCaseID);
+		if (!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. " + testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+		boolean testResult = false;
+		try {
+			// ***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			// ***get end point url
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPut", fileName, level + ".addressLabel.put");
+			test.info("URL: " + getEndPoinUrl);
+
+			// ***send the data to create request and get request
+			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode, addressLineNumber,
+					fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag, effectiveDate,
+					expirationDate, scriptCode);
+			String reqFormatted = Miscellaneous.jsonFormat(payload);
+			test.info("Input Request created:");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+
+			// ***send request and get response
+			Response res = GetResponse.sendRequestPut(payload, tokenValues[0], token, getEndPoinUrl, fileName,
+					testCaseID);
+			String responsestr = res.asString();
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus = js.getString("meta.message.status");
+			String internalMsg = js.getString("meta.message.internalMessage");
+			int Wscode = res.statusCode();
+			String meta = js.getString("meta");
+			String actualRespVersionNum = js.getString("meta.version");
+			String addrLabelResponseId = js.getString("data.geoplId");
+			String expectMessage = resMsgs.addressLabelPutSuccessMsg + addrLabelResponseId;
+			if (Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta != null
+					&& actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
+				logger.info("Response status validation passed: " + Wscode);
+				test.pass("Response status validation passed: " + Wscode);
+				test.pass("Response meta validation passed");
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
+				test.pass("Response API version number validation passed");
+
+				// ***Converting dateFormat according to DB
+				DateFormat srcDf = new SimpleDateFormat("yyyy-MM-dd");
+				DateFormat destDf = new SimpleDateFormat("dd-MMM-yy");
+
+				Date date = new Date();
+				String todaysDate = new SimpleDateFormat("yyy-MM-dd").format(date);
+				
+				String formatEffectiveDate;
+				Date dateEffectiveDate = null;
+
+				String formatExpirationDate;
+				Date dateExpirationDate = null;
+
+				if (effectiveDate.isEmpty()) {
+					formatEffectiveDate = todaysDate;
+				} else {
+					formatEffectiveDate = effectiveDate;
+				}
+
+				try {
+					formatExpirationDate = expirationDate;
+					dateEffectiveDate = srcDf.parse(formatEffectiveDate);
+					dateExpirationDate = srcDf.parse(formatExpirationDate);
+
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				formatEffectiveDate = destDf.format(dateEffectiveDate);
+				formatEffectiveDate = formatEffectiveDate.toUpperCase();
+
+				formatExpirationDate = destDf.format(dateExpirationDate);
+				formatExpirationDate = formatExpirationDate.toUpperCase();
+
+				// ***get the locale code from DB
+				String getLocaleCdQuery = query.getLocaleCodeQueryWithoutScriptCd(addrLabelResponseId, languageCode);
+				// ***get the fields needs to be validate in DB
+				List<String> LocaleCdfields = ValidationFields.addressLabelsGetLocaleCodePUTMethodDbFields();
+				// ***get the result from DB
+				List<String> getLocaleCdDB = DbConnect.getResultSetFor(getLocaleCdQuery, LocaleCdfields, fileName,
+						testCaseID);
+				String localCd = getLocaleCdDB.get(0);
+
+				// ***get the DB query
+				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd, languageCode,
+						formatExpirationDate);
+
+				// ***get the fields needs to be validate in DB
+				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
+
+				// ***get the result from DB
+				List<String> getResultDB = DbConnect.getResultSetFor(addrLabelPostQuery, fields, fileName, testCaseID);
+
+				if (addrLabelResponseId != null) {
+					// ***success message validation
+					if (internalMsg.equals(expectMessage)) {
+						logger.info(
+								"geopoliticalId is getting generated and received in response: " + addrLabelResponseId);
+						test.pass(
+								"geopoliticalId is getting generated and received in response: " + addrLabelResponseId);
+						if (applicableFlag.contains("null"))
+							applicableFlag = "0";
+						// ***send the input, response, DB result for validation
+						String[] inputFieldValues = { userId, geopoliticalId, languageCode, getResultDB.get(3),
+								addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+								applicableFlag, effectiveDate, expirationDate };
+						// ***get response fields values
+						List<String> resFields = ValidationFields.addressLabelResponseFileds(res);
+						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDB,
+								resFields);
+						// ***write result to excel
+						String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ",
+								"Input_languageCode: ", "Input_scriptCode: ", "Input_addressLineNumber: ",
+								"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+								"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
+						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
+						String[] dbFieldNames = { "DB_UserName: ", "DB_geopoliticalId: ", "DB_languageCode: ",
+								"DB_scriptCode: ", "DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
+								"DB_brandAddressLineLabelDescription: ", "DB_applicableFlag: ", "DB_effectiveDate: ",
+								"DB_expirationDate: " };
+						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
+						test.info("Input Data Values:");
+						test.info(writableInputFields.replaceAll("\n", "<br />"));
+						test.info("DB Data Values:");
+						test.info(writableDB_Fields.replaceAll("\n", "<br />"));
+						if (testResult) {
+							logger.info("Comparison between input data & DB data matching and passed");
+							logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
+							logger.info("------------------------------------------------------------------");
+							test.pass("Comparison between input data & DB data matching and passed");
+							ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+									writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Pass",
+									"");
+
+						} else {
+							logger.error("Comparison between input data & DB data not matching and failed");
+							logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+							logger.error("------------------------------------------------------------------");
+							test.fail("Comparison between input data & DB data not matching and failed");
+							ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+									writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Fail",
+									"Comparison between input data & DB data not matching and failed");
+							Assert.fail("Test Failed");
+						}
+					} else {
+						logger.error("Success message is not getting received as expected in response");
+						test.fail("Success message is not getting received as expected in response");
+						ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+								writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Fail",
+								"Success message is not getting received as expected in response");
+						Assert.fail("Test Failed");
+					}
+				} else {
+					logger.error("geopoliticalId is not available in response");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("geopoliticalId is not available in response");
+					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "",
+							Wsstatus, "" + Wscode, responsestr1, "Fail", "");
+					Assert.fail("Test Failed");
+				}
+			} else {
+				if (Wscode != 200) {
+					logger.error("Response status validation failed: " + Wscode);
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response status validation failed: " + Wscode);
+				} else if (meta == null) {
+					logger.error("Response validation failed as meta not found");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as meta not found");
+				} else if (meta.contains("timestamp")) {
+					logger.error("Response validation failed as timestamp found");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as timestamp found");
+				} else if (!actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
+					logger.error("Response validation failed as API version number is not matching with expected");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as API version number is not matching with expected");
+				}
+
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
+						"" + Wscode, responsestr1, "Fail", internalMsg);
+				Assert.fail("Test Failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: " + e);
+			logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: " + e);
+			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "", "Fail",
+					"" + e);
+			Assert.fail("Test Failed");
+		}
+	}
+
+	@Test(priority = 2)
+	public void TC_29() {
+		// ***get test case ID with method name
+		String testCaseID = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: " + testCaseID);
+		if (!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. " + testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+		boolean testResult = false;
+		try {
+			// ***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			// ***get end point url
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPut", fileName, level + ".addressLabel.put");
+			test.info("URL: " + getEndPoinUrl);
+
+			// ***send the data to create request and get request
+			String payload = PostMethod.addressLabelPostRequestWithoutScriptCd(userId, geopoliticalId, languageCode,
+					addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+					applicableFlag, effectiveDate, expirationDate, scriptCode);
+			String reqFormatted = Miscellaneous.jsonFormat(payload);
+			test.info("Input Request created:");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+
+			// ***send request and get response
+			Response res = GetResponse.sendRequestPut(payload, tokenValues[0], token, getEndPoinUrl, fileName,
+					testCaseID);
+			String responsestr = res.asString();
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus = js.getString("meta.message.status");
+			String internalMsg = js.getString("meta.message.internalMessage");
+			int Wscode = res.statusCode();
+			String meta = js.getString("meta");
+			String actualRespVersionNum = js.getString("meta.version");
+			String addrLabelResponseId = js.getString("data.geoplId");
+			String expectMessage = resMsgs.addressLabelPutSuccessMsg + addrLabelResponseId;
+			if (Wscode == 200 && Wsstatus.equalsIgnoreCase("SUCCESS") && meta != null
+					&& actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
+				logger.info("Response status validation passed: " + Wscode);
+				test.pass("Response status validation passed: " + Wscode);
+				test.pass("Response meta validation passed");
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
+				test.pass("Response API version number validation passed");
+
+				// ***Converting dateFormat according to DB
+				DateFormat srcDf = new SimpleDateFormat("yyyy-MM-dd");
+				DateFormat destDf = new SimpleDateFormat("dd-MMM-yy");
+
+				String formatEffectiveDate;
+				Date dateEffectiveDate = null;
+
+				String formatExpirationDate;
+				Date dateExpirationDate = null;
+
+				if (effectiveDate.isEmpty()) {
+					formatEffectiveDate = "";
+				} else {
+					formatEffectiveDate = effectiveDate;
+				}
+
+				try {
+					formatExpirationDate = expirationDate;
+					dateEffectiveDate = srcDf.parse(formatEffectiveDate);
+					dateExpirationDate = srcDf.parse(formatExpirationDate);
+
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				formatEffectiveDate = destDf.format(dateEffectiveDate);
+				formatEffectiveDate = formatEffectiveDate.toUpperCase();
+
+				formatExpirationDate = destDf.format(dateExpirationDate);
+				formatExpirationDate = formatExpirationDate.toUpperCase();
+
+				// ***get the locale code from DB
+				String getLocaleCdQuery = query.getLocaleCodeQuery(addrLabelResponseId, languageCode, scriptCode);
+				// ***get the fields needs to be validate in DB
+				List<String> LocaleCdfields = ValidationFields.addressLabelsGetLocaleCodePUTMethodDbFields();
+				// ***get the result from DB
+				List<String> getLocaleCdDB = DbConnect.getResultSetFor(getLocaleCdQuery, LocaleCdfields, fileName,
+						testCaseID);
+				String localCd = getLocaleCdDB.get(0);
+
+				// ***get the DB query
+				String addrLabelPostQuery = query.addressLabelPostNewQuery(addrLabelResponseId, localCd, languageCode,
+						formatExpirationDate);
+
+				// ***get the fields needs to be validate in DB
+				List<String> fields = ValidationFields.addressLabelsPOSTNewMethodDbFields();
+
+				// ***get the result from DB
+				List<String> getResultDB = DbConnect.getResultSetFor(addrLabelPostQuery, fields, fileName, testCaseID);
+
+				if (addrLabelResponseId != null) {
+					// ***success message validation
+					if (internalMsg.equals(expectMessage)) {
+						logger.info(
+								"geopoliticalId is getting generated and received in response: " + addrLabelResponseId);
+						test.pass(
+								"geopoliticalId is getting generated and received in response: " + addrLabelResponseId);
+						if (applicableFlag.contains("null"))
+							applicableFlag = "0";
+						// ***send the input, response, DB result for validation
+						String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode,
+								addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+								applicableFlag, effectiveDate, expirationDate };
+						// ***get response fields values
+						List<String> resFields = ValidationFields.addressLabelResponseFileds(res);
+						testResult = TestResultValidation.testValidationWithDB(res, inputFieldValues, getResultDB,
+								resFields);
+						// ***write result to excel
+						String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ",
+								"Input_languageCode: ", "Input_scriptCode: ", "Input_addressLineNumber: ",
+								"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+								"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
+						writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
+						String[] dbFieldNames = { "DB_UserName: ", "DB_geopoliticalId: ", "DB_languageCode: ",
+								"DB_scriptCode: ", "DB_addressLineNumber: ", "DB_fullAddressLineLabelDescription: ",
+								"DB_brandAddressLineLabelDescription: ", "DB_applicableFlag: ", "DB_effectiveDate: ",
+								"DB_expirationDate: " };
+						writableDB_Fields = Miscellaneous.geoDBFieldNames(getResultDB, dbFieldNames);
+						test.info("Input Data Values:");
+						test.info(writableInputFields.replaceAll("\n", "<br />"));
+						test.info("DB Data Values:");
+						test.info(writableDB_Fields.replaceAll("\n", "<br />"));
+						if (testResult) {
+							logger.info("Comparison between input data & DB data matching and passed");
+							logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
+							logger.info("------------------------------------------------------------------");
+							test.pass("Comparison between input data & DB data matching and passed");
+							ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+									writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Pass",
+									"");
+
+						} else {
+							logger.error("Comparison between input data & DB data not matching and failed");
+							logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+							logger.error("------------------------------------------------------------------");
+							test.fail("Comparison between input data & DB data not matching and failed");
+							ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+									writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Fail",
+									"Comparison between input data & DB data not matching and failed");
+							Assert.fail("Test Failed");
+						}
+					} else {
+						logger.error("Success message is not getting received as expected in response");
+						test.fail("Success message is not getting received as expected in response");
+						ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+								writableInputFields, writableDB_Fields, Wsstatus, "" + Wscode, responsestr1, "Fail",
+								"Success message is not getting received as expected in response");
+						Assert.fail("Test Failed");
+					}
+				} else {
+					logger.error("geopoliticalId is not available in response");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("geopoliticalId is not available in response");
+					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "",
+							Wsstatus, "" + Wscode, responsestr1, "Fail", "");
+					Assert.fail("Test Failed");
+				}
+			} else {
+				if (Wscode != 200) {
+					logger.error("Response status validation failed: " + Wscode);
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response status validation failed: " + Wscode);
+				} else if (meta == null) {
+					logger.error("Response validation failed as meta not found");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as meta not found");
+				} else if (meta.contains("timestamp")) {
+					logger.error("Response validation failed as timestamp found");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as timestamp found");
+				} else if (!actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
+					logger.error("Response validation failed as API version number is not matching with expected");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as API version number is not matching with expected");
+				}
+
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
+						"" + Wscode, responsestr1, "Fail", internalMsg);
+				Assert.fail("Test Failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: " + e);
+			logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: " + e);
+			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "", "Fail",
+					"" + e);
+			Assert.fail("Test Failed");
+		}
+	}
+
+	@Test(priority = 2)
+	public void TC_30() {
+		// ***get test case ID with method name
+		String testCaseID = new Object() {
+		}.getClass().getEnclosingMethod().getName();
+		logger.info("Executing Test Case: " + testCaseID);
+		if (!runFlag.equalsIgnoreCase("Yes")) {
+			logger.info("Skipped Test Case No. " + testCaseID);
+			logger.info("------------------------------------------------------------------");
+			throw new SkipException("Execution skipped as per test flag set");
+		}
+		boolean testResult = false;
+		try {
+			// ***get the test data from sheet
+			testDataFields(scenarioName, testCaseID);
+			test.log(Status.INFO, MarkupHelper.createLabel(TestCaseDescription, ExtentColor.PURPLE));
+			// ***send the data to create request and get request
+			String payload = PostMethod.addressLabelPostRequest(userId, geopoliticalId, languageCode,
+					addressLineNumber, fullAddressLineLabelDescription, brandAddressLineLabelDescription,
+					applicableFlag, effectiveDate, expirationDate, scriptCode);
+			String reqFormatted = Miscellaneous.jsonFormat(payload);
+			test.info("Input Request created:");
+			test.info(reqFormatted.replaceAll("\n", "<br />"));
+			// ***get end point url
+			String getEndPoinUrl = RetrieveEndPoints.getEndPointUrl("geoPut", fileName, level + ".addressLabel.put");
+			// ***send request and get response
+			Response res = GetResponse.sendRequestPut(payload, tokenValues[0], token, getEndPoinUrl, fileName,
+					testCaseID);
+			String responsestr = res.asString();
+			String responsestr1 = Miscellaneous.jsonFormat(responsestr);
+			test.info("Response Recieved:");
+			test.info(responsestr1.replaceAll("\n", "<br />"));
+			JsonPath js = new JsonPath(responsestr);
+			String Wsstatus = res.getStatusLine();
+			String meta = js.getString("meta");
+			String actualRespVersionNum = js.getString("meta.version");
+
+			List<String> errorMsg1 = new ArrayList<String>();
+			List<String> errorMsg2 = new ArrayList<String>();
+			// int errorMsgLength = js.getInt("errors.size");
+			int errorMsgLength;
+			if (StringUtils.isBlank(js.getString("errors.size"))) {
+				errorMsgLength = 0;
+			} else {
+				errorMsgLength = js.getInt("errors.size");
+			}
+
+			for (int i = 0; i < errorMsgLength; i++) {
+
+				errorMsg1.add(js.getString("errors[" + i + "].fieldName"));
+				errorMsg2.add(js.getString("errors[" + i + "].message"));
+			}
+
+			String expectMessage = resMsgs.inValidFieldMsg;
+			int Wscode = res.statusCode();
+			if (Wscode == 404 && meta != null && actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
+				logger.info("Response status code 404 validation passed: " + Wscode);
+				test.pass("Response status code 404 validation passed: " + Wscode);
+				test.pass("Response meta validation passed");
+				ValidationFields.timestampValidation(js, res);
+				ValidationFields.transactionIdValidation(js, res);
+				test.pass("Response API version number validation passed");
+				// ***error message validation
+
+				if (errorMsg1.get(0).equals("scriptCode") && errorMsg2.get(0).equals(expectMessage)) {
+					String[] inputFieldValues = { userId, geopoliticalId, languageCode, scriptCode, addressLineNumber,
+							fullAddressLineLabelDescription, brandAddressLineLabelDescription, applicableFlag,
+							effectiveDate, expirationDate };
+
+					String[] inputFieldNames = { "Input_UserName: ", "Input_geopoliticalId: ", "Input_languageCode: ",
+							"Input_scriptCode: ", "Input_addressLineNumber: ",
+							"Input_fullAddressLineLabelDescription: ", "Input_brandAddressLineLabelDescription: ",
+							"Input_applicableFlag: ", "Input_effectiveDate: ", "Input_expirationDate: " };
+					writableInputFields = Miscellaneous.geoFieldInputNames(inputFieldValues, inputFieldNames);
+					logger.info(
+							"Expected error message is getting received in response when sending the null value for geopoliticalId");
+					logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
+					logger.info("------------------------------------------------------------------");
+					test.pass(
+							"Expected error message is getting received in response when sending the null value for geopoliticalId");
+					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted,
+							writableInputFields, "NA", Wsstatus, "" + Wscode, responsestr1, "Pass", "");
+					test.log(Status.PASS, MarkupHelper.createLabel("TC Passed", ExtentColor.GREEN));
+				} else {
+					logger.error("Expected error message is not getting received in response");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Expected error message is not getting received in response");
+					ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "",
+							Wsstatus, "" + Wscode, responsestr, "Fail", "countryCode" + expectMessage);
+					Assert.fail("Test Failed");
+				}
+			} else {
+				if (Wscode != 404) {
+					logger.error("Response status validation failed: " + Wscode);
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response status validation failed: " + Wscode);
+				} else if (meta == null) {
+					logger.error("Response validation failed as meta not found");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as meta not found");
+				} else if (meta.contains("timestamp")) {
+					logger.error("Response validation failed as timestamp found");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as timestamp found");
+				} else if (!actualRespVersionNum.equalsIgnoreCase(actuatorcommandversion)) {
+					logger.error("Response validation failed as API version number is not matching with expected");
+					logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+					logger.error("------------------------------------------------------------------");
+					test.fail("Response validation failed as API version number is not matching with expected");
+				}
+
+				ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, reqFormatted, "", "", Wsstatus,
+						"" + Wscode, responsestr, "Fail", "countryCode" + expectMessage);
+				Assert.fail("Test Failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Exception thrown when executing the test case: " + e);
+			logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
+			logger.error("------------------------------------------------------------------");
+			test.fail("Exception thrown when executing the test case: " + e);
+			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "", "Fail",
+					"" + e);
+			Assert.fail("Test Failed");
+		}
+	}
+
+	@Test(priority = 1)
+	public void TC_31() {
 		String testCaseID = new Object() {
 		}.getClass().getEnclosingMethod().getName();
 		logger.info("Executing Test Case: " + testCaseID);
@@ -4083,6 +4638,7 @@ public class AddressLabelsPut extends Reporting {
 				String brandAddressLineLabelDescription = getJMSResult.getJSONObject("data")
 						.getString("brandAddressLineLabelDescription");
 				String languageCode = getJMSResult.getJSONObject("data").getString("languageCode");
+				String scriptCode = getJMSResult.getJSONObject("data").getString("scriptCode");
 				String applicableFlag = getJMSResult.getJSONObject("data").getString("applicableFlag");
 				Long addressLineNumberLong = getJMSResult.getJSONObject("data").getLong("addressLineNumber");
 				String effectiveDate = getJMSResult.getJSONObject("data").getString("effectiveDate");
@@ -4245,5 +4801,6 @@ public class AddressLabelsPut extends Reporting {
 		applicableFlag = inputData1.get(testCaseId).get("applicableFlag");
 		effectiveDate = inputData1.get(testCaseId).get("effectiveDate");
 		expirationDate = inputData1.get(testCaseId).get("expirationDate");
+		scriptCode = inputData1.get(testCaseId).get("scriptCode");
 	}
 }
