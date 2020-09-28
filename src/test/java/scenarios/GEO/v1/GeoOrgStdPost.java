@@ -1050,7 +1050,7 @@ public class GeoOrgStdPost extends Reporting {
 			int errorMsgLength = js.get("errors.size");
 			List<String> errorMsg1 = new ArrayList<>();
 			List<String> errorMsg2 = new ArrayList<>();
-			String expectMessage = resMsgs.lengthExceeds10Char2;
+			String expectMessage = resMsgs.lengthExceeds30Char2;
 			for (int i = 0; i < errorMsgLength; i++) {
 				errorMsg1.add(js.getString("errors[" + i + "].fieldName"));
 				errorMsg2.add(js.getString("errors[" + i + "].message"));
@@ -1070,7 +1070,7 @@ public class GeoOrgStdPost extends Reporting {
 
 				if (errorMsg1.get(0).equals("organizationStandardCode") && errorMsg2.get(0).equals(expectMessage)) {
 					logger.info(
-							"Expected error message is getting received in response when the orgStdCd is more than 10 characters length in JSON");
+							"Expected error message is getting received in response when the orgStdCd is more than 30 characters length in JSON");
 					logger.info("Execution is completed for Passed Test Case No. " + testCaseID);
 					logger.info("------------------------------------------------------------------");
 
