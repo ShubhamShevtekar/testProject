@@ -203,6 +203,7 @@ public class ResponseMessages {
 	public String lengthExceeds25Char = " cannot be greater than 25 characters";
 	public String lengthExceeds10Char = " cannot be greater 10 characters!";
 	public String lengthExceeds10Char2 = " cannot be greater than 10 characters!";
+	public String lengthExceeds30Char2 = " cannot be greater than 30 characters!";
 	public String lengthExceeds65Char2 = " cannot be greater than 65 characters!";
 	public String lengthExceeds10CharNew = " cannot be greater than 10 characters";
 	public String lengthExceeds256Char = " cannot be greater 256 characters!";

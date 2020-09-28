@@ -3,20 +3,50 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="scenarios.GEO.v1.ScriptGet">
+      <class name="scenarios.GEO.v1.AddressLabelsPost">
         <methods>
           <include name="startReport"/>
+          <include name="TC_11"/>
+          <include name="TC_33"/>
+          <include name="TC_12"/>
+          <include name="TC_13"/>
+          <include name="TC_14"/>
+          <include name="TC_15"/>
+          <include name="TC_16"/>
           <include name="before"/>
-          <include name="TC_05"/>
-          <include name="beforeSuite"/>
+          <include name="TC_17"/>
+          <include name="TC_19"/>
+          <include name="endReport"/>
+          <include name="TC_10"/>
+          <include name="TC_32"/>
+          <include name="TC_07"/>
+          <include name="TC_29"/>
           <include name="zipFolder"/>
+          <include name="TC_31"/>
+          <include name="TC_22"/>
+          <include name="TC_01"/>
+          <include name="TC_23"/>
+          <include name="beforeSuite"/>
+          <include name="TC_02"/>
+          <include name="TC_24"/>
+          <include name="TC_03"/>
+          <include name="TC_25"/>
+          <include name="TC_04"/>
+          <include name="TC_26"/>
+          <include name="TC_05"/>
+          <include name="TC_27"/>
+          <include name="TC_06"/>
+          <include name="TC_28"/>
+          <include name="TC_08"/>
+          <include name="TC_09"/>
           <include name="cleanFolder"/>
           <include name="startRepo"/>
+          <include name="TC_21"/>
+          <include name="TC_18"/>
           <include name="getCurrentDate"/>
           <include name="getToken"/>
-          <include name="endReport"/>
         </methods>
-      </class> <!-- scenarios.GEO.v1.ScriptGet -->
+      </class> <!-- scenarios.GEO.v1.AddressLabelsPost -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -88,14 +89,14 @@ public class LanguageGet extends Reporting {
 		}
 	}
 
-	/*@AfterMethod
+	@AfterClass
 	public void after() {
 		try {
 			con.close();
 		} catch (SQLException e) {
 			test.fail("DB connection close failed or connection not active: " + e);
 		}
-	}*/
+	}
 
 	@Test
 	public void TC_01() {
@@ -880,8 +881,9 @@ public class LanguageGet extends Reporting {
 
 	public void localeDBValidation(String testCaseID, String languageCode, JsonPath js, int z, int langSize, int DbCon)
 			throws java.text.ParseException, ParseException {
-
-		if (z == DbCon) {
+		if(js.get("data[" + (z - 1) + "].locales") != null){
+		
+			if (z == DbCon) {
 			con = DbConnect.getSqlStatement(fileName, testCaseID);
 		}
 		List<String> responseLocaleRows = js.get("data[" + (z - 1) + "].locales");
@@ -1094,11 +1096,18 @@ public class LanguageGet extends Reporting {
 			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "" + "", "", "Fail",
 					"");
 		}
+}else{
+	test.pass("Response and DB record count is 0, so validation not needed");
+	ex.writeExcel(fileName, "", TestCaseDescription, scenarioType, "NA", "", "", "", "",
+			"Response and DB record count is 0, so validation not needed", "Pass", "");
+}
 	}
 
 	public void DOW_SectionValidation(String testCaseID, String localeCode, JsonPath js, int localeCount, int z) {
 		localeCount -= 1;
 
+		if(js.get("data[" + (z - 1) + "].locales[" + localeCount + "].translatedDOWs") != null){
+		
 		List<String> responseDOW = js.get("data[" + (z - 1) + "].locales[" + localeCount + "].translatedDOWs");
 		// ***Get TranslatedDOWs query
 		String translatedDOWsDbQuery = query.langTrnslDowGraphQLQuery(localeCode);
@@ -1197,11 +1206,18 @@ public class LanguageGet extends Reporting {
 			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "" + "", "", "Fail",
 					"");
 		}
+		}else{
+			test.pass("Response and DB record count is 0, so validation not needed");
+			ex.writeExcel(fileName, "", TestCaseDescription, scenarioType, "NA", "", "", "", "",
+					"Response and DB record count is 0, so validation not needed", "Pass", "");
+		}
 	}
 
 	public void MOY_SectionValidation(String testCaseID, String localeCode, JsonPath js, int localeCount, int z) {
 		localeCount -= 1;
 
+		if(js.get("data[" + (z - 1) + "].locales[" + localeCount + "].translatedMOYs") != null){
+		
 		List<String> responseMOY = js.get("data[" + (z - 1) + "].locales[" + localeCount + "].translatedMOYs");
 
 		// ***Get TranslatedMOYs query
@@ -1300,6 +1316,11 @@ public class LanguageGet extends Reporting {
 					+ getResultDBData.size() / fields.size() + " & Response: " + getResponsMOY.size());
 			ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "" + "", "", "Fail",
 					"");
+		}
+		}else{
+			test.pass("Response and DB record count is 0, so validation not needed");
+			ex.writeExcel(fileName, "", TestCaseDescription, scenarioType, "NA", "", "", "", "",
+					"Response and DB record count is 0, so validation not needed", "Pass", "");
 		}
 	}
 

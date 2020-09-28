@@ -1,117 +1,345 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="4" passed="4">
+<testng-results skipped="0" failed="0" total="16" passed="16">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="23848" started-at="2020-07-30T10:31:34Z" finished-at="2020-07-30T10:31:58Z">
+  <suite name="Default suite" duration-ms="40670" started-at="2020-09-09T18:03:00Z" finished-at="2020-09-09T18:03:40Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="23848" started-at="2020-07-30T10:31:34Z" finished-at="2020-07-30T10:31:58Z">
-      <class name="scenarios.GEO.v1.MonthOfYearGet">
-        <test-method status="PASS" signature="cleanFolder()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="cleanFolder" is-config="true" duration-ms="26" started-at="2020-07-30T04:31:34Z" finished-at="2020-07-30T04:31:34Z">
+    <test name="Default test" duration-ms="40670" started-at="2020-09-09T18:03:00Z" finished-at="2020-09-09T18:03:40Z">
+      <class name="scenarios.GEO.v1.GeoOrgStdPost">
+        <test-method status="PASS" signature="cleanFolder()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="cleanFolder" is-config="true" duration-ms="22" started-at="2020-09-09T12:03:00Z" finished-at="2020-09-09T12:03:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- cleanFolder -->
-        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="beforeSuite" is-config="true" duration-ms="3" started-at="2020-07-30T04:31:34Z" finished-at="2020-07-30T04:31:34Z">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="beforeSuite" is-config="true" duration-ms="2" started-at="2020-09-09T12:03:00Z" finished-at="2020-09-09T12:03:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeSuite -->
-        <test-method status="PASS" signature="getToken()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="getToken" is-config="true" duration-ms="1097" started-at="2020-07-30T04:31:34Z" finished-at="2020-07-30T04:31:35Z">
+        <test-method status="PASS" signature="getToken()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getToken" is-config="true" duration-ms="839" started-at="2020-09-09T12:03:00Z" finished-at="2020-09-09T12:03:01Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getToken -->
-        <test-method status="PASS" signature="startReport()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="startReport" is-config="true" duration-ms="289" started-at="2020-07-30T04:31:35Z" finished-at="2020-07-30T04:31:35Z">
+        <test-method status="PASS" signature="startReport()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startReport" is-config="true" duration-ms="269" started-at="2020-09-09T12:03:01Z" finished-at="2020-09-09T12:03:01Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startReport -->
-        <test-method status="PASS" signature="before()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="before" is-config="true" duration-ms="1346" started-at="2020-07-30T04:31:35Z" finished-at="2020-07-30T04:31:37Z">
+        <test-method status="PASS" signature="before()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="before" is-config="true" duration-ms="1171" started-at="2020-09-09T12:03:01Z" finished-at="2020-09-09T12:03:02Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- before -->
-        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-07-30T04:31:37Z" finished-at="2020-07-30T04:31:37Z">
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="1" started-at="2020-09-09T12:03:02Z" finished-at="2020-09-09T12:03:02Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getCurrentDate -->
-        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="startRepo" is-config="true" duration-ms="1190" started-at="2020-07-30T04:31:37Z" finished-at="2020-07-30T04:31:38Z">
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="1005" started-at="2020-09-09T12:03:02Z" finished-at="2020-09-09T12:03:03Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void scenarios.GEO.v1.MonthOfYearGet.TC_01()]]>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_01()]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startRepo -->
-        <test-method status="PASS" signature="TC_01()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="TC_01" duration-ms="13225" started-at="2020-07-30T04:31:38Z" finished-at="2020-07-30T04:31:51Z">
+        <test-method status="PASS" signature="TC_01()[pri:1, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_01" duration-ms="4998" started-at="2020-09-09T12:03:03Z" finished-at="2020-09-09T12:03:08Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TC_01 -->
-        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-07-30T04:31:51Z" finished-at="2020-07-30T04:31:51Z">
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:08Z" finished-at="2020-09-09T12:03:08Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getCurrentDate -->
-        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="startRepo" is-config="true" duration-ms="777" started-at="2020-07-30T04:31:51Z" finished-at="2020-07-30T04:31:52Z">
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="436" started-at="2020-09-09T12:03:08Z" finished-at="2020-09-09T12:03:09Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void scenarios.GEO.v1.MonthOfYearGet.TC_02()]]>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_16()]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startRepo -->
-        <test-method status="PASS" signature="TC_02()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="TC_02" duration-ms="1745" started-at="2020-07-30T04:31:52Z" finished-at="2020-07-30T04:31:54Z">
+        <test-method status="PASS" signature="TC_16()[pri:1, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_16" duration-ms="9940" started-at="2020-09-09T12:03:09Z" finished-at="2020-09-09T12:03:19Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_16 -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="1" started-at="2020-09-09T12:03:19Z" finished-at="2020-09-09T12:03:19Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="399" started-at="2020-09-09T12:03:19Z" finished-at="2020-09-09T12:03:19Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_02()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="TC_02()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_02" duration-ms="1028" started-at="2020-09-09T12:03:19Z" finished-at="2020-09-09T12:03:20Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TC_02 -->
-        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="getCurrentDate" is-config="true" duration-ms="1" started-at="2020-07-30T04:31:54Z" finished-at="2020-07-30T04:31:54Z">
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:20Z" finished-at="2020-09-09T12:03:20Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getCurrentDate -->
-        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="startRepo" is-config="true" duration-ms="941" started-at="2020-07-30T04:31:54Z" finished-at="2020-07-30T04:31:54Z">
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="478" started-at="2020-09-09T12:03:20Z" finished-at="2020-09-09T12:03:20Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void scenarios.GEO.v1.MonthOfYearGet.TC_03()]]>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_03()]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startRepo -->
-        <test-method status="PASS" signature="TC_03()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="TC_03" duration-ms="1072" started-at="2020-07-30T04:31:54Z" finished-at="2020-07-30T04:31:56Z">
+        <test-method status="PASS" signature="TC_03()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_03" duration-ms="1931" started-at="2020-09-09T12:03:20Z" finished-at="2020-09-09T12:03:22Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TC_03 -->
-        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-07-30T04:31:56Z" finished-at="2020-07-30T04:31:56Z">
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:22Z" finished-at="2020-09-09T12:03:22Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getCurrentDate -->
-        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="startRepo" is-config="true" duration-ms="476" started-at="2020-07-30T04:31:56Z" finished-at="2020-07-30T04:31:56Z">
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="358" started-at="2020-09-09T12:03:22Z" finished-at="2020-09-09T12:03:23Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void scenarios.GEO.v1.MonthOfYearGet.TC_04()]]>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_04()]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startRepo -->
-        <test-method status="PASS" signature="TC_04()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="TC_04" duration-ms="1012" started-at="2020-07-30T04:31:56Z" finished-at="2020-07-30T04:31:57Z">
+        <test-method status="PASS" signature="TC_04()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_04" duration-ms="878" started-at="2020-09-09T12:03:23Z" finished-at="2020-09-09T12:03:24Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TC_04 -->
-        <test-method status="PASS" signature="endReport()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="endReport" is-config="true" duration-ms="616" started-at="2020-07-30T04:31:57Z" finished-at="2020-07-30T04:31:58Z">
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="510" started-at="2020-09-09T12:03:24Z" finished-at="2020-09-09T12:03:24Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_05()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:24Z" finished-at="2020-09-09T12:03:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="TC_05()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_05" duration-ms="1011" started-at="2020-09-09T12:03:24Z" finished-at="2020-09-09T12:03:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_05 -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:25Z" finished-at="2020-09-09T12:03:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="448" started-at="2020-09-09T12:03:25Z" finished-at="2020-09-09T12:03:26Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_06()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="TC_06()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_06" duration-ms="1819" started-at="2020-09-09T12:03:26Z" finished-at="2020-09-09T12:03:27Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_06 -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="414" started-at="2020-09-09T12:03:27Z" finished-at="2020-09-09T12:03:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_07()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:27Z" finished-at="2020-09-09T12:03:27Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="TC_07()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_07" duration-ms="850" started-at="2020-09-09T12:03:28Z" finished-at="2020-09-09T12:03:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_07 -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:29Z" finished-at="2020-09-09T12:03:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="443" started-at="2020-09-09T12:03:29Z" finished-at="2020-09-09T12:03:29Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_08()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="TC_08()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_08" duration-ms="813" started-at="2020-09-09T12:03:29Z" finished-at="2020-09-09T12:03:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_08 -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="418" started-at="2020-09-09T12:03:30Z" finished-at="2020-09-09T12:03:30Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_09()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:30Z" finished-at="2020-09-09T12:03:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="TC_09()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_09" duration-ms="799" started-at="2020-09-09T12:03:30Z" finished-at="2020-09-09T12:03:31Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_09 -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:31Z" finished-at="2020-09-09T12:03:31Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="471" started-at="2020-09-09T12:03:31Z" finished-at="2020-09-09T12:03:32Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_10()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="TC_10()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_10" duration-ms="940" started-at="2020-09-09T12:03:32Z" finished-at="2020-09-09T12:03:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_10 -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="1" started-at="2020-09-09T12:03:33Z" finished-at="2020-09-09T12:03:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="445" started-at="2020-09-09T12:03:33Z" finished-at="2020-09-09T12:03:33Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_11()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="TC_11()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_11" duration-ms="910" started-at="2020-09-09T12:03:33Z" finished-at="2020-09-09T12:03:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_11 -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="471" started-at="2020-09-09T12:03:34Z" finished-at="2020-09-09T12:03:34Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_12()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:34Z" finished-at="2020-09-09T12:03:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="TC_12()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_12" duration-ms="1254" started-at="2020-09-09T12:03:34Z" finished-at="2020-09-09T12:03:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_12 -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="1" started-at="2020-09-09T12:03:36Z" finished-at="2020-09-09T12:03:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="514" started-at="2020-09-09T12:03:36Z" finished-at="2020-09-09T12:03:36Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_13()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="TC_13()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_13" duration-ms="1107" started-at="2020-09-09T12:03:36Z" finished-at="2020-09-09T12:03:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_13 -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="1" started-at="2020-09-09T12:03:37Z" finished-at="2020-09-09T12:03:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="475" started-at="2020-09-09T12:03:37Z" finished-at="2020-09-09T12:03:38Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_14()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="TC_14()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_14" duration-ms="901" started-at="2020-09-09T12:03:38Z" finished-at="2020-09-09T12:03:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_14 -->
+        <test-method status="PASS" signature="startRepo(java.lang.reflect.Method)[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="startRepo" is-config="true" duration-ms="360" started-at="2020-09-09T12:03:39Z" finished-at="2020-09-09T12:03:39Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void scenarios.GEO.v1.GeoOrgStdPost.TC_15()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startRepo -->
+        <test-method status="PASS" signature="getCurrentDate()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="getCurrentDate" is-config="true" duration-ms="0" started-at="2020-09-09T12:03:39Z" finished-at="2020-09-09T12:03:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getCurrentDate -->
+        <test-method status="PASS" signature="TC_15()[pri:2, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="TC_15" duration-ms="856" started-at="2020-09-09T12:03:39Z" finished-at="2020-09-09T12:03:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TC_15 -->
+        <test-method status="PASS" signature="endReport()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="endReport" is-config="true" duration-ms="572" started-at="2020-09-09T12:03:40Z" finished-at="2020-09-09T12:03:40Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endReport -->
-        <test-method status="PASS" signature="zipFolder()[pri:0, instance:scenarios.GEO.v1.MonthOfYearGet@158fe70]" name="zipFolder" is-config="true" duration-ms="64" started-at="2020-07-30T04:31:58Z" finished-at="2020-07-30T04:31:58Z">
+        <test-method status="PASS" signature="zipFolder()[pri:0, instance:scenarios.GEO.v1.GeoOrgStdPost@709393]" name="zipFolder" is-config="true" duration-ms="37" started-at="2020-09-09T12:03:41Z" finished-at="2020-09-09T12:03:41Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- zipFolder -->
-      </class> <!-- scenarios.GEO.v1.MonthOfYearGet -->
+      </class> <!-- scenarios.GEO.v1.GeoOrgStdPost -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

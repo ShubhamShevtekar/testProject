@@ -40295,8 +40295,8 @@ public class CountryPost extends Reporting {
 				if (getJMSResult.getJSONObject("data").isNull("dependentCountryCode")) {
 					dependentCountryCd1 = "";
 				} else {
-					dependentCountryCode = getJMSResult.getJSONObject("data").getLong("dependentCountryCode");
-					dependentCountryCd1 = String.valueOf(dependentCountryCode);
+					dependentCountryCd1 = getJMSResult.getJSONObject("data").getString("dependentCountryCode");
+					//dependentCountryCd1 = String.valueOf(dependentCountryCode);
 				}
 				String intialDialingCd = getJMSResult.getJSONObject("data").optString("internationalDialingCode");
 				if (getJMSResult.getJSONObject("data").isNull("landPhoneMaximumLength")) {
