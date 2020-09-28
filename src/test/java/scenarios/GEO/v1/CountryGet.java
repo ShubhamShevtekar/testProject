@@ -900,6 +900,8 @@ public class CountryGet extends Reporting {
 				List<String> fields = ValidationFields.countryGetMethodDbFields();
 				// ***get the result from DB
 				List<String> getResultDB = DbConnect.getResultSetFor(countryGetQuery, fields, fileName, testCaseID);
+				System.out.println("Response rows: " + responseRows.size());
+				System.out.println("DB records: " + getResultDB.size() / fields.size());
 				if (getResultDB.size() == responseRows.size() * fields.size()) {
 					logger.info("Total number of records matching between DB & Response: " + responseRows.size());
 					test.pass("Total number of records matching between DB & Response: " + responseRows.size());
@@ -938,10 +940,10 @@ public class CountryGet extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data[" + i + "].dependentRelationshipId"));
 						}
-						if (StringUtils.isBlank(js.getString("data[" + i + "].dependentCountryCode"))) {
+						if (StringUtils.isBlank(js.getString("data[" + i + "].dependantCountryCode"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data[" + i + "].dependentCountryCode"));
+							getResponseRows.add(js.getString("data[" + i + "].dependantCountryCode"));
 						}
 						if (StringUtils.isBlank(js.getString("data[" + i + "].postalFormatDescription"))) {
 							getResponseRows.add("");
@@ -1397,6 +1399,8 @@ public class CountryGet extends Reporting {
 				List<String> fields = ValidationFields.countryGetMethodDbFields();
 				// ***get the result from DB
 				List<String> getResultDB = DbConnect.getResultSetFor(countryGetQuery, fields, fileName, testCaseID);
+				System.out.println("Response rows: " + responseRows.size());
+				System.out.println("DB records: " + getResultDB.size() / fields.size());
 				if (getResultDB.size() >= responseRows.size() * fields.size()) {
 					logger.info("Total number of records matching between DB & Response: " + responseRows.size());
 					test.pass("Total number of records matching between DB & Response: " + responseRows.size());
@@ -1435,10 +1439,10 @@ public class CountryGet extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data[" + i + "].dependentRelationshipId"));
 						}
-						if (StringUtils.isBlank(js.getString("data[" + i + "].dependentCountryCode"))) {
+						if (StringUtils.isBlank(js.getString("data[" + i + "].dependantCountryCode"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data[" + i + "].dependentCountryCode"));
+							getResponseRows.add(js.getString("data[" + i + "].dependantCountryCode"));
 						}
 						if (StringUtils.isBlank(js.getString("data[" + i + "].postalFormatDescription"))) {
 							getResponseRows.add("");
@@ -1626,10 +1630,6 @@ public class CountryGet extends Reporting {
 								countryCurrencyValidation(responsestr, testCaseID, z - 1, targetDate, endDate);
 								test.info("CountryAdressLabel validation starts:");
 								countryAdressLabelValidation(responsestr, testCaseID, z - 1, targetDate, endDate);
-								/*HashMap<String, String> data = new HashMap<>();
-								Set<String> dataKey = new HashSet<String>();
-								data = js.get("data[" + (z - 1) + "].addressLabels");
-								countryAdressLabelValidationNew(responsestr1, data, testCaseID, z - 1, targetDate, endDate);*/
 								z++;
 								i = 0 - fields.size();
 								j = j + fields.size();
@@ -1734,6 +1734,7 @@ public class CountryGet extends Reporting {
 								 */
 
 						}
+						System.out.println("reached here");
 					}
 				} else {
 					logger.error("Total number of records not matching between DB: "
@@ -1839,6 +1840,8 @@ public class CountryGet extends Reporting {
 				List<String> fields = ValidationFields.countryGetMethodDbFields();
 				// ***get the result from DB
 				List<String> getResultDB = DbConnect.getResultSetFor(countryGetQuery, fields, fileName, testCaseID);
+				System.out.println("Response rows: " + responseRows.size());
+				System.out.println("DB records: " + getResultDB.size() / fields.size());
 				if (getResultDB.size() == responseRows.size() * fields.size()) {
 					logger.info("Total number of records matching between DB & Response: " + responseRows.size());
 					test.pass("Total number of records matching between DB & Response: " + responseRows.size());
@@ -1877,10 +1880,10 @@ public class CountryGet extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data[" + i + "].dependentRelationshipId"));
 						}
-						if (StringUtils.isBlank(js.getString("data[" + i + "].dependentCountryCode"))) {
+						if (StringUtils.isBlank(js.getString("data[" + i + "].dependantCountryCode"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data[" + i + "].dependentCountryCode"));
+							getResponseRows.add(js.getString("data[" + i + "].dependantCountryCode"));
 						}
 						if (StringUtils.isBlank(js.getString("data[" + i + "].postalFormatDescription"))) {
 							getResponseRows.add("");
@@ -3860,6 +3863,8 @@ public class CountryGet extends Reporting {
 				List<String> fields = ValidationFields.countryGetMethodDbFields();
 				// ***get the result from DB
 				List<String> getResultDB = DbConnect.getResultSetFor(countryGetQuery, fields, fileName, testCaseID);
+				System.out.println("Response rows: " + responseRows.size());
+				System.out.println("DB records: " + getResultDB.size() / fields.size());
 				if (getResultDB.size() == responseRows.size() * fields.size()) {
 					logger.info("Total number of records matching between DB & Response: " + responseRows.size());
 					test.pass("Total number of records matching between DB & Response: " + responseRows.size());
@@ -3898,10 +3903,10 @@ public class CountryGet extends Reporting {
 						} else {
 							getResponseRows.add(js.getString("data[" + i + "].dependentRelationshipId"));
 						}
-						if (StringUtils.isBlank(js.getString("data[" + i + "].dependentCountryCode"))) {
+						if (StringUtils.isBlank(js.getString("data[" + i + "].dependantCountryCode"))) {
 							getResponseRows.add("");
 						} else {
-							getResponseRows.add(js.getString("data[" + i + "].dependentCountryCode"));
+							getResponseRows.add(js.getString("data[" + i + "].dependantCountryCode"));
 						}
 						if (StringUtils.isBlank(js.getString("data[" + i + "].postalFormatDescription"))) {
 							getResponseRows.add("");
@@ -4320,6 +4325,7 @@ public class CountryGet extends Reporting {
 	private void countryAdressLabelValidation(String responsestr, String testCaseID, int k, String targetDate,
 			String endDate) {
 
+		System.out.println("Value of K " + k);
 		JsonPath js = new JsonPath(responsestr);
 
 		// List<String> responseRows = js.get("data[" + k + "].addressLabels");
@@ -4332,6 +4338,7 @@ public class CountryGet extends Reporting {
 			dataKey = data.keySet();
 
 			int n = dataKey.size();
+			System.out.println("Value of n " + n);
 
 			String strArray[] = new String[n];
 			strArray = dataKey.toArray(strArray);
@@ -4423,200 +4430,7 @@ public class CountryGet extends Reporting {
 							test.info("0 matching records and there is no validation required");
 						}
 						boolean rowMatch = false;
-						for (int e = 0; e < getResponseRows.size(); e = e + fields.size()) {
-							for (int j = 0; j < getResultDB.size(); j = j + fields.size()) {
-								if (getResultDB.get(j).toString().equals(getResponseRows.get(e).toString())
-										&& getResultDB.get(j + 1).toString()
-												.equals(getResponseRows.get(e + 1).toString())
-										&& getResultDB.get(j + 2).toString()
-												.equals(getResponseRows.get(e + 2).toString())) {
-									rowMatch = true;
-									// ***write result to excel
-									String[] responseDbFieldValues = { getResultDB.get(j).toString(),
-											getResponseRows.get(e).toString(), getResultDB.get(j + 1).toString(),
-											getResponseRows.get(e + 1).toString(), getResultDB.get(j + 2).toString(),
-											getResponseRows.get(e + 2).toString(), };
-									String[] responseDbFieldNames = { "Response_brandAddressLineDescription: ",
-											"DB_brandAddressLineDescription: ", "Response_addressLineNumber: ",
-											"DB_addressLineNumber:", "Response_applicable: ", "DB_applicable: " };
-									writableResult = Miscellaneous.geoFieldInputNames(responseDbFieldValues,
-											responseDbFieldNames);
-									test.pass(writableResult.replaceAll("\n", "<br />"));
-									ex.writeExcel(fileName, "", TestCaseDescription, scenarioType, "NA", "", "", "", "",
-											writableResult, "Pass", "");
-									break;
-								}
-
-							}
-							if (!rowMatch) {
-								test.fail("Address Label details are not matiching for the LocalCd: " + strArray[m]);
-								ex.writeExcel(fileName, "", TestCaseDescription, scenarioType, "NA", "", "", "", "",
-										"Address Label details are not matiching for the LocalCd: " + strArray[m],
-										"Fail", "");
-
-							}
-							rowMatch = false;
-						}
-
-					} else {
-						logger.error("Total number of records not matching for AddressLabel record between DB: "
-								+ getResultDB.size() / fields.size() + " & Response: " + responseRows.size());
-						logger.error("Execution is completed for Failed Test Case No. " + testCaseID);
-						logger.error("------------------------------------------------------------------");
-						test.fail("Total number of records not matching for Address Label record between DB: "
-								+ getResultDB.size() / fields.size() + " & Response: " + responseRows.size());
-						ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "", "", "", "", "", "",
-								"Fail", "");
-					}
-				} else {
-					int resNullCount;
-					if (responseRows == null) {
-						resNullCount = 0;
-					} else {
-						resNullCount = responseRows.size();
-					}
-					if (getResultDB.size() == 0 && resNullCount == 0) {
-						test.pass("Response and DB record count is 0, so validation not needed");
-						ex.writeExcel(fileName, "", TestCaseDescription, scenarioType, "NA", "", "", "", "",
-								"Response and DB record count is 0, so validation not needed", "Pass", "");
-					} else {
-						test.fail("Response record count: " + resNullCount + " and DB record count: "
-								+ getResultDB.size() + " is not matching");
-						ex.writeExcel(fileName, "", TestCaseDescription, scenarioType,
-								"NA", "", "", "", "", "Response record count: " + resNullCount
-										+ " and DB record count: " + getResultDB.size() + " is not matching",
-								"Fail", "");
-					}
-
-				}
-			}
-		} else {
-			test.pass("Response and DB record count is 0, so validation not needed");
-			ex.writeExcel(fileName, "", TestCaseDescription, scenarioType, "NA", "", "", "", "",
-					"Response and DB record count is 0, so validation not needed", "Pass", "");
-		}
-	}// CountryAdreessLabelValidation
-	
-	private void countryAdressLabelValidationNew(String responsestr, HashMap<String, String> data,
-			String testCaseID, int k, String targetDate, String endDate) {
-
-		JsonPath js = new JsonPath(responsestr);
-		
-		//HashMap<String, String> data = new HashMap<>();
-		//Set<String> dataKey = new HashSet<String>();
-
-		//data = js.get("data[" + k + "].addressLabels");
-		if (data != null) {
-			Set<String> dataKey = new HashSet<String>();
-			dataKey = data.keySet();
-
-			int n = dataKey.size();
-
-			String strArray[] = new String[n];
-			strArray = dataKey.toArray(strArray);
-			for (int m = 0; m < strArray.length; m++) {
-
-				List<String> responseRows = js.get("data[" + k + "].addressLabels." + strArray[m]);
-				for (int s = 0; s < responseRows.size(); s++) {
-					System.out.println(responseRows);
-				}
-			 List<String> responseRowscheck = js.get("data[" + k + "].addressLabels");
-			/*dataKey = data.keySet();
-
-			int n = dataKey.size();
-
-			String strArray[] = new String[n];
-			strArray = dataKey.toArray(strArray);
-			for (int m = 0; m < strArray.length; m++) {
-
-				List<String> responseRows = js.get("data[" + k + "].addressLabels." + strArray[m]);
-				for (int s = 0; s < responseRows.size(); s++) {
-					System.out.println(responseRows);
-				}*/
-				// ***get query
-				String countryAdressLabelGetQuery = query.AddressLabelsGettQueryCountryAlldata(strArray[m],
-						geopoliticalId);
-				// ***get the fields needs to be validate in DB
-				List<String> fields = ValidationFields.CountryAddressLabelGetMethodDbFields();
-				// ***get the result from DB
-				List<String> getResultDB = new ArrayList<>();
-				try {
-					stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-					ResultSet result = stmt.executeQuery(countryAdressLabelGetQuery);
-					result.last();
-					result.beforeFirst();
-					String checkNull = null;
-					while (result.next()) {
-						for (int d = 0; d < fields.size(); d++) {
-							checkNull = result.getString(fields.get(d));
-							if (StringUtils.isBlank(checkNull)) {
-								checkNull = "";
-							}
-							getResultDB.add(checkNull.trim());
-						}
-					}
-					stmt.close();
-				} catch (SQLException e) {
-					ex.writeExcel(fileName, testCaseID, "", "", "", "", "", "", "", "", "Fail",
-							"DB Connection Exception: " + e.toString());
-					test.fail("DB connection failed: " + e);
-					Assert.fail("Test Failed");
-				}
-
-				if (getResultDB.size() != 0 && responseRows != null) {
-					if (getResultDB.size() == responseRows.size() * fields.size()) {
-						test.pass("Total number of records matching for Address Label record between DB & Response:  "
-								+ responseRows.size());
-						ex.writeExcel(fileName, testCaseID, TestCaseDescription, scenarioType, "NA", "", "", "", "", "",
-								"Pass", "Total number of records matching for Locale record between DB & Response: "
-										+ responseRows.size() + ", below are the test steps for this test case");
-						List<String> getResponseRows = new ArrayList<>();
-
-						int addressSize = js.get("data[" + k + "].addressLabels.size()");
-						int LocalCdSuze = js.get("data[" + k + "].addressLabels." + strArray[m] + ".size()");
-
-						for (int i = 0; i < addressSize; i++) {
-							for (int j = 0; j < LocalCdSuze; j++) {
-
-								String br = js.getString("data[" + k + "].addressLabels." + strArray[m] + "[" + i + "].brandAddressLineDescription");// + "[" + j + "]");
-								// ["+i+"]
-								if (StringUtils.isBlank(js.getString("data.addressLabels." + strArray[m] + "[" + i
-										+ "].brandAddressLineDescription" + "[" + j + "]"))) {
-									getResponseRows.add("");
-								} else {
-									getResponseRows.add(js.getString("data.addressLabels." + strArray[m] + "[" + i
-											+ "].brandAddressLineDescription" + "[" + j + "]"));
-								}
-
-								if (StringUtils.isBlank(js.getString("data.addressLabels." + strArray[m] + "[" + i
-										+ "].addressLineNumber" + "[" + j + "]"))) {
-									getResponseRows.add("");
-								} else {
-									getResponseRows.add(js.getString("data.addressLabels." + strArray[m] + "[" + i
-											+ "].addressLineNumber" + "[" + j + "]"));
-								}
-								if (StringUtils.isBlank(js.getString("data.addressLabels." + strArray[m] + "[" + i
-										+ "].applicable" + "[" + j + "]"))) {
-									getResponseRows.add("");
-								} else {
-									String aplli = js.getString("data.addressLabels." + strArray[m] + "[" + i
-											+ "].applicable" + "[" + j + "]");
-									if (aplli.contains("true"))
-										getResponseRows.add("1");
-									else
-										getResponseRows.add("0");
-
-								}
-							}
-
-						}
-
-						if (responseRows.size() == 0) {
-							logger.info("0 matching records and there is no validation required");
-							test.info("0 matching records and there is no validation required");
-						}
-						boolean rowMatch = false;
-						for (int e = 0; e < getResponseRows.size(); e = e + fields.size()) {
+						for (int e = 0; e < getResultDB.size(); e = e + fields.size()) {
 							for (int j = 0; j < getResultDB.size(); j = j + fields.size()) {
 								if (getResultDB.get(j).toString().equals(getResponseRows.get(e).toString())
 										&& getResultDB.get(j + 1).toString()
